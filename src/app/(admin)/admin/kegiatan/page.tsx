@@ -137,23 +137,23 @@ export default async function ActivitiesAdminPage({
                               </div>
                             ) : null}
                             {!gregorianDate && !lunarDate ? (
-                              <span className="text-xs text-slate-400 italic">Belum ditentukan</span>
+                              <span className="text-xs text-slate-500 font-medium italic">Belum ditentukan</span>
                             ) : null}
                           </div>
                         </td>
                         <td className="px-4 py-4">
                           <span
-                            className={`inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full border whitespace-nowrap ${scheduleStatusObj.badgeClass}`}
+                            className={`inline-flex items-center px-2.5 py-1 text-xs font-semibold rounded-full border whitespace-nowrap shadow-xs ${scheduleStatusObj.badgeClass}`}
                           >
                             {scheduleStatusObj.label.id}
                           </span>
                         </td>
                         <td className="px-4 py-4 text-center">
                           <span
-                            className={`inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full whitespace-nowrap ${
+                            className={`inline-flex items-center px-2.5 py-1 text-xs font-semibold rounded-full whitespace-nowrap border shadow-xs ${
                               item.status === 'published'
-                                ? 'bg-green-100 text-green-800'
-                                : 'bg-slate-100 text-slate-800'
+                                ? 'bg-emerald-100 text-emerald-900 border-emerald-300'
+                                : 'bg-slate-100 text-slate-800 border-slate-300'
                             }`}
                           >
                             {item.status === 'published' ? 'Publik' : 'Draft'}

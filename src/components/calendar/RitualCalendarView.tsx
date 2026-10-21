@@ -561,11 +561,11 @@ function ActivityCalendarCard({
         <div className="p-5 space-y-3">
           {/* Top Badges: Category & Schedule Status */}
           <div className="flex flex-wrap items-center gap-1.5">
-            <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-stone-100 text-stone-700 border border-stone-200">
+            <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-stone-100 text-stone-800 border border-stone-200">
               {occ.categoryLabel}
             </span>
             <span
-              className={`text-[11px] font-semibold px-2.5 py-0.5 rounded-full border ${occ.scheduleStatusBadgeClass}`}
+              className={`text-[11px] font-semibold px-2.5 py-0.5 rounded-full border shadow-xs ${occ.scheduleStatusBadgeClass}`}
             >
               {occ.scheduleStatusLabel[locale]}
             </span>
@@ -594,8 +594,8 @@ function ActivityCalendarCard({
 
           {/* Estimated lunar conversion notice badge */}
           {occ.isEstimated && !isUnscheduledSection && (
-            <div className="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200">
-              <Info className="w-3 h-3" />
+            <div className="inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded bg-amber-100 text-amber-950 border border-amber-300">
+              <Info className="w-3 h-3 text-amber-800" />
               <span>
                 {locale === 'id'
                   ? 'Perkiraan Tanggal Masehi (Konversi Imlek)'

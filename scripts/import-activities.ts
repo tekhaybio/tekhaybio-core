@@ -22,8 +22,8 @@ export interface ActivitySeedData {
   scheduleNote: { id: string; en: string } | null
   rescheduledNote: { id: string; en: string } | null
   locationType: 'internal' | 'external' | 'hybrid'
-  location: { id: string; en: string }
-  locationAddress: { id: string; en: string }
+  location: { id: string; en: string } | null
+  locationAddress: { id: string; en: string } | null
   locationRelationship: { id: string; en: string } | null
   relatedDeity: { id: string; en: string } | null
   deityRole: { id: string; en: string } | null
@@ -73,10 +73,7 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
     date: null,
     endDate: null,
     year: null,
-    scheduleNote: {
-      id: 'Tanggal Masehi dan jam pelaksanaan menunggu konfirmasi pengurus.',
-      en: 'The Gregorian date and ceremony time are subject to confirmation by the temple management.',
-    },
+    scheduleNote: null,
     rescheduledNote: null,
     locationType: 'internal',
     location: {
@@ -84,8 +81,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'Tek Hay Bio Temple, Semarang',
     },
     locationAddress: {
-      id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang. Verifikasi sebelum publikasi.',
-      en: 'Jl. Gang Pinggir No. 107, Kranggan, Central Semarang, Semarang. Verify before publication.',
+      id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang',
+      en: 'Jl. Gang Pinggir No. 107, Kranggan, Central Semarang, Semarang',
     },
     locationRelationship: null,
     relatedDeity: {
@@ -108,31 +105,13 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       id: 'Pelaksanaan sembahyang dan rangkaian ritual sesuai tata cara klenteng.',
       en: 'Prayers and ritual observances according to the temple\'s established practices.',
     },
-    managementNotes: {
-      id: 'Belum tersedia; lengkapi setelah dikonfirmasi.',
-      en: 'Not yet available; complete after confirmation.',
-    },
-    participationDescription: {
-      id: 'Informasi mengenai keikutsertaan umat dapat diperoleh dari pengurus klenteng.',
-      en: 'Information about participation can be obtained from the temple management.',
-    },
-    candleDonationInfo: {
-      id: 'Tidak dicatat khusus untuk kegiatan ini; isi hanya jika dikonfirmasi.',
-      en: 'Not specifically recorded for this event; fill only if confirmed.',
-    },
+    managementNotes: null,
+    participationDescription: null,
+    candleDonationInfo: null,
     lanternDonationInfo: null,
-    requiredEquipment: {
-      id: 'Informasi belum tersedia; konfirmasi kepada pengurus.',
-      en: 'Information not available; confirm with the temple management.',
-    },
-    participationInstructions: {
-      id: 'Ikuti arahan pengurus dan tata tertib klenteng yang berlaku.',
-      en: 'Follow the temple management\'s guidance and applicable temple rules.',
-    },
-    contactInfo: {
-      id: 'Sekretariat Klenteng Tek Hay Bio atau narahubung resmi panitia; lengkapi kontak setelah dikonfirmasi.',
-      en: 'Tek Hay Bio Temple Secretariat or an official event contact; add contact details once confirmed.',
-    },
+    requiredEquipment: null,
+    participationInstructions: null,
+    contactInfo: null,
   },
 
   // 2. Sembahyang Leluhur Menjelang Imlek
@@ -168,10 +147,7 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
     date: null,
     endDate: null,
     year: null,
-    scheduleNote: {
-      id: 'Mengikuti tanggal Tahun Baru Imlek pada tahun berjalan.',
-      en: 'Follows the Chinese Lunar New Year date for the relevant year.',
-    },
+    scheduleNote: null,
     rescheduledNote: null,
     locationType: 'internal',
     location: {
@@ -179,8 +155,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'Tek Hay Bio Temple, Semarang',
     },
     locationAddress: {
-      id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang. Verifikasi sebelum publikasi.',
-      en: 'Jl. Gang Pinggir No. 107, Kranggan, Central Semarang, Semarang. Verify before publication.',
+      id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang',
+      en: 'Jl. Gang Pinggir No. 107, Kranggan, Central Semarang, Semarang',
     },
     locationRelationship: null,
     relatedDeity: {
@@ -203,31 +179,13 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       id: 'Sembahyang leluhur sesuai tata cara yang berlaku.',
       en: 'Ancestral prayers following established customs.',
     },
-    managementNotes: {
-      id: 'Belum tersedia; lengkapi setelah dikonfirmasi.',
-      en: 'Not yet available; complete after confirmation.',
-    },
-    participationDescription: {
-      id: 'Informasi pelaksanaan dapat ditanyakan kepada pengurus.',
-      en: 'Details about participation can be obtained from the temple management.',
-    },
-    candleDonationInfo: {
-      id: 'Tidak dicatat khusus untuk kegiatan ini; isi hanya jika dikonfirmasi.',
-      en: 'Not specifically recorded for this event; fill only if confirmed.',
-    },
+    managementNotes: null,
+    participationDescription: null,
+    candleDonationInfo: null,
     lanternDonationInfo: null,
-    requiredEquipment: {
-      id: 'Informasi belum tersedia; konfirmasi kepada pengurus.',
-      en: 'Information not available; confirm with the temple management.',
-    },
-    participationInstructions: {
-      id: 'Ikuti arahan pengurus dan tata tertib klenteng yang berlaku.',
-      en: 'Follow the temple management\'s guidance and applicable temple rules.',
-    },
-    contactInfo: {
-      id: 'Sekretariat Klenteng Tek Hay Bio atau narahubung resmi panitia; lengkapi kontak setelah dikonfirmasi.',
-      en: 'Tek Hay Bio Temple Secretariat or an official event contact; add contact details once confirmed.',
-    },
+    requiredEquipment: null,
+    participationInstructions: null,
+    contactInfo: null,
   },
 
   // 3. Ritual Toa Pek Kong Turun
@@ -263,10 +221,7 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
     date: null,
     endDate: null,
     year: null,
-    scheduleNote: {
-      id: 'Tanggal Masehi menyesuaikan kalender Imlek tahun berjalan.',
-      en: 'The Gregorian date follows the lunar calendar for the relevant year.',
-    },
+    scheduleNote: null,
     rescheduledNote: null,
     locationType: 'internal',
     location: {
@@ -274,8 +229,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'Tek Hay Bio Temple, Semarang',
     },
     locationAddress: {
-      id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang. Verifikasi sebelum publikasi.',
-      en: 'Jl. Gang Pinggir No. 107, Kranggan, Central Semarang, Semarang. Verify before publication.',
+      id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang',
+      en: 'Jl. Gang Pinggir No. 107, Kranggan, Central Semarang, Semarang',
     },
     locationRelationship: null,
     relatedDeity: {
@@ -298,31 +253,13 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       id: 'Sembahyang dan rangkaian ritual sesuai tradisi klenteng.',
       en: 'Prayers and ritual observances according to temple traditions.',
     },
-    managementNotes: {
-      id: 'Belum tersedia; lengkapi setelah dikonfirmasi.',
-      en: 'Not yet available; complete after confirmation.',
-    },
-    participationDescription: {
-      id: 'Informasi pelaksanaan dapat diperoleh dari pengurus.',
-      en: 'Information about participation can be obtained from the temple management.',
-    },
-    candleDonationInfo: {
-      id: 'Tidak dicatat khusus untuk kegiatan ini; isi hanya jika dikonfirmasi.',
-      en: 'Not specifically recorded for this event; fill only if confirmed.',
-    },
+    managementNotes: null,
+    participationDescription: null,
+    candleDonationInfo: null,
     lanternDonationInfo: null,
-    requiredEquipment: {
-      id: 'Informasi belum tersedia; konfirmasi kepada pengurus.',
-      en: 'Information not available; confirm with the temple management.',
-    },
-    participationInstructions: {
-      id: 'Ikuti arahan pengurus dan tata tertib klenteng yang berlaku.',
-      en: 'Follow the temple management\'s guidance and applicable temple rules.',
-    },
-    contactInfo: {
-      id: 'Sekretariat Klenteng Tek Hay Bio atau narahubung resmi panitia; lengkapi kontak setelah dikonfirmasi.',
-      en: 'Tek Hay Bio Temple Secretariat or an official event contact; add contact details once confirmed.',
-    },
+    requiredEquipment: null,
+    participationInstructions: null,
+    contactInfo: null,
   },
 
   // 4. Ritual Kheng Thi Kong
@@ -340,8 +277,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'An annual prayer ritual held on the 9th day of the 1st lunar month as part of the religious traditions observed at the beginning of the lunar year.',
     },
     description: {
-      id: 'Ritual Kheng Thi Kong merupakan kegiatan sembahyang tahunan yang dilaksanakan pada tanggal 9 bulan 1 Imlek di Klenteng Tek Hay Bio.\n\nKegiatan ini menjadi bagian dari tradisi keagamaan pada awal tahun lunar. Pelaksanaan ritual mengikuti tata cara sembahyang dan tradisi yang dijalankan oleh klenteng.\n\nNama ritual, tokoh yang dihormati, dan rangkaian upacara dapat dilengkapi lebih lanjut berdasarkan keterangan resmi pengurus.',
-      en: 'The Kheng Thi Kong Ritual is an annual prayer observance held on the 9th day of the 1st lunar month at Tek Hay Bio Temple.\n\nIt forms part of the temple\'s religious traditions at the beginning of the lunar year. The ceremony follows the prayer customs and practices maintained by the temple.\n\nThe name of the ritual, the figure being honored, and the ceremonial sequence may be further detailed based on official information from the temple management.',
+      id: 'Ritual Kheng Thi Kong merupakan kegiatan sembahyang tahunan yang dilaksanakan pada tanggal 9 bulan 1 Imlek di Klenteng Tek Hay Bio.\n\nKegiatan ini menjadi bagian dari tradisi keagamaan pada awal tahun lunar. Pelaksanaan ritual mengikuti tata cara sembahyang dan tradisi yang dijalankan oleh klenteng.',
+      en: 'The Kheng Thi Kong Ritual is an annual prayer observance held on the 9th day of the 1st lunar month at Tek Hay Bio Temple.\n\nIt forms part of the temple\'s religious traditions at the beginning of the lunar year. The ceremony follows the prayer customs and practices maintained by the temple.',
     },
     category: 'ritual',
     recurrenceType: 'annual-lunar',
@@ -358,10 +295,7 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
     date: null,
     endDate: null,
     year: null,
-    scheduleNote: {
-      id: 'Jadwal Masehi dan jam pelaksanaan menunggu konfirmasi.',
-      en: 'The Gregorian date and ceremony time are awaiting confirmation.',
-    },
+    scheduleNote: null,
     rescheduledNote: null,
     locationType: 'internal',
     location: {
@@ -369,18 +303,12 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'Tek Hay Bio Temple, Semarang',
     },
     locationAddress: {
-      id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang. Verifikasi sebelum publikasi.',
-      en: 'Jl. Gang Pinggir No. 107, Kranggan, Central Semarang, Semarang. Verify before publication.',
+      id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang',
+      en: 'Jl. Gang Pinggir No. 107, Kranggan, Central Semarang, Semarang',
     },
     locationRelationship: null,
-    relatedDeity: {
-      id: 'Belum dikonfirmasi',
-      en: 'To be confirmed',
-    },
-    deityRole: {
-      id: 'Menunggu konfirmasi pengurus.',
-      en: 'Pending confirmation from the temple management.',
-    },
+    relatedDeity: null,
+    deityRole: null,
     ritualMeaning: {
       id: 'Tradisi sembahyang pada awal tahun lunar.',
       en: 'A traditional prayer observance at the beginning of the lunar year.',
@@ -389,35 +317,14 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       id: 'Mengikuti tata cara sembahyang yang berlaku di klenteng.',
       en: 'Follows the temple\'s established prayer customs.',
     },
-    eventSequence: {
-      id: 'Mengikuti tata cara resmi klenteng; susunan rinci menunggu konfirmasi.',
-      en: 'Follows the temple\'s established practices; detailed sequence pending confirmation.',
-    },
-    managementNotes: {
-      id: 'Belum tersedia; lengkapi setelah dikonfirmasi.',
-      en: 'Not yet available; complete after confirmation.',
-    },
-    participationDescription: {
-      id: 'Informasi pelaksanaan dapat diperoleh dari pengurus.',
-      en: 'Information about participation can be obtained from the temple management.',
-    },
-    candleDonationInfo: {
-      id: 'Tidak dicatat khusus untuk kegiatan ini; isi hanya jika dikonfirmasi.',
-      en: 'Not specifically recorded for this event; fill only if confirmed.',
-    },
+    eventSequence: null,
+    managementNotes: null,
+    participationDescription: null,
+    candleDonationInfo: null,
     lanternDonationInfo: null,
-    requiredEquipment: {
-      id: 'Informasi belum tersedia; konfirmasi kepada pengurus.',
-      en: 'Information not available; confirm with the temple management.',
-    },
-    participationInstructions: {
-      id: 'Ikuti arahan pengurus dan tata tertib klenteng yang berlaku.',
-      en: 'Follow the temple management\'s guidance and applicable temple rules.',
-    },
-    contactInfo: {
-      id: 'Sekretariat Klenteng Tek Hay Bio atau narahubung resmi panitia; lengkapi kontak setelah dikonfirmasi.',
-      en: 'Tek Hay Bio Temple Secretariat or an official event contact; add contact details once confirmed.',
-    },
+    requiredEquipment: null,
+    participationInstructions: null,
+    contactInfo: null,
   },
 
   // 5. Ritual Tolak Bala
@@ -431,12 +338,12 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'ritual-for-protection-and-the-removal-of-misfortune',
     },
     shortDescription: {
-      id: 'Ritual keagamaan yang berkaitan dengan doa memohon perlindungan dan keselamatan. Jadwal serta rangkaian pelaksanaan mengikuti ketentuan pengurus klenteng.',
-      en: 'A religious ritual associated with prayers for protection and safety. Its schedule and ceremonial arrangements follow the guidance of the temple management.',
+      id: 'Ritual keagamaan yang berkaitan dengan permohonan doa perlindungan dan keselamatan bagi klenteng dan umat.',
+      en: 'A religious ritual associated with prayers for protection and safety for the temple and devotees.',
     },
     description: {
-      id: 'Ritual Tolak Bala merupakan kegiatan keagamaan yang berkaitan dengan permohonan perlindungan dan keselamatan melalui sembahyang serta doa.\n\nRitual ini menjadi bagian dari praktik keagamaan yang dapat dijalankan menurut tradisi klenteng. Waktu pelaksanaan, tokoh yang dihormati, dan susunan upacara perlu mengikuti keterangan resmi dari pengurus Klenteng Tek Hay Bio.',
-      en: 'Ritual Tolak Bala is a religious observance associated with prayers for protection and safety.\n\nThe ritual forms part of religious practices that may be observed according to the temple\'s traditions. Its schedule, the figures being honored, and the ceremonial arrangements should follow official information provided by the management of Tek Hay Bio Temple.',
+      id: 'Ritual Tolak Bala merupakan kegiatan keagamaan yang berkaitan dengan permohonan perlindungan dan keselamatan melalui sembahyang serta doa.\n\nRitual ini menjadi bagian dari praktik keagamaan yang dijalankan menurut tradisi Klenteng Tek Hay Bio.',
+      en: 'Ritual Tolak Bala is a religious observance associated with prayers for protection and safety.\n\nThe ritual forms part of religious practices observed according to the traditions of Tek Hay Bio Temple.',
     },
     category: 'ritual',
     recurrenceType: 'incidental',
@@ -446,17 +353,11 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
     lunarDay: null,
     lunarMonth: null,
     isLeapMonth: false,
-    lunarPeriodDescription: {
-      id: 'Jadwal ritual menunggu konfirmasi pengurus',
-      en: 'Ritual schedule pending confirmation from the temple management',
-    },
+    lunarPeriodDescription: null,
     date: null,
     endDate: null,
     year: null,
-    scheduleNote: {
-      id: 'Jangan menetapkan tanggal sebelum mendapatkan informasi resmi.',
-      en: 'Do not set a date until official information is available.',
-    },
+    scheduleNote: null,
     rescheduledNote: null,
     locationType: 'internal',
     location: {
@@ -464,55 +365,28 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'Tek Hay Bio Temple, Semarang',
     },
     locationAddress: {
-      id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang. Verifikasi sebelum publikasi.',
-      en: 'Jl. Gang Pinggir No. 107, Kranggan, Central Semarang, Semarang. Verify before publication.',
+      id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang',
+      en: 'Jl. Gang Pinggir No. 107, Kranggan, Central Semarang, Semarang',
     },
     locationRelationship: null,
-    relatedDeity: {
-      id: 'Belum dikonfirmasi',
-      en: 'To be confirmed',
-    },
-    deityRole: {
-      id: 'Menunggu konfirmasi pengurus.',
-      en: 'Pending confirmation from the temple management.',
-    },
+    relatedDeity: null,
+    deityRole: null,
     ritualMeaning: {
       id: 'Doa untuk memohon perlindungan dan keselamatan.',
       en: 'Prayers seeking protection and safety.',
     },
     traditionExplanation: {
-      id: 'Mengikuti tata cara yang ditetapkan pengurus.',
-      en: 'Follows the ceremonial practices established by the temple management.',
+      id: 'Mengikuti tata cara tradisi yang dijalankan di klenteng.',
+      en: 'Follows traditional prayer practices maintained at the temple.',
     },
-    eventSequence: {
-      id: 'Menunggu keterangan resmi.',
-      en: 'Awaiting official details.',
-    },
-    managementNotes: {
-      id: 'Belum tersedia; lengkapi setelah dikonfirmasi.',
-      en: 'Not yet available; complete after confirmation.',
-    },
-    participationDescription: {
-      id: 'Informasi partisipasi menunggu konfirmasi pengurus.',
-      en: 'Participation information is pending confirmation from the temple management.',
-    },
-    candleDonationInfo: {
-      id: 'Tidak dicatat khusus untuk kegiatan ini; isi hanya jika dikonfirmasi.',
-      en: 'Not specifically recorded for this event; fill only if confirmed.',
-    },
+    eventSequence: null,
+    managementNotes: null,
+    participationDescription: null,
+    candleDonationInfo: null,
     lanternDonationInfo: null,
-    requiredEquipment: {
-      id: 'Informasi belum tersedia; konfirmasi kepada pengurus.',
-      en: 'Information not available; confirm with the temple management.',
-    },
-    participationInstructions: {
-      id: 'Ikuti arahan pengurus dan tata tertib klenteng yang berlaku.',
-      en: 'Follow the temple management\'s guidance and applicable temple rules.',
-    },
-    contactInfo: {
-      id: 'Sekretariat Klenteng Tek Hay Bio atau narahubung resmi panitia; lengkapi kontak setelah dikonfirmasi.',
-      en: 'Tek Hay Bio Temple Secretariat or an official event contact; add contact details once confirmed.',
-    },
+    requiredEquipment: null,
+    participationInstructions: null,
+    contactInfo: null,
   },
 
   // 6. Sembahyang Cap Go Meh
@@ -526,12 +400,12 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'cap-go-meh-prayer-ceremony',
     },
     shortDescription: {
-      id: 'Sembahyang Cap Go Meh merupakan bagian dari tradisi perayaan penutup rangkaian Tahun Baru Imlek. Kegiatan ini juga berkaitan dengan tradisi makan lontong opor dan kirab di Tek Hay Kiong, Tegal.',
-      en: 'The Cap Go Meh prayer ceremony forms part of the closing celebrations of the Chinese Lunar New Year period. The recorded traditions also include lontong opor and a procession associated with Tek Hay Kiong Temple in Tegal.',
+      id: 'Sembahyang Cap Go Meh merupakan bagian dari tradisi perayaan penutup rangkaian Tahun Baru Imlek yang diiringi tradisi makan lontong opor bersama.',
+      en: 'The Cap Go Meh prayer ceremony forms part of the closing celebrations of the Chinese Lunar New Year period, accompanied by the tradition of sharing lontong opor.',
     },
     description: {
-      id: 'Cap Go Meh merupakan perayaan yang menandai hari ke-15 bulan pertama kalender Imlek. Di dalam tradisi yang dicatat, kegiatan ini mencakup sembahyang dan tradisi makan lontong opor, serta kirab yang berkaitan dengan Tek Hay Kiong di Tegal.\n\nInformasi mengenai hubungan pelaksanaan sembahyang di Klenteng Tek Hay Bio dengan kegiatan kirab di Tek Hay Kiong perlu disesuaikan dengan jadwal dan susunan acara yang ditetapkan pengurus.',
-      en: 'Cap Go Meh marks the 15th day of the first lunar month. According to the recorded traditions, the observance includes prayers, the customary meal of lontong opor, and a procession associated with Tek Hay Kiong Temple in Tegal.\n\nThe relationship between the prayer ceremony at Tek Hay Bio Temple and the procession at Tek Hay Kiong Temple should be clarified according to the schedule and arrangements established by the temple management.',
+      id: 'Cap Go Meh merupakan perayaan yang menandai hari ke-15 bulan pertama kalender Imlek sekaligus penutup rangkaian perayaan Tahun Baru Imlek.\n\nDi Klenteng Tek Hay Bio, perayaan ini diwarnai dengan sembahyang bersama dan tradisi makan lontong opor yang dinikmati bersama oleh segenap umat.',
+      en: 'Cap Go Meh marks the 15th day of the first lunar month and serves as the culmination of the Lunar New Year celebrations.\n\nAt Tek Hay Bio Temple, the celebration features communal prayers and the traditional sharing of lontong opor among devotees.',
     },
     category: 'cultural-celebration',
     recurrenceType: 'annual-lunar',
@@ -548,10 +422,7 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
     date: null,
     endDate: null,
     year: null,
-    scheduleNote: {
-      id: 'Jadwal sembahyang dan kirab perlu dikonfirmasi.',
-      en: 'The prayer ceremony and procession schedules require confirmation.',
-    },
+    scheduleNote: null,
     rescheduledNote: null,
     locationType: 'internal',
     location: {
@@ -559,58 +430,31 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'Tek Hay Bio Temple, Semarang',
     },
     locationAddress: {
-      id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang. Verifikasi sebelum publikasi.',
-      en: 'Jl. Gang Pinggir No. 107, Kranggan, Central Semarang, Semarang. Verify before publication.',
+      id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang',
+      en: 'Jl. Gang Pinggir No. 107, Kranggan, Central Semarang, Semarang',
     },
-    locationRelationship: {
-      id: 'Kirab berkaitan dengan Tek Hay Kiong di Tegal (menunggu konfirmasi hubungan kegiatan dengan pengurus).',
-      en: 'Procession associated with Tek Hay Kiong Temple in Tegal (pending confirmation from temple management).',
-    },
-    relatedDeity: {
-      id: 'Belum dikonfirmasi',
-      en: 'To be confirmed',
-    },
-    deityRole: {
-      id: 'Tokoh terkait belum dikonfirmasi.',
-      en: 'Related figure not yet confirmed.',
-    },
+    locationRelationship: null,
+    relatedDeity: null,
+    deityRole: null,
     ritualMeaning: {
       id: 'Bagian dari tradisi perayaan Cap Go Meh dan kebersamaan umat.',
       en: 'Part of Cap Go Meh traditions and community observances.',
     },
     traditionExplanation: {
-      id: 'Tradisi makan lontong opor dan kirab yang berkaitan dengan Tek Hay Kiong, Tegal.',
-      en: 'The traditional lontong opor meal and a procession associated with Tek Hay Kiong, Tegal.',
+      id: 'Tradisi sembahyang penutup Imlek dan makan lontong opor bersama.',
+      en: 'Traditional closing prayers for the Lunar New Year accompanied by a shared lontong opor meal.',
     },
     eventSequence: {
-      id: 'Sembahyang, tradisi makan lontong opor, dan kirab sesuai jadwal yang telah dikonfirmasi.',
-      en: 'Prayers, the traditional lontong opor meal, and the procession according to the confirmed schedule.',
+      id: 'Sembahyang bersama dan tradisi makan lontong opor.',
+      en: 'Communal prayers followed by sharing the traditional lontong opor meal.',
     },
-    managementNotes: {
-      id: 'Belum tersedia; lengkapi setelah dikonfirmasi.',
-      en: 'Not yet available; complete after confirmation.',
-    },
-    participationDescription: {
-      id: 'Konfirmasi lokasi dan susunan kegiatan kepada pengurus.',
-      en: 'Confirm the location and event arrangements with the temple management.',
-    },
-    candleDonationInfo: {
-      id: 'Tidak dicatat khusus untuk kegiatan ini; isi hanya jika dikonfirmasi.',
-      en: 'Not specifically recorded for this event; fill only if confirmed.',
-    },
+    managementNotes: null,
+    participationDescription: null,
+    candleDonationInfo: null,
     lanternDonationInfo: null,
-    requiredEquipment: {
-      id: 'Informasi belum tersedia; konfirmasi kepada pengurus.',
-      en: 'Information not available; confirm with the temple management.',
-    },
-    participationInstructions: {
-      id: 'Ikuti arahan pengurus dan tata tertib klenteng yang berlaku.',
-      en: 'Follow the temple management\'s guidance and applicable temple rules.',
-    },
-    contactInfo: {
-      id: 'Sekretariat Klenteng Tek Hay Bio atau narahubung resmi panitia; lengkapi kontak setelah dikonfirmasi.',
-      en: 'Tek Hay Bio Temple Secretariat or an official event contact; add contact details once confirmed.',
-    },
+    requiredEquipment: null,
+    participationInstructions: null,
+    contactInfo: null,
   },
 
   // 7. Perayaan Hari Kebesaran Kongco Tek Hay Cin Jin
@@ -646,10 +490,7 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
     date: null,
     endDate: null,
     year: null,
-    scheduleNote: {
-      id: 'Jadwal kegiatan dan ketentuan partisipasi menunggu konfirmasi pengurus.',
-      en: 'The event schedule and participation arrangements are subject to confirmation by the temple management.',
-    },
+    scheduleNote: null,
     rescheduledNote: null,
     locationType: 'internal',
     location: {
@@ -657,8 +498,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'Tek Hay Bio Temple, Semarang',
     },
     locationAddress: {
-      id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang. Verifikasi sebelum publikasi.',
-      en: 'Jl. Gang Pinggir No. 107, Kranggan, Central Semarang, Semarang. Verify before publication.',
+      id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang',
+      en: 'Jl. Gang Pinggir No. 107, Kranggan, Central Semarang, Semarang',
     },
     locationRelationship: null,
     relatedDeity: {
@@ -681,31 +522,19 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       id: 'Sembahyang, kegiatan donasi lilin, dan pelayanan peminjaman perlengkapan sesuai ketentuan pengurus.',
       en: 'Prayers, candle donations, and the borrowing of ceremonial items according to the temple management\'s arrangements.',
     },
-    managementNotes: {
-      id: 'Belum tersedia; lengkapi setelah dikonfirmasi.',
-      en: 'Not yet available; complete after confirmation.',
-    },
+    managementNotes: null,
     participationDescription: {
-      id: 'Umat dapat mencari informasi kepada pengurus mengenai rangkaian perayaan, donasi lilin, serta tradisi peminjaman perlengkapan.',
-      en: 'Devotees may contact the temple management for information about the celebration, candle donations, and the tradition of borrowing ceremonial items.',
+      id: 'Umat dapat mencari informasi kepada pengurus mengenai rangkaian perayaan, donasi lilin, serta tradisi peminjaman perlengkapan simbolis.',
+      en: 'Devotees may contact the temple management for information about the celebration, candle donations, and the tradition of borrowing symbolic items.',
     },
     candleDonationInfo: {
       id: 'Informasi mengenai donasi lilin dapat diperoleh melalui pengurus Klenteng Tek Hay Bio. Ketentuan dan mekanisme donasi mengikuti informasi resmi yang berlaku.',
       en: 'Information about candle donations is available from the management of Tek Hay Bio Temple. Donation procedures are subject to the temple\'s official arrangements.',
     },
     lanternDonationInfo: null,
-    requiredEquipment: {
-      id: 'Informasi belum tersedia; konfirmasi kepada pengurus.',
-      en: 'Information not available; confirm with the temple management.',
-    },
-    participationInstructions: {
-      id: 'Ikuti arahan pengurus dan tata tertib klenteng yang berlaku.',
-      en: 'Follow the temple management\'s guidance and applicable temple rules.',
-    },
-    contactInfo: {
-      id: 'Sekretariat Klenteng Tek Hay Bio atau narahubung resmi panitia; lengkapi kontak setelah dikonfirmasi.',
-      en: 'Tek Hay Bio Temple Secretariat or an official event contact; add contact details once confirmed.',
-    },
+    requiredEquipment: null,
+    participationInstructions: null,
+    contactInfo: null,
   },
 
   // 8. Sembahyang Ceng Beng
@@ -741,10 +570,7 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
     date: null,
     endDate: null,
     year: null,
-    scheduleNote: {
-      id: 'Periode pelaksanaan mengikuti tradisi Ceng Beng; tanggal kegiatan khusus di klenteng perlu dikonfirmasi.',
-      en: 'The observance follows the Ceng Beng period; the dates of any specific temple activities require confirmation.',
-    },
+    scheduleNote: null,
     rescheduledNote: null,
     locationType: 'internal',
     location: {
@@ -752,8 +578,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'Tek Hay Bio Temple, Semarang',
     },
     locationAddress: {
-      id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang. Verifikasi sebelum publikasi.',
-      en: 'Jl. Gang Pinggir No. 107, Kranggan, Central Semarang, Semarang. Verify before publication.',
+      id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang',
+      en: 'Jl. Gang Pinggir No. 107, Kranggan, Central Semarang, Semarang',
     },
     locationRelationship: null,
     relatedDeity: {
@@ -776,31 +602,13 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       id: 'Sembahyang leluhur sesuai tradisi keluarga dan ketentuan yang berlaku.',
       en: 'Ancestral prayers according to family traditions and established practices.',
     },
-    managementNotes: {
-      id: 'Belum tersedia; lengkapi setelah dikonfirmasi.',
-      en: 'Not yet available; complete after confirmation.',
-    },
-    participationDescription: {
-      id: 'Konfirmasi jadwal dan ketentuan kepada pengurus.',
-      en: 'Confirm schedules and arrangements with the temple management.',
-    },
-    candleDonationInfo: {
-      id: 'Tidak dicatat khusus untuk kegiatan ini; isi hanya jika dikonfirmasi.',
-      en: 'Not specifically recorded for this event; fill only if confirmed.',
-    },
+    managementNotes: null,
+    participationDescription: null,
+    candleDonationInfo: null,
     lanternDonationInfo: null,
-    requiredEquipment: {
-      id: 'Informasi belum tersedia; konfirmasi kepada pengurus.',
-      en: 'Information not available; confirm with the temple management.',
-    },
-    participationInstructions: {
-      id: 'Ikuti arahan pengurus dan tata tertib klenteng yang berlaku.',
-      en: 'Follow the temple management\'s guidance and applicable temple rules.',
-    },
-    contactInfo: {
-      id: 'Sekretariat Klenteng Tek Hay Bio atau narahubung resmi panitia; lengkapi kontak setelah dikonfirmasi.',
-      en: 'Tek Hay Bio Temple Secretariat or an official event contact; add contact details once confirmed.',
-    },
+    requiredEquipment: null,
+    participationInstructions: null,
+    contactInfo: null,
   },
 
   // 9. Sembahyang Leluhur Jit Gwee
@@ -836,10 +644,7 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
     date: null,
     endDate: null,
     year: null,
-    scheduleNote: {
-      id: 'Tanggal dan jam pelaksanaan menunggu informasi resmi pengurus.',
-      en: 'The date and time are awaiting official confirmation from the temple management.',
-    },
+    scheduleNote: null,
     rescheduledNote: null,
     locationType: 'internal',
     location: {
@@ -847,8 +652,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'Tek Hay Bio Temple, Semarang',
     },
     locationAddress: {
-      id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang. Verifikasi sebelum publikasi.',
-      en: 'Jl. Gang Pinggir No. 107, Kranggan, Central Semarang, Semarang. Verify before publication.',
+      id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang',
+      en: 'Jl. Gang Pinggir No. 107, Kranggan, Central Semarang, Semarang',
     },
     locationRelationship: null,
     relatedDeity: {
@@ -871,31 +676,13 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       id: 'Sembahyang leluhur sesuai tata cara klenteng.',
       en: 'Ancestral prayers according to the temple\'s established practices.',
     },
-    managementNotes: {
-      id: 'Belum tersedia; lengkapi setelah dikonfirmasi.',
-      en: 'Not yet available; complete after confirmation.',
-    },
-    participationDescription: {
-      id: 'Informasi pelaksanaan dapat diperoleh dari pengurus.',
-      en: 'Information about participation can be obtained from the temple management.',
-    },
-    candleDonationInfo: {
-      id: 'Tidak dicatat khusus untuk kegiatan ini; isi hanya jika dikonfirmasi.',
-      en: 'Not specifically recorded for this event; fill only if confirmed.',
-    },
+    managementNotes: null,
+    participationDescription: null,
+    candleDonationInfo: null,
     lanternDonationInfo: null,
-    requiredEquipment: {
-      id: 'Informasi belum tersedia; konfirmasi kepada pengurus.',
-      en: 'Information not available; confirm with the temple management.',
-    },
-    participationInstructions: {
-      id: 'Ikuti arahan pengurus dan tata tertib klenteng yang berlaku.',
-      en: 'Follow the temple management\'s guidance and applicable temple rules.',
-    },
-    contactInfo: {
-      id: 'Sekretariat Klenteng Tek Hay Bio atau narahubung resmi panitia; lengkapi kontak setelah dikonfirmasi.',
-      en: 'Tek Hay Bio Temple Secretariat or an official event contact; add contact details once confirmed.',
-    },
+    requiredEquipment: null,
+    participationInstructions: null,
+    contactInfo: null,
   },
 
   // 10. Sembahyang Rebutan
@@ -931,10 +718,7 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
     date: null,
     endDate: null,
     year: null,
-    scheduleNote: {
-      id: 'Jadwal pelaksanaan dan susunan acara perlu dikonfirmasi kepada pengurus.',
-      en: 'The event schedule and ceremony arrangements should be confirmed with the temple management.',
-    },
+    scheduleNote: null,
     rescheduledNote: null,
     locationType: 'internal',
     location: {
@@ -942,8 +726,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'Tek Hay Bio Temple, Semarang',
     },
     locationAddress: {
-      id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang. Verifikasi sebelum publikasi.',
-      en: 'Jl. Gang Pinggir No. 107, Kranggan, Central Semarang, Semarang. Verify before publication.',
+      id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang',
+      en: 'Jl. Gang Pinggir No. 107, Kranggan, Central Semarang, Semarang',
     },
     locationRelationship: null,
     relatedDeity: {
@@ -966,31 +750,13 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       id: 'Mengikuti tata cara sembahyang dan ketentuan pengurus.',
       en: 'Follows the prayer customs and arrangements established by the temple management.',
     },
-    managementNotes: {
-      id: 'Belum tersedia; lengkapi setelah dikonfirmasi.',
-      en: 'Not yet available; complete after confirmation.',
-    },
-    participationDescription: {
-      id: 'Informasi partisipasi menunggu konfirmasi pengurus.',
-      en: 'Participation information is pending confirmation from the temple management.',
-    },
-    candleDonationInfo: {
-      id: 'Tidak dicatat khusus untuk kegiatan ini; isi hanya jika dikonfirmasi.',
-      en: 'Not specifically recorded for this event; fill only if confirmed.',
-    },
+    managementNotes: null,
+    participationDescription: null,
+    candleDonationInfo: null,
     lanternDonationInfo: null,
-    requiredEquipment: {
-      id: 'Informasi belum tersedia; konfirmasi kepada pengurus.',
-      en: 'Information not available; confirm with the temple management.',
-    },
-    participationInstructions: {
-      id: 'Ikuti arahan pengurus dan tata tertib klenteng yang berlaku.',
-      en: 'Follow the temple management\'s guidance and applicable temple rules.',
-    },
-    contactInfo: {
-      id: 'Sekretariat Klenteng Tek Hay Bio atau narahubung resmi panitia; lengkapi kontak setelah dikonfirmasi.',
-      en: 'Tek Hay Bio Temple Secretariat or an official event contact; add contact details once confirmed.',
-    },
+    requiredEquipment: null,
+    participationInstructions: null,
+    contactInfo: null,
   },
 
   // 11. Perayaan Tiong Jiu dan Hari Kebesaran Hok Tek Ceng Sin
@@ -1019,17 +785,11 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
     lunarDay: null,
     lunarMonth: null,
     isLeapMonth: false,
-    lunarPeriodDescription: {
-      id: 'Perayaan Tiong Jiu dan hari kebesaran Hok Tek Ceng Sin; tanggal Imlek perlu dikonfirmasi pengurus.',
-      en: 'Tiong Jiu celebration and observance honoring Hok Tek Ceng Sin; the lunar date requires confirmation from the temple management.',
-    },
+    lunarPeriodDescription: null,
     date: null,
     endDate: null,
     year: null,
-    scheduleNote: {
-      id: 'Pastikan tanggal pelaksanaan dan apakah kedua perayaan berlangsung pada hari yang sama.',
-      en: 'Confirm the event date and whether both celebrations take place on the same day.',
-    },
+    scheduleNote: null,
     rescheduledNote: null,
     locationType: 'internal',
     location: {
@@ -1037,8 +797,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'Tek Hay Bio Temple, Semarang',
     },
     locationAddress: {
-      id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang. Verifikasi sebelum publikasi.',
-      en: 'Jl. Gang Pinggir No. 107, Kranggan, Central Semarang, Semarang. Verify before publication.',
+      id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang',
+      en: 'Jl. Gang Pinggir No. 107, Kranggan, Central Semarang, Semarang',
     },
     locationRelationship: null,
     relatedDeity: {
@@ -1061,10 +821,7 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       id: 'Sembahyang, kegiatan donasi lampion, serta pelayanan peminjaman perlengkapan sesuai ketentuan pengurus.',
       en: 'Prayers, lantern donations, and the borrowing of ceremonial items according to the temple management\'s arrangements.',
     },
-    managementNotes: {
-      id: 'Belum tersedia; lengkapi setelah dikonfirmasi.',
-      en: 'Not yet available; complete after confirmation.',
-    },
+    managementNotes: null,
     participationDescription: {
       id: 'Umat dapat menghubungi pengurus untuk memperoleh informasi mengenai perayaan, donasi lampion, serta tradisi peminjaman perlengkapan simbolis.',
       en: 'Devotees may contact the temple management for information about the celebration, lantern donations, and the tradition of borrowing symbolic ceremonial items.',
@@ -1074,18 +831,9 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       id: 'Informasi mengenai donasi lampion dapat diperoleh melalui pengurus Klenteng Tek Hay Bio. Ketentuan, biaya, dan mekanisme partisipasi perlu mengikuti informasi resmi yang berlaku.',
       en: 'Information about lantern donations is available from the management of Tek Hay Bio Temple. Any fees, conditions, and participation procedures must follow the temple\'s official arrangements.',
     },
-    requiredEquipment: {
-      id: 'Informasi belum tersedia; konfirmasi kepada pengurus.',
-      en: 'Information not available; confirm with the temple management.',
-    },
-    participationInstructions: {
-      id: 'Ikuti arahan pengurus dan tata tertib klenteng yang berlaku.',
-      en: 'Follow the temple management\'s guidance and applicable temple rules.',
-    },
-    contactInfo: {
-      id: 'Sekretariat Klenteng Tek Hay Bio atau narahubung resmi panitia; lengkapi kontak setelah dikonfirmasi.',
-      en: 'Tek Hay Bio Temple Secretariat or an official event contact; add contact details once confirmed.',
-    },
+    requiredEquipment: null,
+    participationInstructions: null,
+    contactInfo: null,
   },
 ]
 
@@ -1238,8 +986,15 @@ export async function importActivities(options: { dryRun?: boolean; force?: bool
         // Jika force === true, lakukan update yang aman
         console.log(`  🔄 Melakukan update dokumen yang sudah ada (ID: ${existingDoc.id})...`)
         if (!dryRun) {
-          const idData = extractLocalePayload(item, 'id')
-          const enData = extractLocalePayload(item, 'en')
+          const idData = {
+            ...extractLocalePayload(item, 'id'),
+            // Pertahankan status publikasi jika sudah published oleh admin
+            status: existingDoc.status || item.status,
+          }
+          const enData = {
+            ...extractLocalePayload(item, 'en'),
+            status: existingDoc.status || item.status,
+          }
 
           await payload.update({
             collection: 'activities',
@@ -1266,7 +1021,7 @@ export async function importActivities(options: { dryRun?: boolean; force?: bool
           slugId,
           slugEn,
           action: 'updated',
-          status: item.status,
+          status: existingDoc.status || item.status,
           id: existingDoc.id,
         })
         console.log(`  ✅ Berhasil diperbarui.`)

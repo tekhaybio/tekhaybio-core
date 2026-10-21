@@ -183,22 +183,22 @@ export async function ActivitiesListPage({
                             </span>
                           </div>
                         ) : lunarDate ? (
-                          <div className="absolute top-4 right-4 bg-amber-50/95 backdrop-blur-sm px-3 py-2 rounded-lg text-center shadow-md border border-amber-200">
-                            <span className="block text-[11px] font-bold text-amber-900 leading-tight">
+                          <div className="absolute top-4 right-4 bg-amber-100/95 backdrop-blur-sm px-3 py-2 rounded-lg text-center shadow-md border border-amber-300">
+                            <span className="block text-[11px] font-extrabold text-amber-950 leading-tight">
                               🌙 Imlek
                             </span>
                             {activity.lunarDay && activity.lunarMonth ? (
-                              <span className="block text-sm font-bold text-amber-700 mt-0.5">
+                              <span className="block text-sm font-bold text-amber-950 mt-0.5">
                                 {activity.lunarDay}/{activity.lunarMonth}
                               </span>
                             ) : (
-                              <span className="block text-[10px] font-medium text-amber-800 mt-0.5">
+                              <span className="block text-[10px] font-semibold text-amber-900 mt-0.5">
                                 Bulan {activity.lunarMonth || ''}
                               </span>
                             )}
                           </div>
                         ) : (
-                          <div className="absolute top-4 right-4 bg-stone-900/80 backdrop-blur-sm px-2.5 py-1.5 rounded-lg text-center shadow-md text-white text-xs font-medium">
+                          <div className="absolute top-4 right-4 bg-stone-900/90 backdrop-blur-sm px-2.5 py-1.5 rounded-lg text-center shadow-md text-white text-xs font-semibold">
                             {scheduleStatusObj.label[locale]}
                           </div>
                         )}
@@ -207,12 +207,12 @@ export async function ActivitiesListPage({
                       <div className="p-6 flex-1 flex flex-col space-y-3">
                         {/* Categories and Status Badges */}
                         <div className="flex flex-wrap items-center gap-2">
-                          <span className="px-2.5 py-1 bg-stone-100 text-stone-700 text-xs font-bold rounded uppercase tracking-wider">
+                          <span className="px-2.5 py-1 bg-stone-100 text-stone-800 text-xs font-bold rounded uppercase tracking-wider border border-stone-200">
                             {categoryLabel}
                           </span>
                           {activity.scheduleStatus && activity.scheduleStatus !== 'scheduled' && (
                             <span
-                              className={`px-2 py-0.5 text-[11px] font-medium rounded-full border ${scheduleStatusObj.badgeClass}`}
+                              className={`px-2 py-0.5 text-[11px] font-semibold rounded-full border shadow-xs ${scheduleStatusObj.badgeClass}`}
                             >
                               {scheduleStatusObj.label[locale]}
                             </span>
@@ -233,13 +233,13 @@ export async function ActivitiesListPage({
                             </div>
                           )}
                           {lunarDate && (
-                            <div className="flex items-center gap-1.5 text-amber-800">
+                            <div className="flex items-center gap-1.5 text-amber-900 font-medium">
                               <Moon className="w-3.5 h-3.5 text-amber-600 shrink-0" />
                               <span>{lunarDate}</span>
                             </div>
                           )}
                           {!gregorianDate && !lunarDate && (
-                            <div className="text-stone-400 italic">
+                            <div className="text-stone-600 font-medium italic">
                               {locale === 'id' ? 'Jadwal belum ditentukan' : 'Date to be announced'}
                             </div>
                           )}
@@ -247,7 +247,7 @@ export async function ActivitiesListPage({
 
                         {/* Related Deity / Figure */}
                         {Boolean(activity.relatedDeity) && (
-                          <div className="text-xs text-amber-700 flex items-center gap-1">
+                          <div className="text-xs text-amber-900 flex items-center gap-1">
                             <Sparkles className="w-3.5 h-3.5 text-amber-500 shrink-0" />
                             <span>{activity.relatedDeity as string}</span>
                           </div>
@@ -255,7 +255,7 @@ export async function ActivitiesListPage({
 
                         {/* Location */}
                         {Boolean(activity.location) && (
-                          <div className="text-xs text-stone-500 flex items-center gap-1 line-clamp-1">
+                          <div className="text-xs text-stone-600 flex items-center gap-1 line-clamp-1">
                             <MapPin className="w-3.5 h-3.5 text-stone-400 shrink-0" />
                             <span>{activity.location as string}</span>
                           </div>
@@ -263,8 +263,8 @@ export async function ActivitiesListPage({
 
                         {/* Reschedule alert notice if any */}
                         {activity.scheduleStatus === 'rescheduled' && Boolean(activity.rescheduledNote) && (
-                          <div className="p-2 bg-rose-50 rounded border border-rose-200 text-[11px] text-rose-700 flex items-start gap-1.5">
-                            <AlertCircle className="w-3.5 h-3.5 text-rose-600 shrink-0 mt-0.5" />
+                          <div className="p-2 bg-rose-50 rounded border border-rose-300 text-[11px] text-rose-950 font-medium flex items-start gap-1.5">
+                            <AlertCircle className="w-3.5 h-3.5 text-rose-700 shrink-0 mt-0.5" />
                             <span className="line-clamp-2">{activity.rescheduledNote}</span>
                           </div>
                         )}

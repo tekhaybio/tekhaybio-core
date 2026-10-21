@@ -112,7 +112,7 @@ export async function ActivityDetailPage({ locale, slug }: { locale: 'id' | 'en'
                 {recurrenceLabel}
               </span>
               <span
-                className={`px-3 py-1 font-medium rounded border ${scheduleStatusObj.badgeClass}`}
+                className={`px-3 py-1 font-semibold rounded shadow-sm border ${scheduleStatusObj.badgeClass}`}
               >
                 {scheduleStatusObj.label[locale]}
               </span>
@@ -164,13 +164,13 @@ export async function ActivityDetailPage({ locale, slug }: { locale: 'id' | 'en'
             <div className="lg:col-span-2 space-y-10">
               {/* Rescheduled Alert if present */}
               {activity.scheduleStatus === 'rescheduled' && (
-                <div className="p-4 bg-rose-50 border border-rose-200 rounded-xl text-rose-800 text-sm flex items-start gap-3">
-                  <AlertCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
+                <div className="p-4 bg-rose-50 border border-rose-300 rounded-xl text-rose-950 text-sm flex items-start gap-3">
+                  <AlertCircle className="w-5 h-5 text-rose-700 shrink-0 mt-0.5" />
                   <div className="space-y-1">
-                    <div className="font-bold">
+                    <div className="font-bold text-rose-950">
                       {locale === 'id' ? 'Pemberitahuan Perubahan Jadwal' : 'Schedule Change Notice'}
                     </div>
-                    <p className="text-rose-700">
+                    <p className="text-rose-900">
                       {activity.rescheduledNote ||
                         (locale === 'id'
                           ? 'Kegiatan ini telah mengalami penyesuaian jadwal dari ketetapan sebelumnya.'
@@ -182,13 +182,13 @@ export async function ActivityDetailPage({ locale, slug }: { locale: 'id' | 'en'
 
               {/* Tentative Schedule Note if present */}
               {activity.scheduleStatus === 'tentative' && (
-                <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl text-amber-900 text-sm flex items-start gap-3">
-                  <Clock className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+                <div className="p-4 bg-amber-50 border border-amber-300 rounded-xl text-amber-950 text-sm flex items-start gap-3">
+                  <Clock className="w-5 h-5 text-amber-700 shrink-0 mt-0.5" />
                   <div className="space-y-1">
-                    <div className="font-bold">
+                    <div className="font-bold text-amber-950">
                       {locale === 'id' ? 'Jadwal Masih Perkiraan / Tentatif' : 'Tentative Schedule'}
                     </div>
-                    <p className="text-amber-800">
+                    <p className="text-amber-900">
                       {activity.scheduleNote ||
                         (locale === 'id'
                           ? 'Tanggal pelaksanaan masih menunggu kepastian atau musyawarah pengurus klenteng.'
@@ -360,7 +360,7 @@ export async function ActivityDetailPage({ locale, slug }: { locale: 'id' | 'en'
                 {/* Calendar Schedule */}
                 <div className="space-y-3 text-sm">
                   <div>
-                    <div className="text-xs uppercase font-bold tracking-wider text-stone-400 mb-1">
+                    <div className="text-xs uppercase font-bold tracking-wider text-stone-600 mb-1">
                       {locale === 'id' ? 'Kalender Masehi' : 'Gregorian Calendar'}
                     </div>
                     {gregorianDate ? (
@@ -369,39 +369,39 @@ export async function ActivityDetailPage({ locale, slug }: { locale: 'id' | 'en'
                         <span>{gregorianDate}</span>
                       </div>
                     ) : (
-                      <div className="text-stone-400 italic text-xs">
+                      <div className="text-stone-500 italic text-xs">
                         {locale === 'id' ? 'Belum ditentukan' : 'To be confirmed'}
                       </div>
                     )}
                   </div>
 
                   <div>
-                    <div className="text-xs uppercase font-bold tracking-wider text-stone-400 mb-1">
+                    <div className="text-xs uppercase font-bold tracking-wider text-stone-600 mb-1">
                       {locale === 'id' ? 'Kalender Imlek (Lunar)' : 'Lunar Calendar'}
                     </div>
                     {lunarDate ? (
-                      <div className="font-medium text-amber-800 flex items-start gap-2">
+                      <div className="font-medium text-amber-900 flex items-start gap-2">
                         <Moon className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
                         <span>{lunarDate}</span>
                       </div>
                     ) : (
-                      <div className="text-stone-400 italic text-xs">-</div>
+                      <div className="text-stone-500 italic text-xs">-</div>
                     )}
                   </div>
 
                   <div>
-                    <div className="text-xs uppercase font-bold tracking-wider text-stone-400 mb-1">
+                    <div className="text-xs uppercase font-bold tracking-wider text-stone-600 mb-1">
                       {locale === 'id' ? 'Status Jadwal' : 'Schedule Status'}
                     </div>
                     <span
-                      className={`inline-block px-2.5 py-1 text-xs font-medium rounded-full border ${scheduleStatusObj.badgeClass}`}
+                      className={`inline-block px-2.5 py-1 text-xs font-semibold rounded-full border shadow-xs ${scheduleStatusObj.badgeClass}`}
                     >
                       {scheduleStatusObj.label[locale]}
                     </span>
                   </div>
 
                   <div>
-                    <div className="text-xs uppercase font-bold tracking-wider text-stone-400 mb-1">
+                    <div className="text-xs uppercase font-bold tracking-wider text-stone-600 mb-1">
                       {locale === 'id' ? 'Pola Pengulangan' : 'Recurrence'}
                     </div>
                     <div className="text-stone-700 text-xs font-medium">{recurrenceLabel}</div>
@@ -410,7 +410,7 @@ export async function ActivityDetailPage({ locale, slug }: { locale: 'id' | 'en'
 
                 <div className="border-t border-stone-100 pt-4 space-y-3">
                   <div>
-                    <div className="text-xs uppercase font-bold tracking-wider text-stone-400 mb-1">
+                    <div className="text-xs uppercase font-bold tracking-wider text-stone-600 mb-1">
                       {locale === 'id' ? 'Lokasi Pelaksanaan' : 'Location'}
                     </div>
                     <div className="font-medium text-stone-900 flex items-start gap-2 text-sm">
@@ -418,12 +418,12 @@ export async function ActivityDetailPage({ locale, slug }: { locale: 'id' | 'en'
                       <div>
                         <div>{activity.location || 'Klenteng Tek Hay Bio, Semarang'}</div>
                         {Boolean(activity.locationAddress) && (
-                          <div className="text-xs text-stone-500 mt-1 font-normal">
+                          <div className="text-xs text-stone-600 mt-1 font-normal">
                             {activity.locationAddress as string}
                           </div>
                         )}
                         {Boolean(activity.locationRelationship) && (
-                          <div className="text-xs text-stone-600 mt-1 italic font-normal bg-stone-50 p-2 rounded border border-stone-200">
+                          <div className="text-xs text-stone-700 mt-1 italic font-normal bg-stone-50 p-2 rounded border border-stone-200">
                             {activity.locationRelationship as string}
                           </div>
                         )}
@@ -433,15 +433,15 @@ export async function ActivityDetailPage({ locale, slug }: { locale: 'id' | 'en'
 
                   {Boolean(activity.relatedDeity) && (
                     <div>
-                      <div className="text-xs uppercase font-bold tracking-wider text-stone-400 mb-1">
+                      <div className="text-xs uppercase font-bold tracking-wider text-stone-600 mb-1">
                         {locale === 'id' ? 'Dewa / Tokoh Terkait' : 'Related Deity'}
                       </div>
-                      <div className="font-medium text-amber-800 text-sm flex items-center gap-1.5">
+                      <div className="font-medium text-amber-900 text-sm flex items-center gap-1.5">
                         <Sparkles className="w-4 h-4 text-amber-500 shrink-0" />
                         <span>{activity.relatedDeity as string}</span>
                       </div>
                       {Boolean(activity.deityRole) && (
-                        <div className="text-xs text-stone-500 mt-0.5">
+                        <div className="text-xs text-stone-600 mt-0.5">
                           {activity.deityRole as string}
                         </div>
                       )}

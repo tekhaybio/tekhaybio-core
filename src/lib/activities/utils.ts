@@ -52,22 +52,22 @@ export const ACTIVITY_SCHEDULE_STATUSES: {
   {
     value: 'scheduled',
     label: { id: 'Jadwal Ditetapkan', en: 'Scheduled' },
-    badgeClass: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    badgeClass: 'bg-emerald-100 text-emerald-950 border-emerald-300 font-semibold',
   },
   {
     value: 'tentative',
     label: { id: 'Perkiraan / Menunggu Konfirmasi', en: 'Tentative / Pending' },
-    badgeClass: 'bg-amber-50 text-amber-700 border-amber-200',
+    badgeClass: 'bg-amber-100 text-amber-950 border-amber-300 font-semibold',
   },
   {
     value: 'rescheduled',
     label: { id: 'Jadwal Diubah', en: 'Rescheduled' },
-    badgeClass: 'bg-rose-50 text-rose-700 border-rose-200',
+    badgeClass: 'bg-rose-100 text-rose-950 border-rose-300 font-semibold',
   },
   {
     value: 'unscheduled',
     label: { id: 'Belum Ditentukan', en: 'Unscheduled' },
-    badgeClass: 'bg-stone-100 text-stone-700 border-stone-200',
+    badgeClass: 'bg-stone-200 text-stone-900 border-stone-300 font-semibold',
   },
 ]
 
@@ -104,7 +104,7 @@ export function getActivityScheduleStatus(status?: string | null, locale: 'id' |
   return match || {
     value: 'scheduled' as ActivityScheduleStatus,
     label: { id: 'Jadwal Ditetapkan', en: 'Scheduled' },
-    badgeClass: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    badgeClass: 'bg-emerald-100 text-emerald-950 border-emerald-300 font-semibold',
   }
 }
 
