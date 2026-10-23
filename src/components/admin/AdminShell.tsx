@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import {
@@ -30,6 +30,11 @@ export function AdminShell({ children, user }: { children: React.ReactNode; user
   const pathname = usePathname()
   const router = useRouter()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+  // Auto-close mobile/tablet drawer on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false)
+  }, [pathname])
 
   if (pathname === '/admin/login') {
     return <AdminFeedbackProvider>{children}</AdminFeedbackProvider>
@@ -213,9 +218,9 @@ export function AdminShell({ children, user }: { children: React.ReactNode; user
   return (
     <AdminFeedbackProvider>
       <div className="fixed inset-0 flex overflow-hidden bg-stone-50 text-stone-900 font-sans">
-        {/* Mobile Drawer (Dialog Overlay) */}
+        {/* Mobile & Tablet Drawer (Dialog Overlay for < 1024px) */}
         {isMobileMenuOpen && (
-          <div className="fixed inset-0 z-50 md:hidden flex">
+          <div className="fixed inset-0 z-50 lg:hidden flex">
             {/* Backdrop */}
             <div
               className="fixed inset-0 bg-stone-950/50 backdrop-blur-xs transition-opacity"
@@ -228,15 +233,15 @@ export function AdminShell({ children, user }: { children: React.ReactNode; user
           </div>
         )}
 
-        {/* Desktop Sidebar (Permanent, 100% viewport height, independent nav scroll) */}
-        <aside className="hidden md:flex md:w-64 md:flex-col md:shrink-0 h-full border-r border-stone-200 bg-white">
+        {/* Desktop Sidebar (Permanent on >= 1024px, 100% viewport height, independent nav scroll) */}
+        <aside className="hidden lg:flex lg:w-64 lg:flex-col lg:shrink-0 h-full border-r border-stone-200 bg-white">
           <SidebarContent />
         </aside>
 
         {/* Main Content Area (Header + Scrollable Main Workspace) */}
         <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
-          {/* Mobile Top Header */}
-          <div className="md:hidden h-14 bg-white border-b border-stone-200 flex items-center justify-between px-4 shrink-0 shadow-2xs">
+          {/* Mobile & Tablet Top Header (< 1024px) */}
+          <div className="lg:hidden h-14 bg-white border-b border-stone-200 flex items-center justify-between px-4 shrink-0 shadow-2xs">
             <div className="flex items-center gap-2">
               <div className="w-7 h-7 rounded-md bg-stone-900 text-amber-300 font-serif font-bold text-xs flex items-center justify-center">
                 德
@@ -252,8 +257,8 @@ export function AdminShell({ children, user }: { children: React.ReactNode; user
             </button>
           </div>
 
-          {/* Desktop Top Header Bar */}
-          <header className="hidden md:flex h-16 bg-white border-b border-stone-200 items-center justify-between px-8 shrink-0">
+          {/* Desktop Top Header Bar (>= 1024px) */}
+          <header className="hidden lg:flex h-16 bg-white border-b border-stone-200 items-center justify-between px-8 shrink-0">
             {/* Breadcrumb / Title Context */}
             <div className="flex items-center gap-2 text-xs text-stone-600 font-medium">
               <Link href="/admin" className="hover:text-stone-900">
