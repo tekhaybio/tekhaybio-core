@@ -8,9 +8,11 @@ import { saveNewsAction, deleteNewsAction } from '@/app/(admin)/admin/berita/act
 import { LexicalEditor } from '@/components/admin/LexicalEditor'
 import { MediaPicker } from '@/components/admin/MediaPicker'
 import { LocaleTabs } from '@/components/admin/LocaleTabs'
+import { useAdminFeedback } from '@/components/admin/AdminFeedbackContext'
 
 export function NewsForm({ initialData }: { initialData?: any }) {
   const router = useRouter()
+  const { toast, confirm } = useAdminFeedback()
   const [activeTab, setActiveTab] = useState<'id' | 'en'>('id')
   const [isSaving, setIsSaving] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
@@ -117,14 +119,20 @@ if (submitData.featuredImage && submitData.featuredImage.id) submitData.featured
 
   const handleDelete = async () => {
     if (!initialData?.id) return
-    if (!confirm('Hapus berita? Tindakan ini tidak dapat dibatalkan.')) return
+    const ok = await confirm({
+      title: 'Hapus Berita',
+      message: 'Apakah Anda yakin ingin menghapus artikel berita ini? Tindakan ini tidak dapat dibatalkan.',
+      confirmText: 'Ya, Hapus',
+      isDanger: true,
+    })
+    if (!ok) return
     
     setIsDeleting(true)
     const res = await deleteNewsAction(initialData.id)
     if (res.success) {
       router.push('/admin/berita')
     } else {
-      alert('Gagal menghapus berita: ' + res.error)
+      toast.error('Gagal menghapus berita: ' + (res.error || 'Kesalahan sistem'))
       setIsDeleting(false)
     }
   }

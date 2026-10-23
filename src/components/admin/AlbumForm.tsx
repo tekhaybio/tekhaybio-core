@@ -12,6 +12,7 @@ import {
   updateMediaAction,
 } from '@/app/(admin)/admin/galeri/actions'
 import { LocaleTabs } from '@/components/admin/LocaleTabs'
+import { useAdminFeedback } from '@/components/admin/AdminFeedbackContext'
 import { MediaPicker } from '@/components/admin/MediaPicker'
 import { BulkMediaUploader } from '@/components/admin/BulkMediaUploader'
 import { ALBUM_CATEGORIES, isMediaVideo } from '@/lib/gallery/utils'
@@ -32,6 +33,7 @@ import {
 
 export function AlbumForm({ initialData }: { initialData?: any }) {
   const router = useRouter()
+  const { toast, confirm } = useAdminFeedback()
   const [activeTab, setActiveTab] = useState<'id' | 'en'>('id')
   const [isSaving, setIsSaving] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
@@ -142,10 +144,15 @@ export function AlbumForm({ initialData }: { initialData?: any }) {
     const mediaId = typeof item.media === 'object' ? item.media?.id : item.media
 
     if (initialData?.id && mediaId) {
-      if (!confirm('Keluarkan media ini dari album? File fisik di Pusat Media TIDAK akan dihapus.')) return
+      const ok = await confirm({
+        title: 'Keluarkan Media dari Album',
+        message: 'Keluarkan media ini dari album? File fisik di Pusat Media TIDAK akan dihapus.',
+        confirmText: 'Keluarkan',
+      })
+      if (!ok) return
       const res = await removeMediaFromAlbumAction(initialData.id, mediaId)
       if (!res.success) {
-        alert('Gagal mengeluarkan media: ' + res.error)
+        toast.error('Gagal mengeluarkan media: ' + (res.error || 'Kesalahan sistem'))
         return
       }
     }
@@ -157,14 +164,20 @@ export function AlbumForm({ initialData }: { initialData?: any }) {
     const item = mediaItems[index]
     const mediaId = typeof item.media === 'object' ? item.media?.id : item.media
 
-    if (!confirm('Hapus file media ini secara permanen dari server?\n\nTindakan ini tidak dapat dibatalkan.')) return
+    const ok = await confirm({
+      title: 'Hapus Media Permanen',
+      message: 'Hapus file media ini secara permanen dari server?\n\nTindakan ini tidak dapat dibatalkan.',
+      confirmText: 'Ya, Hapus Permanen',
+      isDanger: true,
+    })
+    if (!ok) return
 
     const res = await deleteMediaAction(mediaId, 'gallery-media')
     if (res.success) {
       setMediaItems((prev) => prev.filter((_, i) => i !== index))
-      alert('File berhasil dihapus permanen.')
+      toast.success('File media berhasil dihapus permanen.')
     } else {
-      alert(res.error)
+      toast.error('Gagal menghapus: ' + (res.error || 'Kesalahan sistem'))
     }
   }
 
@@ -273,15 +286,20 @@ export function AlbumForm({ initialData }: { initialData?: any }) {
 
   const handleDeleteAlbum = async () => {
     if (!initialData?.id) return
-    if (!confirm('Hapus album dokumentasi ini?\n\nFile foto dan video di dalamnya TIDAK akan dihapus dari Pusat Media.'))
-      return
+    const ok = await confirm({
+      title: 'Hapus Album Dokumentasi',
+      message: 'Hapus album dokumentasi ini?\n\nFile foto dan video di dalamnya TIDAK akan dihapus dari Pusat Media.',
+      confirmText: 'Ya, Hapus Album',
+      isDanger: true,
+    })
+    if (!ok) return
 
     setIsDeleting(true)
     const res = await deleteAlbumAction(initialData.id)
     if (res.success) {
       router.push('/admin/galeri')
     } else {
-      alert('Gagal menghapus album: ' + res.error)
+      toast.error('Gagal menghapus album: ' + (res.error || 'Kesalahan sistem'))
       setIsDeleting(false)
     }
   }

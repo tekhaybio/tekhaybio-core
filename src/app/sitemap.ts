@@ -11,14 +11,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/history', '/sejarah',
     '/services', '/layanan',
     '/activities', '/kegiatan',
+    '/ritual-calendar', '/kalender-ritual',
     '/news', '/berita',
     '/gallery', '/galeri',
     '/contact', '/kontak',
   ]
 
   return routes.flatMap((route) => {
-    // Determine locale from route if possible, or just generate for both /id and /en
-    // Since we mapped localized slugs directly, we can just prepend locale
     if (route === '') {
       return [
         { url: `${baseUrl}/id`, lastModified: new Date() },
@@ -26,8 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       ]
     }
     
-    // We already split route names above by their locales.
-    const isIndonesian = ['tentang-kami', 'sejarah', 'layanan', 'kegiatan', 'berita', 'galeri', 'kontak'].some(r => route.includes(r))
+    const isIndonesian = ['tentang-kami', 'sejarah', 'layanan', 'kegiatan', 'kalender-ritual', 'berita', 'galeri', 'kontak'].some(r => route.includes(r))
     const locale = isIndonesian ? 'id' : 'en'
 
     return {

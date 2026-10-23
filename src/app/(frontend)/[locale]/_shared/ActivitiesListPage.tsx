@@ -52,30 +52,30 @@ export async function ActivitiesListPage({
         }
       />
 
-      <Section className="bg-stone-50">
+      <Section className="bg-stone-50 py-12 md:py-16">
         <Container>
           {/* Calendar Banner Callout */}
-          <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-primary/10 via-amber-50/70 to-stone-50 border border-primary/20 rounded-2xl p-4 md:p-5">
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-primary text-white shrink-0 shadow-sm">
+          <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white border border-stone-200 rounded-lg p-5 shadow-2xs">
+            <div className="flex items-center gap-3.5">
+              <div className="p-2.5 rounded-md bg-stone-900 text-amber-300 shrink-0">
                 <Calendar className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-sm font-bold text-stone-900">
+                <h3 className="text-base font-serif font-bold text-stone-900">
                   {locale === 'id'
                     ? 'Kalender Ritual & Perayaan Klenteng'
                     : 'Temple Ritual & Celebration Calendar'}
                 </h3>
-                <p className="text-xs text-stone-600">
+                <p className="text-xs text-stone-600 mt-0.5">
                   {locale === 'id'
-                    ? 'Lihat kalender interaktif bulanan dan agenda ritual tahunan lengkap dengan konversi Imlek.'
+                    ? 'Lihat kalender interaktif bulanan dan agenda ritual tahunan lengkap dengan konversi penanggalan Imlek.'
                     : 'View interactive monthly calendar and annual schedule with lunar date conversions.'}
                 </p>
               </div>
             </div>
             <Link
               href={`/${locale}/${locale === 'id' ? 'kalender-ritual' : 'ritual-calendar'}`}
-              className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-primary text-white text-xs font-bold hover:bg-primary/90 transition-all shadow-sm shrink-0"
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-md bg-primary text-white text-xs font-bold hover:bg-primary/90 transition-all shadow-xs shrink-0"
             >
               <span>{locale === 'id' ? 'Buka Kalender Ritual' : 'Open Ritual Calendar'}</span>
               <span>→</span>
@@ -84,14 +84,14 @@ export async function ActivitiesListPage({
 
           {/* Category Filter Pills */}
           <div className="mb-10 flex flex-wrap items-center gap-2 border-b border-stone-200 pb-5">
-            <span className="text-xs font-bold uppercase tracking-wider text-stone-500 mr-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-stone-500 mr-2 font-serif">
               {locale === 'id' ? 'Kategori:' : 'Category:'}
             </span>
             <Link
               href={baseUrl}
               className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-colors ${
                 !category || category === 'all'
-                  ? 'bg-primary text-white shadow-sm'
+                  ? 'bg-primary text-white shadow-2xs'
                   : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'
               }`}
             >
@@ -106,7 +106,7 @@ export async function ActivitiesListPage({
                   href={filterUrl}
                   className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-colors ${
                     isActive
-                      ? 'bg-primary text-white shadow-sm'
+                      ? 'bg-primary text-white shadow-2xs'
                       : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'
                   }`}
                 >
@@ -117,7 +117,7 @@ export async function ActivitiesListPage({
           </div>
 
           {activities.length === 0 ? (
-            <div className="py-16 text-center text-stone-500 bg-white rounded-xl border border-stone-200 shadow-sm max-w-xl mx-auto space-y-3">
+            <div className="py-16 text-center text-stone-500 bg-white rounded-lg border border-stone-200 shadow-2xs max-w-xl mx-auto space-y-3 p-6">
               <Calendar className="w-10 h-10 text-stone-400 mx-auto" />
               <p className="text-base font-medium text-stone-700">
                 {locale === 'id' ? 'Belum ada agenda kegiatan pada kategori ini.' : 'No upcoming activities in this category.'}
@@ -147,13 +147,13 @@ export async function ActivitiesListPage({
                 baseUrl={category ? `${baseUrl}?category=${category}` : baseUrl}
               />
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {activities.map((activity: any) => {
+                {activities.map((activity: any, idx: number) => {
                   const gregorianDate = formatGregorianDateRange(activity.date, activity.endDate, locale)
                   const lunarDate = formatLunarDate(activity, locale)
                   const categoryLabel = getActivityCategoryLabel(activity.category, locale)
                   const scheduleStatusObj = getActivityScheduleStatus(activity.scheduleStatus, locale)
 
-                  // Date badge on image corner (never show fake date!)
+                  // Real Gregorian date or Lunar date badge (never fabricate a date)
                   const dateObj = activity.date ? new Date(activity.date) : null
                   const hasValidGregorian = dateObj && !isNaN(dateObj.getTime())
 
@@ -161,118 +161,111 @@ export async function ActivitiesListPage({
                     <Link
                       href={`/${locale}/${locale === 'id' ? 'kegiatan' : 'activities'}/${activity.slug}`}
                       key={activity.id as string}
-                      className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group flex flex-col border border-stone-200"
+                      className="bg-white rounded-md overflow-hidden shadow-2xs hover:shadow-sm transition-all group flex flex-col border border-stone-200"
                     >
-                      <div className="aspect-[4/3] relative bg-stone-100 overflow-hidden">
+                      <div className="aspect-[16/10] relative bg-stone-100 overflow-hidden">
                         <MediaImage
                           media={activity.featuredImage as CMSRecord}
                           fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          priority={idx === 0}
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          className="object-cover group-hover:scale-105 transition-transform duration-700"
                         />
 
-                        {/* Top-Right Badge: Real Gregorian date, Lunar badge, or Schedule Status */}
+                        {/* Top-Right Badge */}
                         {hasValidGregorian ? (
-                          <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm px-3 py-2 rounded-lg text-center shadow-md border border-stone-100">
-                            <span className="block text-2xl font-bold text-primary leading-none">
+                          <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-xs px-2.5 py-1.5 rounded text-center shadow-xs border border-stone-200">
+                            <span className="block text-xl font-bold text-primary leading-none font-serif">
                               {dateObj.getDate()}
                             </span>
-                            <span className="block text-[11px] font-bold text-stone-600 uppercase mt-1">
+                            <span className="block text-[10px] font-bold text-stone-600 uppercase mt-0.5">
                               {dateObj.toLocaleDateString(locale === 'id' ? 'id-ID' : 'en-US', {
                                 month: 'short',
                               })}
                             </span>
                           </div>
                         ) : lunarDate ? (
-                          <div className="absolute top-4 right-4 bg-amber-100/95 backdrop-blur-sm px-3 py-2 rounded-lg text-center shadow-md border border-amber-300">
-                            <span className="block text-[11px] font-extrabold text-amber-950 leading-tight">
+                          <div className="absolute top-3 right-3 bg-amber-50/95 backdrop-blur-xs px-2.5 py-1.5 rounded text-center shadow-xs border border-amber-300">
+                            <span className="block text-[10px] font-bold text-amber-900 leading-tight">
                               🌙 Imlek
                             </span>
                             {activity.lunarDay && activity.lunarMonth ? (
-                              <span className="block text-sm font-bold text-amber-950 mt-0.5">
+                              <span className="block text-xs font-bold text-amber-950 mt-0.5">
                                 {activity.lunarDay}/{activity.lunarMonth}
                               </span>
-                            ) : (
-                              <span className="block text-[10px] font-semibold text-amber-900 mt-0.5">
-                                Bulan {activity.lunarMonth || ''}
-                              </span>
-                            )}
+                            ) : null}
                           </div>
                         ) : (
-                          <div className="absolute top-4 right-4 bg-stone-900/90 backdrop-blur-sm px-2.5 py-1.5 rounded-lg text-center shadow-md text-white text-xs font-semibold">
+                          <div className="absolute top-3 right-3 bg-stone-900/90 backdrop-blur-xs px-2 py-1 rounded text-center shadow-xs text-white text-[11px] font-medium">
                             {scheduleStatusObj.label[locale]}
                           </div>
                         )}
                       </div>
 
-                      <div className="p-6 flex-1 flex flex-col space-y-3">
-                        {/* Categories and Status Badges */}
-                        <div className="flex flex-wrap items-center gap-2">
-                          <span className="px-2.5 py-1 bg-stone-100 text-stone-800 text-xs font-bold rounded uppercase tracking-wider border border-stone-200">
-                            {categoryLabel}
-                          </span>
-                          {activity.scheduleStatus && activity.scheduleStatus !== 'scheduled' && (
-                            <span
-                              className={`px-2 py-0.5 text-[11px] font-semibold rounded-full border shadow-xs ${scheduleStatusObj.badgeClass}`}
-                            >
-                              {scheduleStatusObj.label[locale]}
+                      <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
+                        <div className="space-y-3">
+                          {/* Category and Status */}
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className="px-2 py-0.5 bg-stone-100 text-stone-700 text-[11px] font-semibold rounded uppercase tracking-wider border border-stone-200">
+                              {categoryLabel}
                             </span>
+                            {activity.scheduleStatus && activity.scheduleStatus !== 'scheduled' && (
+                              <span
+                                className={`px-2 py-0.5 text-[11px] font-medium rounded border ${scheduleStatusObj.badgeClass}`}
+                              >
+                                {scheduleStatusObj.label[locale]}
+                              </span>
+                            )}
+                          </div>
+
+                          {/* Title */}
+                          <h2 className="font-serif font-bold text-xl text-stone-900 group-hover:text-primary transition-colors line-clamp-2 leading-snug">
+                            {activity.title as string}
+                          </h2>
+
+                          {/* Date & Schedule */}
+                          <div className="space-y-1 text-xs text-stone-600">
+                            {gregorianDate && (
+                              <div className="flex items-center gap-1.5 font-medium text-stone-800">
+                                <Calendar className="w-3.5 h-3.5 text-primary shrink-0" />
+                                <span>{gregorianDate}</span>
+                              </div>
+                            )}
+                            {lunarDate && (
+                              <div className="flex items-center gap-1.5 text-amber-900 font-medium">
+                                <Moon className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                                <span>{lunarDate}</span>
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Deity & Location */}
+                          {(Boolean(activity.relatedDeity) || Boolean(activity.location)) && (
+                            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-stone-500 pt-0.5">
+                              {Boolean(activity.relatedDeity) && (
+                                <span className="inline-flex items-center gap-1 text-amber-800">
+                                  <Sparkles className="w-3 h-3 text-amber-500" />
+                                  <span>{activity.relatedDeity as string}</span>
+                                </span>
+                              )}
+                              {Boolean(activity.location) && (
+                                <span className="inline-flex items-center gap-1 line-clamp-1">
+                                  <MapPin className="w-3 h-3 text-stone-400" />
+                                  <span>{activity.location as string}</span>
+                                </span>
+                              )}
+                            </div>
                           )}
+
+                          {/* Excerpt */}
+                          <p className="text-stone-600 text-sm leading-relaxed line-clamp-2 pt-1">
+                            {activity.shortDescription as string}
+                          </p>
                         </div>
 
-                        {/* Title */}
-                        <h2 className="text-xl font-bold text-stone-900 group-hover:text-primary transition-colors line-clamp-2">
-                          {activity.title as string}
-                        </h2>
-
-                        {/* Schedule & Date Rows */}
-                        <div className="space-y-1.5 text-xs text-stone-600">
-                          {gregorianDate && (
-                            <div className="flex items-center gap-1.5 font-medium text-stone-700">
-                              <Calendar className="w-3.5 h-3.5 text-primary shrink-0" />
-                              <span>{gregorianDate}</span>
-                            </div>
-                          )}
-                          {lunarDate && (
-                            <div className="flex items-center gap-1.5 text-amber-900 font-medium">
-                              <Moon className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                              <span>{lunarDate}</span>
-                            </div>
-                          )}
-                          {!gregorianDate && !lunarDate && (
-                            <div className="text-stone-600 font-medium italic">
-                              {locale === 'id' ? 'Jadwal belum ditentukan' : 'Date to be announced'}
-                            </div>
-                          )}
+                        <div className="pt-3 border-t border-stone-100 text-xs font-semibold text-primary group-hover:underline">
+                          {locale === 'id' ? 'Lihat Detail & Panduan Ritual' : 'View Ritual Details & Guide'} →
                         </div>
-
-                        {/* Related Deity / Figure */}
-                        {Boolean(activity.relatedDeity) && (
-                          <div className="text-xs text-amber-900 flex items-center gap-1">
-                            <Sparkles className="w-3.5 h-3.5 text-amber-500 shrink-0" />
-                            <span>{activity.relatedDeity as string}</span>
-                          </div>
-                        )}
-
-                        {/* Location */}
-                        {Boolean(activity.location) && (
-                          <div className="text-xs text-stone-600 flex items-center gap-1 line-clamp-1">
-                            <MapPin className="w-3.5 h-3.5 text-stone-400 shrink-0" />
-                            <span>{activity.location as string}</span>
-                          </div>
-                        )}
-
-                        {/* Reschedule alert notice if any */}
-                        {activity.scheduleStatus === 'rescheduled' && Boolean(activity.rescheduledNote) && (
-                          <div className="p-2 bg-rose-50 rounded border border-rose-300 text-[11px] text-rose-950 font-medium flex items-start gap-1.5">
-                            <AlertCircle className="w-3.5 h-3.5 text-rose-700 shrink-0 mt-0.5" />
-                            <span className="line-clamp-2">{activity.rescheduledNote}</span>
-                          </div>
-                        )}
-
-                        {/* Excerpt */}
-                        <p className="text-stone-600 line-clamp-2 flex-1 text-sm pt-1">
-                          {activity.shortDescription as string}
-                        </p>
                       </div>
                     </Link>
                   )

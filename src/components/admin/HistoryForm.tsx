@@ -8,9 +8,11 @@ import { saveGlobalAction } from '@/app/(admin)/admin/actions'
 import { LexicalEditor } from '@/components/admin/LexicalEditor'
 import { MediaPicker } from '@/components/admin/MediaPicker'
 import { LocaleTabs } from '@/components/admin/LocaleTabs'
+import { useAdminFeedback } from '@/components/admin/AdminFeedbackContext'
 
 export function HistoryForm({ initialData }: { initialData?: any }) {
   const router = useRouter()
+  const { toast, confirm } = useAdminFeedback()
   const [activeTab, setActiveTab] = useState<'id' | 'en'>('id')
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState('')
@@ -75,7 +77,14 @@ export function HistoryForm({ initialData }: { initialData?: any }) {
     })
   }
 
-  const removeTimelineItem = (index: number) => {
+  const removeTimelineItem = async (index: number) => {
+    const ok = await confirm({
+      title: 'Hapus Momen Linimasa',
+      message: 'Apakah Anda yakin ingin menghapus catatan sejarah ini dari linimasa?',
+      confirmText: 'Ya, Hapus',
+      isDanger: true,
+    })
+    if (!ok) return
     setTimeline(prev => {
       const arr = [...prev]
       arr.splice(index, 1)
@@ -100,7 +109,7 @@ export function HistoryForm({ initialData }: { initialData?: any }) {
     
     setIsSaving(false)
     if (res.success) {
-      alert('Sejarah berhasil disimpan.')
+      toast.success('Informasi sejarah dan linimasa berhasil diperbarui.')
       router.refresh()
     } else {
       setError(res.error || 'Terjadi kesalahan.')

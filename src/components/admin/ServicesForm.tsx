@@ -8,9 +8,11 @@ import { saveServiceAction, deleteServiceAction } from '@/app/(admin)/admin/laya
 import { LexicalEditor } from '@/components/admin/LexicalEditor'
 import { MediaPicker } from '@/components/admin/MediaPicker'
 import { LocaleTabs } from '@/components/admin/LocaleTabs'
+import { useAdminFeedback } from '@/components/admin/AdminFeedbackContext'
 
 export function ServicesForm({ initialData }: { initialData?: any }) {
   const router = useRouter()
+  const { toast, confirm } = useAdminFeedback()
   const [activeTab, setActiveTab] = useState<'id' | 'en'>('id')
   const [isSaving, setIsSaving] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
@@ -98,14 +100,20 @@ if (submitData.image && submitData.image.id) submitData.image = submitData.image
 
   const handleDelete = async () => {
     if (!initialData?.id) return
-    if (!confirm('Hapus layanan? Tindakan ini tidak dapat dibatalkan.')) return
+    const ok = await confirm({
+      title: 'Hapus Layanan',
+      message: 'Apakah Anda yakin ingin menghapus layanan ini? Tindakan ini tidak dapat dibatalkan.',
+      confirmText: 'Ya, Hapus',
+      isDanger: true,
+    })
+    if (!ok) return
     
     setIsDeleting(true)
     const res = await deleteServiceAction(initialData.id)
     if (res.success) {
       router.push('/admin/layanan')
     } else {
-      alert('Gagal menghapus layanan: ' + res.error)
+      toast.error('Gagal menghapus layanan: ' + (res.error || 'Kesalahan sistem'))
       setIsDeleting(false)
     }
   }

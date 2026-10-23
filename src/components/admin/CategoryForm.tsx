@@ -4,9 +4,11 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { LocaleTabs } from '@/components/admin/LocaleTabs'
+import { useAdminFeedback } from '@/components/admin/AdminFeedbackContext'
 
 export function CategoryForm({ initialData }: { initialData?: any }) {
   const router = useRouter()
+  const { toast, confirm } = useAdminFeedback()
   const [activeTab, setActiveTab] = useState<'id' | 'en'>('id')
   const [isSaving, setIsSaving] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
@@ -74,7 +76,13 @@ export function CategoryForm({ initialData }: { initialData?: any }) {
 
   const handleDelete = async () => {
     if (!initialData?.id) return
-    if (!confirm('Hapus kategori ini? Tindakan ini tidak dapat dibatalkan.')) return
+    const ok = await confirm({
+      title: 'Hapus Kategori Berita',
+      message: 'Apakah Anda yakin ingin menghapus kategori berita ini? Tindakan ini tidak dapat dibatalkan.',
+      confirmText: 'Ya, Hapus',
+      isDanger: true,
+    })
+    if (!ok) return
     
     setIsDeleting(true)
     try {
@@ -83,7 +91,7 @@ export function CategoryForm({ initialData }: { initialData?: any }) {
       router.push('/admin/kategori-berita')
       router.refresh()
     } catch (err: any) {
-      alert(err.message)
+      toast.error('Gagal menghapus kategori: ' + (err.message || 'Kesalahan sistem'))
       setIsDeleting(false)
     }
   }

@@ -28,14 +28,14 @@ export default async function EditAlbumPage({ params }: { params: Promise<{ id: 
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-slate-900">Kelola Album Dokumentasi</h1>
-            <p className="text-sm text-slate-500">
+            <h1 className="text-2xl font-serif font-bold text-stone-900 tracking-tight">Kelola Album Dokumentasi</h1>
+            <p className="text-xs text-stone-500 mt-0.5">
               Edit informasi album, unggah media secara massal, atau atur urutan tampilan foto dan video.
             </p>
           </div>
           <Link
             href="/admin/galeri"
-            className="text-xs font-medium text-slate-600 hover:text-slate-900 px-3.5 py-2 rounded-lg border border-slate-200 hover:bg-slate-50"
+            className="text-xs font-semibold text-stone-700 hover:text-stone-900 px-3.5 py-2 rounded-lg border border-stone-200 hover:bg-stone-100 transition-colors shadow-2xs"
           >
             ← Kembali ke Daftar Album
           </Link>

@@ -11,6 +11,7 @@ import { DeleteActionClient } from '@/components/admin/DeleteActionClient'
 import { BulkDeleteProvider, BulkDeleteCheckbox, BulkDeleteSelectAll, BulkDeleteButton } from '@/components/admin/BulkDelete'
 import { deleteAlbumAction, deleteManyAlbumAction } from './actions'
 import { AdminPagination } from '@/components/admin/AdminPagination'
+import { AdminTableFilter } from '@/components/admin/AdminTableFilter'
 import { GalleryUploader } from '@/components/admin/GalleryUploader'
 import { getAlbumCategoryLabel, formatEventDateRange, countAlbumMedia } from '@/lib/gallery/utils'
 
@@ -28,13 +29,24 @@ const mediaCollections = [
 export default async function GalleryAdminPage({
   searchParams,
 }: {
-  searchParams: Promise<{ tab?: string; collection?: string; page?: string; limit?: string }>
+  searchParams: Promise<{
+    tab?: string
+    collection?: string
+    page?: string
+    limit?: string
+    q?: string
+    category?: string
+    status?: string
+  }>
 }) {
   const params = await searchParams
   const activeTab = params.tab || 'albums'
   const activeCollection = params.collection || 'gallery-media'
   const page = parseInt(params.page || '1', 10)
   const limit = parseInt(params.limit || '10', 10)
+  const q = params.q?.trim() || ''
+  const category = params.category?.trim() || ''
+  const status = params.status?.trim() || ''
 
   const payload = await getPayload({ config: configPromise })
   const { user } = await payload.auth({ headers: await headers() })
@@ -53,29 +65,29 @@ export default async function GalleryAdminPage({
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-slate-900">Pusat Media Terpusat</h1>
-            <p className="text-sm text-slate-500">
-              Kelola seluruh file media fisik dari berbagai kategori konten.
+            <h1 className="text-2xl font-serif font-bold text-stone-900 tracking-tight">Pusat Media Terpusat</h1>
+            <p className="text-xs text-stone-500 mt-0.5">
+              Kelola seluruh file media fisik dari berbagai kategori konten klenteng.
             </p>
           </div>
           <Link
             href="/admin/galeri"
-            className="inline-flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-md hover:bg-slate-800 text-sm font-medium shrink-0"
+            className="inline-flex items-center gap-2 bg-stone-900 text-white px-4 py-2 rounded-lg hover:bg-stone-800 text-xs font-semibold shrink-0 transition-colors shadow-2xs"
           >
-            ← Kembali ke Daftar Album
+            &larr; Kembali ke Daftar Album
           </Link>
         </div>
 
         {/* Tab Sub-collections */}
-        <div className="flex gap-2 border-b border-slate-200 pb-2 overflow-x-auto">
+        <div className="flex gap-2 border-b border-stone-200 pb-2 overflow-x-auto">
           {mediaCollections.map((c) => (
             <Link
               key={c.id}
               href={`/admin/galeri?tab=media&collection=${c.id}`}
-              className={`px-4 py-2 text-sm font-medium rounded-t-lg transition-colors whitespace-nowrap ${
+              className={`px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-colors whitespace-nowrap ${
                 activeCollection === c.id
-                  ? 'bg-slate-900 text-white'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  ? 'bg-stone-900 text-white shadow-2xs'
+                  : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
               }`}
             >
               {c.label}
@@ -103,8 +115,20 @@ export default async function GalleryAdminPage({
   }
 
   // Active Tab: ALBUMS
+  const where: any = {}
+  if (q) {
+    where.title = { contains: q }
+  }
+  if (category && category !== 'all') {
+    where.category = { equals: category }
+  }
+  if (status && status !== 'all') {
+    where.status = { equals: status }
+  }
+
   const albumData = await payload.find({
     collection: 'albums',
+    where: Object.keys(where).length > 0 ? where : undefined,
     sort: '-createdAt',
     limit: limit,
     page: page,
@@ -112,69 +136,94 @@ export default async function GalleryAdminPage({
     locale: 'id',
   })
 
+  // Construct base query url for pagination
+  const baseParams = new URLSearchParams()
+  if (q) baseParams.set('q', q)
+  if (category && category !== 'all') baseParams.set('category', category)
+  if (status && status !== 'all') baseParams.set('status', status)
+  const baseUrl = `/admin/galeri${baseParams.toString() ? `?${baseParams.toString()}` : ''}`
+
   return (
     <BulkDeleteProvider>
       <div className="space-y-6">
         {/* Top Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-slate-900">Galeri & Dokumentasi Album</h1>
-            <p className="text-sm text-slate-500">
+            <h1 className="text-2xl font-serif font-bold text-stone-900 tracking-tight">Galeri &amp; Dokumentasi Album</h1>
+            <p className="text-xs text-stone-500 mt-0.5">
               Kelola album dokumentasi acara, upacara ritual, foto, dan video Klenteng Tek Hay Bio.
             </p>
           </div>
 
           <div className="flex items-center gap-2">
-            <BulkDeleteButton action={deleteManyAlbumAction} />
+            <BulkDeleteButton action={deleteManyAlbumAction} itemName="album" />
             <Link
               href="/admin/galeri/tambah"
-              className="inline-flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-md hover:bg-slate-800 text-sm font-medium shrink-0"
+              className="inline-flex items-center gap-1.5 bg-primary hover:bg-primary-hover text-white px-3.5 py-2 rounded-lg text-xs font-semibold shrink-0 transition-colors shadow-2xs"
             >
-              <Plus className="w-4 h-4" /> Buat Album Baru
+              <Plus className="w-4 h-4" />
+              <span>Buat Album Baru</span>
             </Link>
           </div>
         </div>
 
         {/* Navigation Tabs */}
-        <div className="flex gap-2 border-b border-slate-200 pb-2">
+        <div className="flex gap-2 border-b border-stone-200 pb-2">
           <Link
             href="/admin/galeri"
-            className="px-4 py-2 text-sm font-medium rounded-t-lg bg-slate-900 text-white flex items-center gap-1.5"
+            className="px-4 py-2 text-xs font-semibold rounded-t-lg bg-stone-900 text-white flex items-center gap-1.5 shadow-2xs"
           >
-            <Layers className="w-4 h-4" /> Album Dokumentasi
+            <Layers className="w-4 h-4" />
+            <span>Album Dokumentasi</span>
           </Link>
           <Link
             href="/admin/galeri?tab=media"
-            className="px-4 py-2 text-sm font-medium rounded-t-lg bg-slate-100 text-slate-600 hover:bg-slate-200 flex items-center gap-1.5"
+            className="px-4 py-2 text-xs font-semibold rounded-t-lg bg-stone-100 text-stone-600 hover:bg-stone-200 flex items-center gap-1.5 transition-colors"
           >
-            <ImageIcon className="w-4 h-4" /> Pusat File Media
+            <ImageIcon className="w-4 h-4" />
+            <span>Pusat File Media</span>
           </Link>
         </div>
 
+        {/* Filters */}
+        <AdminTableFilter
+          searchPlaceholder="Cari judul album dokumentasi..."
+          initialQuery={q || ''}
+          initialCategory={category || 'all'}
+          initialStatus={status || 'all'}
+          categories={[
+            { label: 'Ritual Keagamaan', value: 'ritual' },
+            { label: 'Sembahyang Leluhur', value: 'ancestral-worship' },
+            { label: 'Hari Kebesaran Dewa', value: 'deity-festival' },
+            { label: 'Perayaan Budaya', value: 'cultural-celebration' },
+            { label: 'Kegiatan Sosial', value: 'social-activity' },
+            { label: 'Dokumentasi Lainnya', value: 'other' },
+          ]}
+        />
+
         {/* Albums Table */}
-        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+        <div className="bg-white rounded-xl border border-stone-200 shadow-2xs overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm text-slate-600">
-              <thead className="bg-slate-50 text-slate-900 border-b border-slate-200">
+            <table className="w-full text-left text-xs text-stone-600">
+              <thead className="bg-stone-50/80 text-stone-700 font-medium border-b border-stone-200 uppercase tracking-wider text-[11px]">
                 <tr>
-                  <th className="px-6 py-4 font-medium w-12">
+                  <th className="px-5 py-3.5 w-12">
                     <BulkDeleteSelectAll allIds={albumData.docs.map((d: any) => d.id)} />
                   </th>
-                  <th className="px-6 py-4 font-medium w-20">Sampul</th>
-                  <th className="px-6 py-4 font-medium">Judul Album</th>
-                  <th className="px-6 py-4 font-medium">Kategori</th>
-                  <th className="px-6 py-4 font-medium">Waktu Acara</th>
-                  <th className="px-6 py-4 font-medium">Isi Media</th>
-                  <th className="px-6 py-4 font-medium">Status</th>
-                  <th className="px-6 py-4 font-medium text-right">Aksi</th>
+                  <th className="px-5 py-3.5 w-20">Sampul</th>
+                  <th className="px-5 py-3.5">Judul Album</th>
+                  <th className="px-5 py-3.5">Kategori</th>
+                  <th className="px-5 py-3.5">Waktu Acara</th>
+                  <th className="px-5 py-3.5">Isi Media</th>
+                  <th className="px-5 py-3.5">Status</th>
+                  <th className="px-5 py-3.5 text-right">Aksi</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-stone-100">
                 {albumData.docs.length === 0 ? (
                   <tr>
-                    <td colSpan={8} className="px-6 py-10 text-center text-slate-500">
-                      Belum ada album dokumentasi yang dibuat. Klik tombol{' '}
-                      <strong>"Buat Album Baru"</strong> untuk memulai.
+                    <td colSpan={8} className="px-6 py-12 text-center text-stone-500">
+                      Tidak ada album dokumentasi yang sesuai kriteria filter.
                     </td>
                   </tr>
                 ) : (
@@ -188,12 +237,12 @@ export default async function GalleryAdminPage({
                       '/placeholder.png'
 
                     return (
-                      <tr key={album.id} className="hover:bg-slate-50 transition-colors">
-                        <td className="px-6 py-4">
+                      <tr key={album.id} className="hover:bg-stone-50/70 transition-colors">
+                        <td className="px-5 py-3.5">
                           <BulkDeleteCheckbox id={album.id} />
                         </td>
-                        <td className="px-6 py-4">
-                          <div className="w-14 h-14 rounded-lg bg-slate-100 overflow-hidden relative border border-slate-200 shrink-0">
+                        <td className="px-5 py-3.5">
+                          <div className="w-14 h-14 rounded-lg bg-stone-100 overflow-hidden relative border border-stone-200 shrink-0">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
                               src={coverUrl}
@@ -202,50 +251,50 @@ export default async function GalleryAdminPage({
                             />
                           </div>
                         </td>
-                        <td className="px-6 py-4">
-                          <div className="font-medium text-slate-900">{album.title || 'Tanpa Judul'}</div>
-                          <div className="text-xs text-slate-400 font-mono mt-0.5">/{album.slug}</div>
+                        <td className="px-5 py-3.5">
+                          <div className="font-semibold text-stone-900">{album.title || 'Tanpa Judul'}</div>
+                          <div className="text-[11px] text-stone-400 font-mono mt-0.5">/{album.slug}</div>
                         </td>
-                        <td className="px-6 py-4">
+                        <td className="px-5 py-3.5">
                           <span className="inline-block px-2.5 py-0.5 text-xs font-medium rounded-md bg-stone-100 text-stone-700 border border-stone-200">
                             {categoryLabel}
                           </span>
                         </td>
-                        <td className="px-6 py-4">
+                        <td className="px-5 py-3.5">
                           {dateFormatted ? (
-                            <div className="flex items-center gap-1.5 text-xs text-slate-700">
-                              <Calendar className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                            <div className="flex items-center gap-1.5 text-xs text-stone-700">
+                              <Calendar className="w-3.5 h-3.5 text-stone-400 shrink-0" />
                               <span>{dateFormatted}</span>
                             </div>
                           ) : (
-                            <span className="text-xs text-slate-400 italic">Belum ditentukan</span>
+                            <span className="text-xs text-stone-400 italic">Belum ditentukan</span>
                           )}
                         </td>
-                        <td className="px-6 py-4">
-                          <div className="flex flex-col gap-0.5 text-xs text-slate-600">
-                            <span className="font-medium">{total} Media</span>
-                            <span className="text-[11px] text-slate-400">
-                              {photosCount} Foto • {videosCount} Video
+                        <td className="px-5 py-3.5">
+                          <div className="flex flex-col gap-0.5 text-xs text-stone-600">
+                            <span className="font-semibold text-stone-900">{total} Media</span>
+                            <span className="text-[11px] text-stone-400">
+                              {photosCount} Foto &bull; {videosCount} Video
                             </span>
                           </div>
                         </td>
-                        <td className="px-6 py-4">
+                        <td className="px-5 py-3.5">
                           <span
-                            className={`px-2.5 py-1 text-xs font-medium rounded-full ${
+                            className={`inline-flex items-center px-2 py-0.5 text-xs font-medium rounded-full border ${
                               album.status === 'published'
-                                ? 'bg-green-100 text-green-800'
-                                : 'bg-slate-100 text-slate-800'
+                                ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                                : 'bg-stone-100 text-stone-600 border-stone-200'
                             }`}
                           >
                             {album.status === 'published' ? 'Publik' : 'Draft'}
                           </span>
                         </td>
-                        <td className="px-6 py-4 text-right space-x-1 whitespace-nowrap">
+                        <td className="px-5 py-3.5 text-right space-x-1 whitespace-nowrap">
                           {album.status === 'published' && album.slug && (
                             <Link
                               href={`/id/galeri/${album.slug}`}
                               target="_blank"
-                              className="inline-flex items-center justify-center p-2 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-md transition-colors"
+                              className="inline-flex items-center justify-center p-1.5 text-stone-400 hover:text-emerald-700 hover:bg-emerald-50 rounded-md transition-colors"
                               title="Lihat di Website Publik"
                             >
                               <ExternalLink className="w-4 h-4" />
@@ -253,8 +302,8 @@ export default async function GalleryAdminPage({
                           )}
                           <Link
                             href={`/admin/galeri/${album.id}`}
-                            className="inline-flex items-center justify-center p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
-                            title="Edit Album & Kelola Media"
+                            className="inline-flex items-center justify-center p-1.5 text-stone-400 hover:text-stone-900 hover:bg-stone-100 rounded-md transition-colors"
+                            title="Edit Album &amp; Kelola Media"
                           >
                             <Edit className="w-4 h-4" />
                           </Link>
@@ -278,7 +327,7 @@ export default async function GalleryAdminPage({
             hasNextPage={albumData.hasNextPage}
             prevPage={albumData.prevPage}
             nextPage={albumData.nextPage}
-            baseUrl="/admin/galeri"
+            baseUrl={baseUrl}
             limit={limit}
           />
         </div>

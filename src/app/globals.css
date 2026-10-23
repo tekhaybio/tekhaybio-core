@@ -21,8 +21,11 @@
     --muted: 60 4.8% 95.9%;
     --muted-foreground: 25 5.3% 44.7%; /* stone-500 */
     
-    --accent: 60 4.8% 95.9%;
-    --accent-foreground: 24 9.8% 10%;
+    /* Authentic antique gold / ceremonial brass accent */
+    --accent: 38 68% 46%;
+    --accent-foreground: 0 0% 100%;
+    --accent-subtle: 40 60% 94%;
+    --accent-subtle-foreground: 35 75% 25%;
     
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 60 9.1% 97.8%;

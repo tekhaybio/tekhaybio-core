@@ -41,10 +41,16 @@ export async function NewsListPage({ locale, page = 1, limit = 9 }: { locale: 'i
                 baseUrl={baseUrl}
               />
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {posts.map((post) => (
+                {posts.map((post, idx) => (
                   <Link href={`/${locale}/${locale === 'id' ? 'berita' : 'news'}/${post.slug}`} key={post.id as string} className="group space-y-4">
                     <div className="aspect-[3/2] relative bg-stone-100 rounded-lg overflow-hidden border border-stone-200">
-                      <MediaImage media={post.featuredImage as CMSRecord} fill sizes="(max-width: 768px) 100vw, 33vw" className="transition-transform duration-500 group-hover:scale-105" />
+                      <MediaImage
+                        media={post.featuredImage as CMSRecord}
+                        fill
+                        priority={idx === 0}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="transition-transform duration-500 group-hover:scale-105"
+                      />
                     </div>
                     <div className="space-y-2">
                       <div className="text-xs text-stone-500">

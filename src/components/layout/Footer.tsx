@@ -30,6 +30,7 @@ export async function Footer({ locale }: { locale: 'id' | 'en' }) {
     { href: locale === 'id' ? '/id/kalender-ritual' : '/en/ritual-calendar', label: locale === 'id' ? 'Kalender Ritual' : 'Calendar' },
     { href: locale === 'id' ? '/id/berita' : '/en/news', label: locale === 'id' ? 'Berita' : 'News' },
     { href: locale === 'id' ? '/id/galeri' : '/en/gallery', label: locale === 'id' ? 'Galeri' : 'Gallery' },
+    { href: locale === 'id' ? '/id/kontak' : '/en/contact', label: locale === 'id' ? 'Kontak' : 'Contact' },
   ]
 
   return (
@@ -37,9 +38,12 @@ export async function Footer({ locale }: { locale: 'id' | 'en' }) {
       <div className="container grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Brand & Description */}
         <div className="md:col-span-2">
-          <Link href={`/${locale}`} className="inline-block mb-4">
+          <Link href={`/${locale}`} className="inline-flex items-baseline gap-2 mb-4">
             <span className="font-serif text-2xl font-bold tracking-tight text-white">
               {siteSettings.siteName || 'Klenteng Tek Hay Bio'}
+            </span>
+            <span className="font-serif text-xs text-stone-400 font-medium tracking-widest pl-2 border-l border-stone-700">
+              德海廟
             </span>
           </Link>
           <p className="max-w-md text-stone-400 text-sm leading-relaxed">
@@ -94,7 +98,7 @@ export async function Footer({ locale }: { locale: 'id' | 'en' }) {
         </div>
       </div>
       
-      <div className="container mt-12 pt-8 border-t border-stone-800 text-sm text-stone-500 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div className="container mt-12 pt-8 border-t border-stone-800 text-sm text-stone-400 flex flex-col md:flex-row justify-between items-center gap-4">
         <p>&copy; {year} {siteSettings.siteName || 'Tek Hay Bio'}. All rights reserved.</p>
         <p>{locale === 'id' ? 'Dikelola oleh pengurus klenteng.' : 'Managed by the temple board.'}</p>
       </div>

@@ -22,8 +22,12 @@ export default async function HistoryAdminPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">Sejarah</h1>
-        <p className="text-sm text-slate-500">Kelola informasi sejarah Klenteng Tek Hay Bio.</p>
+        <h1 className="text-2xl font-serif font-bold text-stone-900 tracking-tight">
+          Narasi Sejarah Klenteng
+        </h1>
+        <p className="text-xs text-stone-500 mt-0.5">
+          Kelola informasi sejarah berdirinya Klenteng Tek Hay Bio dan riwayat masa ke masa.
+        </p>
       </div>
 
       <HistoryForm initialData={data} />

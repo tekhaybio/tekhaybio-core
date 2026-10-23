@@ -399,8 +399,8 @@ export function RitualCalendarView({
                       </span>
                     </div>
 
-                    {/* Event Badges */}
-                    <div className="mt-1 space-y-1 overflow-hidden">
+                    {/* Event Badges (Desktop) */}
+                    <div className="mt-1 space-y-1 overflow-hidden hidden md:block">
                       {cell.occurrences.slice(0, 2).map((occ) => (
                         <Link
                           key={occ.id}

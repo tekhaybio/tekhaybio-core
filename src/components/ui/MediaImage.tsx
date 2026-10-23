@@ -21,6 +21,7 @@ interface MediaImageProps {
   height?: number;
   sizes?: string;
   priority?: boolean;
+  loading?: 'lazy' | 'eager';
 }
 
 import { isMediaVideo } from "@/lib/gallery/utils";
@@ -34,6 +35,7 @@ export function MediaImage({
   height,
   sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw",
   priority = false,
+  loading,
 }: MediaImageProps) {
   // If no media is provided, render a neutral placeholder
   if (!media || typeof media === "string" || !media.url) {
@@ -99,6 +101,7 @@ export function MediaImage({
         height={!fill ? height || media.height : undefined}
         sizes={sizes}
         priority={priority}
+        loading={priority ? 'eager' : loading}
         className={fill ? "object-cover" : "w-full h-auto"}
       />
     </div>

@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import { saveGlobalAction } from '@/app/(admin)/admin/actions'
 import { MediaPicker } from '@/components/admin/MediaPicker'
 import { LocaleTabs } from '@/components/admin/LocaleTabs'
+import { useAdminFeedback } from '@/components/admin/AdminFeedbackContext'
 
 const routeOptions = [
   { label: 'Beranda (Home)', value: 'home' },
@@ -21,6 +22,7 @@ const routeOptions = [
 
 export function HomePageForm({ initialData }: { initialData?: any }) {
   const router = useRouter()
+  const { toast } = useAdminFeedback()
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState('')
   const [activeTab, setActiveTab] = useState('hero')
@@ -110,7 +112,7 @@ export function HomePageForm({ initialData }: { initialData?: any }) {
     
     setIsSaving(false)
     if (res.success) {
-      alert('Halaman Beranda berhasil disimpan.')
+      toast.success('Halaman Beranda berhasil diperbarui.')
       router.refresh()
     } else {
       setError(res.error || 'Terjadi kesalahan.')

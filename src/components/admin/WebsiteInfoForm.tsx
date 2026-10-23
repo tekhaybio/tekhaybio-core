@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { saveGlobalAction } from "@/app/(admin)/admin/actions";
 import { LocaleTabs } from "@/components/admin/LocaleTabs";
+import { useAdminFeedback } from "@/components/admin/AdminFeedbackContext";
 
 export function WebsiteInfoForm({
   contactData,
@@ -15,6 +16,7 @@ export function WebsiteInfoForm({
   siteData?: any;
 }) {
   const router = useRouter();
+  const { toast } = useAdminFeedback();
   const [activeTab, setActiveTab] = useState<'id' | 'en'>('id');
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState("");
@@ -122,7 +124,7 @@ export function WebsiteInfoForm({
 
     setIsSaving(false);
     if (resSite.success && resContact.success) {
-      alert("Informasi website berhasil disimpan.");
+      toast.success("Informasi website dan kontak berhasil diperbarui.");
       router.refresh();
     } else {
       setError(resSite.error || resContact.error || "Terjadi kesalahan.");

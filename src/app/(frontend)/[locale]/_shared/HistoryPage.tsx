@@ -5,6 +5,7 @@ import { Container, Section } from '@/components/ui/Layout'
 import { MediaImage } from '@/components/ui/MediaImage'
 import { notFound } from 'next/navigation'
 import type { CMSRecord } from '@/types'
+import { ShieldCheck, Search } from 'lucide-react'
 
 export async function HistoryPage({ locale }: { locale: 'id' | 'en' }) {
   const history = await getGlobal('history', locale)
@@ -18,43 +19,80 @@ export async function HistoryPage({ locale }: { locale: 'id' | 'en' }) {
   return (
     <>
       <PageHeader 
-        title={locale === 'id' ? 'Garis Waktu Sejarah' : 'Historical Timeline'}
-        description={locale === 'id' ? 'Perjalanan sejarah Klenteng Tek Hay Bio dari masa ke masa.' : 'The historical journey of Tek Hay Bio Temple.'}
+        title={locale === 'id' ? 'Garis Waktu & Sejarah Klenteng' : 'Historical Timeline & Archives'}
+        description={locale === 'id' ? 'Perjalanan sejarah dan pelestarian Klenteng Tek Hay Bio dari masa ke masa.' : 'The historical journey and cultural preservation of Tek Hay Bio Temple through the centuries.'}
       />
-      <Section className="bg-stone-50">
+      <Section className="bg-stone-50 py-16 md:py-24">
         <Container>
-          <div className="max-w-4xl mx-auto space-y-12 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-stone-300 before:to-transparent">
+          <div className="max-w-3xl mx-auto">
             {timeline.length === 0 ? (
-              <p className="text-center text-stone-500 italic">
+              <p className="text-center text-stone-500 italic py-12">
                 {locale === 'id' ? 'Belum ada data sejarah.' : 'No historical data available yet.'}
               </p>
             ) : (
-              timeline.map((event: Record<string, unknown>, idx: number) => (
-                <div key={idx} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-stone-50 bg-stone-300 group-hover:bg-primary group-hover:border-primary/20 text-stone-50 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm transition-colors duration-300">
-                    <span className="w-2 h-2 rounded-full bg-white"></span>
-                  </div>
-                  
-                  <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white p-6 rounded-xl shadow-sm border border-stone-200 hover:shadow-md transition-shadow">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-xl font-bold text-primary font-serif">{event.year as string}</span>
-                      {event.verificationStatus === 'under_research' && (
-                         <span className="text-xs font-medium px-2 py-1 bg-amber-100 text-amber-800 rounded-full">
-                           {locale === 'id' ? 'Dalam Penelitian' : 'Under Research'}
-                         </span>
-                      )}
+              /* Linear single-rail vertical timeline */
+              <div className="relative pl-6 md:pl-10 border-l-2 border-stone-300 space-y-12">
+                {timeline.map((event: Record<string, unknown>, idx: number) => {
+                  const isUnderResearch = event.verificationStatus === 'under_research'
+
+                  return (
+                    <div key={idx} className="relative group">
+                      {/* Timeline Node Dot */}
+                      <div className="absolute -left-[31px] md:-left-[47px] top-1.5 w-4 h-4 rounded-full border-2 border-primary bg-stone-50 group-hover:bg-primary transition-colors duration-300 shadow-xs" />
+
+                      {/* Event Content Card */}
+                      <article className="bg-white p-6 md:p-8 rounded-lg border border-stone-200/90 shadow-2xs hover:shadow-xs transition-shadow space-y-4">
+                        {/* Year & Verification Badge */}
+                        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-stone-100 pb-3">
+                          <span className="text-2xl md:text-3xl font-serif font-bold text-primary tracking-tight">
+                            {event.year as string}
+                          </span>
+                          
+                          {isUnderResearch ? (
+                            <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 bg-amber-50 text-amber-900 border border-amber-300/80 rounded-full">
+                              <Search className="w-3.5 h-3.5 text-amber-700" />
+                              <span>{locale === 'id' ? 'Dalam Penelitian' : 'Under Research'}</span>
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 bg-stone-100 text-stone-700 border border-stone-200 rounded-full">
+                              <ShieldCheck className="w-3.5 h-3.5 text-stone-500" />
+                              <span>{locale === 'id' ? 'Catatan Terverifikasi' : 'Verified Record'}</span>
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Title & Description */}
+                        <div>
+                          <h3 className="text-xl md:text-2xl font-serif font-bold text-stone-900 mb-2">
+                            {event.title as string}
+                          </h3>
+                          <p className="text-stone-700 text-sm md:text-base leading-relaxed whitespace-pre-line">
+                            {event.description as string}
+                          </p>
+                        </div>
+
+                        {/* Archival Image */}
+                        {Boolean(event.image) && (
+                          <div className="pt-2">
+                            <div className="relative aspect-video rounded-md overflow-hidden border border-stone-200 bg-stone-100">
+                              <MediaImage
+                                media={event.image as CMSRecord}
+                                fill
+                                priority={idx === 0}
+                                sizes="(max-width: 768px) 100vw, 48rem"
+                                className="object-cover group-hover:scale-102 transition-transform duration-700"
+                              />
+                            </div>
+                            <p className="text-xs text-stone-500 italic mt-2 text-center font-serif">
+                              {locale === 'id' ? 'Dokumentasi arsip sejarah Klenteng Tek Hay Bio' : 'Archival documentation, Tek Hay Bio Temple'}
+                            </p>
+                          </div>
+                        )}
+                      </article>
                     </div>
-                    <h3 className="text-lg font-bold text-stone-900 mb-2">{event.title as string}</h3>
-                    <p className="text-stone-600 mb-4 text-sm leading-relaxed">{event.description as string}</p>
-                    
-                    {Boolean(event.image) && (
-                      <div className="relative aspect-video rounded-lg overflow-hidden border border-stone-100 mt-4">
-                        <MediaImage media={event.image as CMSRecord} fill className="object-cover hover:scale-105 transition-transform duration-500" />
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))
+                  )
+                })}
+              </div>
             )}
           </div>
         </Container>

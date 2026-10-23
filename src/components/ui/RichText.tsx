@@ -90,7 +90,7 @@ function renderNode(node: Record<string, unknown>, i: number): React.ReactNode {
     }
 
     return (
-      <p key={i} className={alignClass || undefined}>
+      <p key={i} className={`text-stone-700 leading-relaxed text-base md:text-lg mb-5 ${alignClass || ''}`.trim()}>
         {children.map((c, j) => renderNode(c, j))}
       </p>
     )
@@ -122,7 +122,7 @@ function renderNode(node: Record<string, unknown>, i: number): React.ReactNode {
     const isChecklist = node.listType === 'check'
     const listClass = node.listType === 'number' ? 'list-decimal' : (isChecklist ? 'list-none' : 'list-disc')
     return (
-      <ListTag key={i} className={`${listClass} ${isChecklist ? 'pl-0' : 'pl-5'} space-y-2`}>
+      <ListTag key={i} className={`${listClass} ${isChecklist ? 'pl-0' : 'pl-6'} space-y-2.5 my-5 text-stone-700 text-base md:text-lg`}>
         {children.map((c, j) => renderNode(c, j))}
       </ListTag>
     )
@@ -149,7 +149,7 @@ function renderNode(node: Record<string, unknown>, i: number): React.ReactNode {
 
   if (node.type === 'quote') {
     return (
-      <blockquote key={i} className="border-l-4 border-primary pl-4 py-1 italic text-stone-600 bg-stone-50 my-4">
+      <blockquote key={i} className="border-l-4 border-primary pl-5 py-2.5 italic text-stone-700 bg-stone-100/60 my-6 rounded-r-md">
         {children.map((c, j) => renderNode(c, j))}
       </blockquote>
     )
@@ -196,7 +196,7 @@ function renderNode(node: Record<string, unknown>, i: number): React.ReactNode {
           height={media.height}
         />
         {fields.caption && (
-          <figcaption className="text-center text-sm text-stone-500 mt-2 italic">
+          <figcaption className="text-center text-xs md:text-sm text-stone-500 mt-2 italic font-serif">
             {fields.caption}
           </figcaption>
         )}

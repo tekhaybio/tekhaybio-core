@@ -17,8 +17,8 @@ export default async function AdminLayout({
   const { user } = await payload.auth({ headers: await headers() })
 
   return (
-    <html lang="id">
-      <body className="bg-slate-50 text-slate-900 font-sans">
+    <html lang="id" className="h-full" suppressHydrationWarning>
+      <body className="h-full bg-stone-50 text-stone-900 font-sans antialiased" suppressHydrationWarning>
         <AdminShell user={user}>
           {children}
         </AdminShell>

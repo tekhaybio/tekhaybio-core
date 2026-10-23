@@ -6,12 +6,20 @@ import { headers } from 'next/headers'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import Link from 'next/link'
-import { Plus, Edit, Calendar, Moon } from 'lucide-react'
+import { Plus, Edit, Calendar, Moon, Image as ImageIcon, CalendarDays } from 'lucide-react'
 import { DeleteActionClient } from '@/components/admin/DeleteActionClient'
-import { BulkDeleteProvider, BulkDeleteCheckbox, BulkDeleteSelectAll, BulkDeleteButton } from '@/components/admin/BulkDelete'
+import {
+  BulkDeleteProvider,
+  BulkDeleteCheckbox,
+  BulkDeleteSelectAll,
+  BulkDeleteButton,
+} from '@/components/admin/BulkDelete'
 import { deleteActivityAction, deleteManyActivityAction } from './actions'
 import { AdminPagination } from '@/components/admin/AdminPagination'
+import { AdminTableFilter } from '@/components/admin/AdminTableFilter'
 import {
+  ACTIVITY_CATEGORIES,
+  ACTIVITY_SCHEDULE_STATUSES,
   getActivityCategoryLabel,
   getActivityScheduleStatus,
   formatGregorianDateRange,
@@ -23,74 +31,131 @@ export const dynamic = 'force-dynamic'
 export default async function ActivitiesAdminPage({
   searchParams,
 }: {
-  searchParams: Promise<{ page?: string; limit?: string }>
+  searchParams: Promise<{
+    page?: string
+    limit?: string
+    q?: string
+    category?: string
+    status?: string
+    scheduleStatus?: string
+  }>
 }) {
-  const { page, limit } = await searchParams
+  const { page, limit, q, category, status, scheduleStatus } = await searchParams
   const payload = await getPayload({ config: configPromise })
   const { user } = await payload.auth({ headers: await headers() })
   if (!user) redirect('/admin/login')
 
   const currentPage = parseInt(page || '1', 10)
   const currentLimit = parseInt(limit || '10', 10)
+
+  // Construct filters
+  const where: any = {}
+  if (q && q.trim()) {
+    where.title = { contains: q.trim() }
+  }
+  if (category && category !== 'all') {
+    where.category = { equals: category }
+  }
+  if (status && status !== 'all') {
+    where.status = { equals: status }
+  }
+  if (scheduleStatus && scheduleStatus !== 'all') {
+    where.scheduleStatus = { equals: scheduleStatus }
+  }
+
   const data = await payload.find({
     collection: 'activities',
+    where,
     sort: '-createdAt',
     limit: currentLimit,
     page: currentPage,
     locale: 'id',
+    depth: 1,
   })
+
+  const categoryOptions = ACTIVITY_CATEGORIES.map((c) => ({
+    value: c.value,
+    label: c.label.id,
+  }))
+
+  const scheduleStatusOptions = ACTIVITY_SCHEDULE_STATUSES.map((ss) => ({
+    value: ss.value,
+    label: ss.label.id,
+  }))
+
+  const baseParams = new URLSearchParams()
+  if (q) baseParams.set('q', q)
+  if (category && category !== 'all') baseParams.set('category', category)
+  if (status && status !== 'all') baseParams.set('status', status)
+  if (scheduleStatus && scheduleStatus !== 'all') baseParams.set('scheduleStatus', scheduleStatus)
+  const baseUrl = `/admin/kegiatan${baseParams.toString() ? `?${baseParams.toString()}` : ''}`
 
   return (
     <BulkDeleteProvider>
       <div className="space-y-6">
+        {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold text-slate-900">Kegiatan & Perayaan</h1>
-            <p className="text-sm text-slate-500">
-              Kelola jadwal ritual keagamaan, sembahyang leluhur, hari kebesaran dewa, dan perayaan budaya klenteng.
+            <h1 className="text-2xl font-serif font-bold text-stone-900 tracking-tight">
+              Agenda Ritual & Perayaan Klenteng
+            </h1>
+            <p className="text-xs text-stone-500 mt-0.5">
+              Kelola jadwal upacara keagamaan, sembahyang leluhur, hari kebesaran dewa, dan tradisi Imlek Klenteng Tek Hay Bio.
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <BulkDeleteButton action={deleteManyActivityAction} />
+            <BulkDeleteButton action={deleteManyActivityAction} itemName="kegiatan" />
             <Link
               href="/admin/kegiatan/tambah"
-              className="inline-flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-md hover:bg-slate-800 text-sm font-medium shrink-0"
+              className="inline-flex items-center gap-2 bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-lg text-xs font-semibold shrink-0 transition-colors shadow-2xs"
             >
-              <Plus className="w-4 h-4" /> Tambah Kegiatan
+              <Plus className="w-4 h-4" />
+              <span>Tambah Kegiatan Baru</span>
             </Link>
           </div>
         </div>
 
-        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm text-slate-600 min-w-[1100px] table-fixed">
-              <colgroup>
-                <col className="w-12" />
-                <col className="w-[23%]" />
-                <col className="w-[16%]" />
-                <col className="w-[24%]" />
-                <col className="w-[25%]" />
-                <col className="w-[12%]" />
-                <col className="w-20" />
-              </colgroup>
-              <thead className="bg-slate-50 text-slate-900 border-b border-slate-200">
+        {/* Filters */}
+        <AdminTableFilter
+          searchPlaceholder="Cari nama upacara / perayaan..."
+          categories={categoryOptions}
+          scheduleStatusOptions={scheduleStatusOptions}
+          initialQuery={q || ''}
+          initialCategory={category || 'all'}
+          initialStatus={status || 'all'}
+          initialScheduleStatus={scheduleStatus || 'all'}
+        />
+
+        {/* Table */}
+        <div className="bg-white rounded-xl border border-stone-200 shadow-2xs overflow-hidden">
+          <div className="overflow-x-auto relative">
+            <table className="w-full text-left text-sm text-stone-600 min-w-[900px]">
+              <thead className="bg-stone-50 text-stone-900 text-xs font-semibold border-b border-stone-200">
                 <tr>
-                  <th className="px-4 py-4 font-medium w-12 text-center">
+                  <th className="px-4 py-3.5 w-12 text-center">
                     <BulkDeleteSelectAll allIds={data.docs.map((d: any) => d.id)} />
                   </th>
-                  <th className="px-4 py-4 font-medium">Judul Kegiatan</th>
-                  <th className="px-4 py-4 font-medium">Kategori</th>
-                  <th className="px-4 py-4 font-medium">Jadwal Pelaksanaan</th>
-                  <th className="px-4 py-4 font-medium">Status Jadwal</th>
-                  <th className="px-4 py-4 font-medium text-center">Publikasi</th>
-                  <th className="px-4 py-4 font-medium text-right">Aksi</th>
+                  <th className="px-3 py-3.5 w-16">Foto</th>
+                  <th className="px-4 py-3.5 font-semibold">Judul Kegiatan & Dewa</th>
+                  <th className="px-4 py-3.5 font-semibold">Kategori</th>
+                  <th className="px-4 py-3.5 font-semibold">Jadwal Masehi & Imlek</th>
+                  <th className="px-4 py-3.5 font-semibold">Status Jadwal</th>
+                  <th className="px-4 py-3.5 font-semibold text-center">Publikasi</th>
+                  <th className="px-4 py-3.5 font-semibold text-right sticky right-0 bg-stone-50 shadow-[-4px_0_6px_-2px_rgba(0,0,0,0.05)]">
+                    Aksi
+                  </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-stone-100 text-xs">
                 {data.docs.length === 0 ? (
                   <tr>
-                    <td colSpan={7} className="px-6 py-8 text-center text-slate-500">
-                      Belum ada kegiatan yang terdaftar.
+                    <td colSpan={8} className="px-6 py-12 text-center text-stone-500 space-y-2">
+                      <CalendarDays className="w-8 h-8 text-stone-400 mx-auto" />
+                      <p className="font-medium">
+                        {q || category || status || scheduleStatus
+                          ? 'Tidak ada kegiatan yang cocok dengan filter saat ini.'
+                          : 'Belum ada agenda kegiatan yang terdaftar.'}
+                      </p>
                     </td>
                   </tr>
                 ) : (
@@ -99,75 +164,103 @@ export default async function ActivitiesAdminPage({
                     const lunarDate = formatLunarDate(item, 'id')
                     const scheduleStatusObj = getActivityScheduleStatus(item.scheduleStatus, 'id')
                     const categoryLabel = getActivityCategoryLabel(item.category, 'id')
+                    const thumbUrl =
+                      item.featuredImage?.sizes?.thumbnail?.url ||
+                      item.featuredImage?.url ||
+                      null
 
                     return (
-                      <tr key={item.id} className="hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-4 text-center">
+                      <tr key={item.id} className="hover:bg-stone-50/70 transition-colors group">
+                        <td className="px-4 py-3 text-center">
                           <BulkDeleteCheckbox id={item.id} />
                         </td>
-                        <td className="px-4 py-4">
-                          <div className="font-medium text-slate-900 break-words line-clamp-2" title={item.title || 'Tanpa Judul'}>
-                            {item.title || 'Tanpa Judul'}
+                        <td className="px-3 py-3">
+                          <div className="w-12 h-9 rounded-md bg-stone-100 border border-stone-200 overflow-hidden relative shrink-0 flex items-center justify-center">
+                            {thumbUrl ? (
+                              // eslint-disable-next-line @next/next/no-img-element
+                              <img
+                                src={thumbUrl}
+                                alt={item.title || 'Thumbnail'}
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <ImageIcon className="w-4 h-4 text-stone-400" />
+                            )}
                           </div>
+                        </td>
+                        <td className="px-4 py-3 font-medium text-stone-900 max-w-xs">
+                          <Link
+                            href={`/admin/kegiatan/${item.id}`}
+                            className="hover:text-primary transition-colors line-clamp-1 font-semibold"
+                            title={item.title || 'Tanpa Judul'}
+                          >
+                            {item.title || 'Tanpa Judul'}
+                          </Link>
                           {item.relatedDeity && (
-                            <div className="text-xs text-slate-500 mt-0.5 truncate" title={`Dewa: ${item.relatedDeity}`}>
+                            <p className="text-[11px] text-amber-800 font-medium truncate mt-0.5" title={`Dewa: ${item.relatedDeity}`}>
                               Dewa: {item.relatedDeity}
-                            </div>
+                            </p>
                           )}
                         </td>
-                        <td className="px-4 py-4">
-                          <span className="inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-md bg-stone-100 text-stone-700 border border-stone-200 whitespace-nowrap">
+                        <td className="px-4 py-3">
+                          <span className="inline-flex items-center px-2 py-0.5 text-[11px] font-medium rounded bg-stone-100 text-stone-700 border border-stone-200 whitespace-nowrap">
                             {categoryLabel}
                           </span>
                         </td>
-                        <td className="px-4 py-4">
+                        <td className="px-4 py-3">
                           <div className="space-y-1">
                             {gregorianDate ? (
-                              <div className="flex items-center gap-1.5 text-xs text-slate-700">
-                                <Calendar className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                                <span className="truncate" title={gregorianDate}>{gregorianDate}</span>
+                              <div className="flex items-center gap-1.5 text-stone-700">
+                                <Calendar className="w-3.5 h-3.5 text-stone-400 shrink-0" />
+                                <span className="truncate" title={gregorianDate}>
+                                  {gregorianDate}
+                                </span>
                               </div>
                             ) : null}
                             {lunarDate ? (
-                              <div className="flex items-start gap-1.5 text-xs text-amber-700">
-                                <Moon className="w-3.5 h-3.5 text-amber-500 shrink-0 mt-0.5" />
-                                <span className="line-clamp-2 leading-relaxed" title={lunarDate}>
+                              <div className="flex items-start gap-1.5 text-amber-900">
+                                <Moon className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
+                                <span className="line-clamp-1 leading-snug font-medium" title={lunarDate}>
                                   {lunarDate}
                                 </span>
                               </div>
                             ) : null}
                             {!gregorianDate && !lunarDate ? (
-                              <span className="text-xs text-slate-500 font-medium italic">Belum ditentukan</span>
+                              <span className="text-stone-400 italic">Belum ditentukan</span>
                             ) : null}
                           </div>
                         </td>
-                        <td className="px-4 py-4">
+                        <td className="px-4 py-3 whitespace-nowrap">
                           <span
-                            className={`inline-flex items-center px-2.5 py-1 text-xs font-semibold rounded-full border whitespace-nowrap shadow-xs ${scheduleStatusObj.badgeClass}`}
+                            className={`inline-flex items-center px-2 py-0.5 text-[11px] font-semibold rounded-full border shadow-2xs ${scheduleStatusObj.badgeClass}`}
                           >
                             {scheduleStatusObj.label.id}
                           </span>
                         </td>
-                        <td className="px-4 py-4 text-center">
+                        <td className="px-4 py-3 text-center whitespace-nowrap">
                           <span
-                            className={`inline-flex items-center px-2.5 py-1 text-xs font-semibold rounded-full whitespace-nowrap border shadow-xs ${
+                            className={`inline-flex items-center px-2 py-0.5 text-[11px] font-semibold rounded-full border shadow-2xs ${
                               item.status === 'published'
-                                ? 'bg-emerald-100 text-emerald-900 border-emerald-300'
-                                : 'bg-slate-100 text-slate-800 border-slate-300'
+                                ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                                : 'bg-stone-100 text-stone-700 border-stone-200'
                             }`}
                           >
                             {item.status === 'published' ? 'Publik' : 'Draft'}
                           </span>
                         </td>
-                        <td className="px-4 py-4 text-right whitespace-nowrap space-x-1">
+                        <td className="px-4 py-3 text-right whitespace-nowrap space-x-1 sticky right-0 bg-white group-hover:bg-stone-50 transition-colors shadow-[-4px_0_6px_-2px_rgba(0,0,0,0.05)]">
                           <Link
                             href={`/admin/kegiatan/${item.id}`}
-                            className="inline-flex items-center justify-center p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
-                            title="Edit"
+                            className="inline-flex items-center justify-center p-1.5 text-stone-400 hover:text-stone-900 hover:bg-stone-100 rounded-lg transition-colors"
+                            title="Edit Kegiatan"
                           >
                             <Edit className="w-4 h-4" />
                           </Link>
-                          <DeleteActionClient id={item.id} action={deleteActivityAction} />
+                          <DeleteActionClient
+                            id={item.id}
+                            action={deleteActivityAction}
+                            itemName={`kegiatan "${item.title || 'ini'}"`}
+                          />
                         </td>
                       </tr>
                     )
@@ -186,7 +279,7 @@ export default async function ActivitiesAdminPage({
             hasNextPage={data.hasNextPage}
             prevPage={data.prevPage}
             nextPage={data.nextPage}
-            baseUrl="/admin/kegiatan"
+            baseUrl={baseUrl}
             limit={currentLimit}
           />
         </div>

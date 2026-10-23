@@ -123,7 +123,7 @@ export async function GalleryPage({
                 baseUrl={category ? `${baseUrl}?category=${category}` : baseUrl}
               />
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {albums.map((album: any) => {
+                {albums.map((album: any, idx: number) => {
                   const categoryLabel = getAlbumCategoryLabel(album.category, locale)
                   const dateFormatted = formatEventDateRange(album.eventDate, album.eventEndDate, locale)
                   const { photosCount, videosCount, total } = countAlbumMedia(album.mediaItems)
@@ -133,13 +133,14 @@ export async function GalleryPage({
                     <Link
                       href={detailUrl}
                       key={album.id as string}
-                      className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col border border-stone-200"
+                      className="bg-white rounded-md overflow-hidden shadow-2xs hover:shadow-sm transition-all duration-300 group flex flex-col border border-stone-200"
                     >
                       {/* Album Cover */}
                       <div className="aspect-[16/10] relative bg-stone-900 overflow-hidden">
                         <MediaImage
                           media={album.coverImage as CMSRecord}
                           fill
+                          priority={idx === 0}
                           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           className="object-cover group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100"
                         />

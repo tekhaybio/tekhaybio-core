@@ -1,7 +1,8 @@
 'use client'
 
 import { createContext, useContext, useState, ReactNode } from 'react'
-import { Trash2 } from 'lucide-react'
+import { Trash2, Loader2 } from 'lucide-react'
+import { useAdminFeedback } from './AdminFeedbackContext'
 
 interface BulkDeleteContextType {
   selectedIds: string[]
@@ -19,7 +20,7 @@ export function BulkDeleteProvider({ children }: { children: ReactNode }) {
   const [isDeleting, setIsDeleting] = useState(false)
 
   const toggleId = (id: string) => {
-    setSelectedIds(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id])
+    setSelectedIds((prev) => (prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]))
   }
 
   const toggleAll = (ids: string[]) => {
@@ -31,7 +32,16 @@ export function BulkDeleteProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <BulkDeleteContext.Provider value={{ selectedIds, toggleId, toggleAll, clear: () => setSelectedIds([]), isDeleting, setIsDeleting }}>
+    <BulkDeleteContext.Provider
+      value={{
+        selectedIds,
+        toggleId,
+        toggleAll,
+        clear: () => setSelectedIds([]),
+        isDeleting,
+        setIsDeleting,
+      }}
+    >
       {children}
     </BulkDeleteContext.Provider>
   )
@@ -47,11 +57,11 @@ export function BulkDeleteCheckbox({ id }: { id: string | number }) {
   const { selectedIds, toggleId } = useBulkDelete()
   const stringId = String(id)
   return (
-    <input 
-      type="checkbox" 
-      checked={selectedIds.includes(stringId)} 
+    <input
+      type="checkbox"
+      checked={selectedIds.includes(stringId)}
       onChange={() => toggleId(stringId)}
-      className="rounded border-slate-300 text-slate-900 focus:ring-slate-900 cursor-pointer"
+      className="rounded border-stone-300 text-primary focus:ring-primary cursor-pointer w-4 h-4"
     />
   )
 }
@@ -59,36 +69,51 @@ export function BulkDeleteCheckbox({ id }: { id: string | number }) {
 export function BulkDeleteSelectAll({ allIds }: { allIds: (string | number)[] }) {
   const { selectedIds, toggleAll } = useBulkDelete()
   const ids = allIds.map(String)
-  const isAllSelected = ids.length > 0 && selectedIds.length === ids.length
-  
+  const isAllSelected = ids.length > 0 && ids.every((id) => selectedIds.includes(id))
+
   return (
-    <input 
-      type="checkbox" 
+    <input
+      type="checkbox"
       checked={isAllSelected}
       onChange={() => toggleAll(ids)}
-      className="rounded border-slate-300 text-slate-900 focus:ring-slate-900 cursor-pointer"
+      className="rounded border-stone-300 text-primary focus:ring-primary cursor-pointer w-4 h-4"
     />
   )
 }
 
-export function BulkDeleteButton({ action }: { action: (ids: string[]) => Promise<{ success: boolean; error?: string }> }) {
+export function BulkDeleteButton({
+  action,
+  itemName = 'data',
+}: {
+  action: (ids: string[]) => Promise<{ success: boolean; error?: string }>
+  itemName?: string
+}) {
   const { selectedIds, clear, isDeleting, setIsDeleting } = useBulkDelete()
+  const { toast, confirm } = useAdminFeedback()
 
   if (selectedIds.length === 0) return null
 
   const handleDelete = async () => {
-    if (!window.confirm(`Hapus ${selectedIds.length} data terpilih? Tindakan ini tidak dapat dibatalkan.`)) return
-    
+    const ok = await confirm({
+      title: 'Hapus Massal (Bulk Delete)',
+      message: `Hapus ${selectedIds.length} ${itemName} terpilih secara massal?\n\nTindakan ini tidak dapat dibatalkan.`,
+      confirmText: `Hapus ${selectedIds.length} Item`,
+      cancelText: 'Batal',
+      isDanger: true,
+    })
+    if (!ok) return
+
     setIsDeleting(true)
     try {
       const res = await action(selectedIds)
       if (!res?.success) {
-        window.alert('Gagal menghapus data: ' + (res?.error || 'Kesalahan tidak diketahui'))
+        toast.error('Gagal menghapus data massal: ' + (res?.error || 'Kesalahan sistem'))
       } else {
+        toast.success(`${selectedIds.length} ${itemName} berhasil dihapus.`)
         clear()
       }
     } catch (err: any) {
-      window.alert('Terjadi kesalahan: ' + err.message)
+      toast.error('Terjadi kesalahan: ' + (err.message || 'Kesalahan jaringan'))
     } finally {
       setIsDeleting(false)
     }
@@ -96,12 +121,17 @@ export function BulkDeleteButton({ action }: { action: (ids: string[]) => Promis
 
   return (
     <button
+      type="button"
       onClick={handleDelete}
       disabled={isDeleting}
-      className="inline-flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 text-sm font-medium shrink-0 disabled:opacity-50"
+      className="inline-flex items-center gap-2 bg-rose-600 text-white px-3.5 py-2 rounded-lg hover:bg-rose-700 text-xs font-semibold shrink-0 disabled:opacity-50 transition-colors shadow-2xs"
     >
-      <Trash2 className="w-4 h-4" />
-      {isDeleting ? 'Menghapus...' : `Hapus (${selectedIds.length})`}
+      {isDeleting ? (
+        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+      ) : (
+        <Trash2 className="w-3.5 h-3.5" />
+      )}
+      <span>{isDeleting ? 'Menghapus...' : `Hapus (${selectedIds.length})`}</span>
     </button>
   )
 }
