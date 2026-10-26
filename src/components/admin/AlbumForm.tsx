@@ -350,18 +350,23 @@ export function AlbumForm({ initialData }: { initialData?: any }) {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Slug URL</label>
-              <div className="text-xs text-slate-500 mb-1.5">
-                Kosongkan untuk membuat slug otomatis dari judul.
+              <label className="block text-xs font-semibold text-stone-700 mb-1.5">Slug URL</label>
+              <div className="flex rounded-lg shadow-2xs border border-stone-300 overflow-hidden focus-within:ring-2 focus-within:ring-amber-500/20 focus-within:border-amber-600 transition-colors bg-white">
+                <span className="inline-flex items-center px-3 bg-stone-100 text-stone-500 text-xs font-mono select-none border-r border-stone-200 shrink-0">
+                  /{activeTab === 'id' ? 'galeri' : 'gallery'}/
+                </span>
+                <input
+                  type="text"
+                  name="slug"
+                  value={localizedData.slug[activeTab]}
+                  onChange={handleLocalizedChange}
+                  placeholder="otomatis-dibuat-dari-judul"
+                  className="w-full px-3 py-2 text-xs font-mono text-stone-900 bg-transparent focus:outline-none"
+                />
               </div>
-              <input
-                type="text"
-                name="slug"
-                value={localizedData.slug[activeTab]}
-                onChange={handleLocalizedChange}
-                placeholder="otomatis-dari-judul"
-                className="w-full px-3.5 py-2.5 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-900 text-sm"
-              />
+              <p className="text-[11px] text-stone-400 mt-1">
+                Kosongkan untuk membuat tautan URL permanen secara otomatis dari judul.
+              </p>
             </div>
 
             <div>

@@ -22,12 +22,11 @@ export function CategoryForm({ initialData }: { initialData?: any }) {
 
   const [localizedData, setLocalizedData] = useState({
     title: getLocalized(initialData?.title),
+    slug: getLocalized(initialData?.slug),
     description: getLocalized(initialData?.description),
   })
 
-  const [formData, setFormData] = useState({
-    slug: initialData?.slug || '',
-  })
+  const [formData, setFormData] = useState({})
 
   const handleLocalizedChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -53,6 +52,7 @@ export function CategoryForm({ initialData }: { initialData?: any }) {
       const submitData = {
         ...formData,
         title: localizedData.title,
+        slug: localizedData.slug,
         description: localizedData.description,
       }
       
@@ -119,14 +119,23 @@ export function CategoryForm({ initialData }: { initialData?: any }) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">Slug URL (Otomatis jika kosong)</label>
-          <input 
-            type="text" 
-            name="slug"
-            value={formData.slug}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-900" 
-          />
+          <label className="block text-xs font-semibold text-stone-700 mb-1.5">Slug URL</label>
+          <div className="flex rounded-lg shadow-2xs border border-stone-300 overflow-hidden focus-within:ring-2 focus-within:ring-amber-500/20 focus-within:border-amber-600 transition-colors bg-white">
+            <span className="inline-flex items-center px-3 bg-stone-100 text-stone-500 text-xs font-mono select-none border-r border-stone-200 shrink-0">
+              /{activeTab === 'id' ? 'kategori' : 'category'}/
+            </span>
+            <input
+              type="text"
+              name="slug"
+              value={localizedData.slug[activeTab]}
+              onChange={handleLocalizedChange}
+              placeholder="otomatis-dibuat-dari-judul"
+              className="w-full px-3 py-2 text-xs font-mono text-stone-900 bg-transparent focus:outline-none"
+            />
+          </div>
+          <p className="text-[11px] text-stone-400 mt-1">
+            Kosongkan untuk membuat tautan URL permanen secara otomatis dari judul.
+          </p>
         </div>
         <div>
           <label className="block text-sm font-medium text-slate-700 mb-1">Deskripsi ({activeTab.toUpperCase()})</label>
