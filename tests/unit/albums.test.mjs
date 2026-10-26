@@ -2,10 +2,14 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import {
   ALBUM_CATEGORIES,
+  MEDIA_CATEGORIES,
   getAlbumCategoryLabel,
+  getMediaCategoryLabel,
   isMediaVideo,
   countAlbumMedia,
   formatEventDateRange,
+  MEDIA_LIMITS,
+  validateMediaFile,
 } from '../../src/lib/gallery/utils.ts'
 
 test('Verifikasi 1: Kategori Album Galeri Terstruktur dan Bilingual', () => {
@@ -177,5 +181,103 @@ test('Verifikasi 7: Fallback Judul Media ke Judul Album Jika Kosong', () => {
     'Sembahyang Mooncake di Halaman'
   )
 })
+
+test('Verifikasi 8: Kategori Media Lepas Galeri (MEDIA_CATEGORIES & getMediaCategoryLabel)', () => {
+  assert.equal(MEDIA_CATEGORIES.length, 6)
+  assert.equal(getMediaCategoryLabel('building', 'id'), 'Bangunan Klenteng')
+  assert.equal(getMediaCategoryLabel('building', 'en'), 'Temple Building')
+  assert.equal(getMediaCategoryLabel('interior', 'id'), 'Interior & Altar')
+  assert.equal(getMediaCategoryLabel('interior', 'en'), 'Interior & Altar')
+  assert.equal(getMediaCategoryLabel('activities', 'id'), 'Kegiatan & Ritual')
+  assert.equal(getMediaCategoryLabel('activities', 'en'), 'Activities & Rituals')
+  assert.equal(getMediaCategoryLabel('history', 'id'), 'Sejarah & Peninggalan')
+  assert.equal(getMediaCategoryLabel('history', 'en'), 'History & Relics')
+  assert.equal(getMediaCategoryLabel('traditions', 'id'), 'Tradisi & Budaya')
+  assert.equal(getMediaCategoryLabel('traditions', 'en'), 'Traditions & Culture')
+  assert.equal(getMediaCategoryLabel('other', 'id'), 'Dokumentasi Lainnya')
+  assert.equal(getMediaCategoryLabel('other', 'en'), 'Other Documentation')
+
+  // Fallback aman
+  assert.equal(getMediaCategoryLabel(null, 'id'), 'Umum')
+  assert.equal(getMediaCategoryLabel(undefined, 'en'), 'General')
+})
+
+test('Verifikasi 9: Resolusi Tab Default Halaman Galeri (Smart Hybrid Tab Resolution)', () => {
+  const resolveActiveTab = (tab, totalAlbums) => {
+    if (tab === 'photos' || tab === 'albums') return tab
+    return totalAlbums > 0 ? 'albums' : 'photos'
+  }
+
+  // Kasus 1: Belum ada album di database (totalAlbums = 0) -> otomatis membuka tab 'photos'
+  assert.equal(resolveActiveTab(undefined, 0), 'photos')
+  assert.equal(resolveActiveTab(null, 0), 'photos')
+
+  // Kasus 2: Sudah ada album di database (totalAlbums > 0) -> default ke 'albums'
+  assert.equal(resolveActiveTab(undefined, 5), 'albums')
+
+  // Kasus 3: User secara eksplisit meminta tab 'photos' (misal dari tombol Lihat Semua Galeri di beranda)
+  assert.equal(resolveActiveTab('photos', 5), 'photos')
+  assert.equal(resolveActiveTab('photos', 0), 'photos')
+
+  // Kasus 4: User secara eksplisit meminta tab 'albums'
+  assert.equal(resolveActiveTab('albums', 5), 'albums')
+  assert.equal(resolveActiveTab('albums', 0), 'albums')
+})
+
+test('Verifikasi 10: Batas Ukuran dan Format Validasi Media (Video maks 10MB, Foto maks 5MB)', () => {
+  assert.equal(MEDIA_LIMITS.MAX_VIDEO_SIZE_MB, 10)
+  assert.equal(MEDIA_LIMITS.MAX_IMAGE_SIZE_MB, 5)
+  assert.equal(MEDIA_LIMITS.MAX_VIDEO_SIZE_BYTES, 10 * 1024 * 1024)
+  assert.equal(MEDIA_LIMITS.MAX_IMAGE_SIZE_BYTES, 5 * 1024 * 1024)
+
+  // 1. Video 8 MB (valid, <= 10 MB)
+  const validVideo = validateMediaFile({
+    name: 'perayaan-barongsai.mp4',
+    type: 'video/mp4',
+    size: 8 * 1024 * 1024,
+  })
+  assert.equal(validVideo.valid, true)
+  assert.equal(validVideo.mediaType, 'video')
+
+  // 2. Video 12 MB (invalid, > 10 MB)
+  const invalidVideo = validateMediaFile({
+    name: 'kirab-panjang.mp4',
+    type: 'video/mp4',
+    size: 12 * 1024 * 1024,
+  })
+  assert.equal(invalidVideo.valid, false)
+  assert.equal(invalidVideo.mediaType, 'video')
+  assert.match(invalidVideo.error, /melebihi batas maksimal 10MB/)
+
+  // 3. Foto 4 MB (valid, <= 5 MB)
+  const validPhoto = validateMediaFile({
+    name: 'altar-hi-res.jpg',
+    type: 'image/jpeg',
+    size: 4 * 1024 * 1024,
+  })
+  assert.equal(validPhoto.valid, true)
+  assert.equal(validPhoto.mediaType, 'image')
+
+  // 4. Foto 6 MB (invalid, > 5 MB)
+  const invalidPhoto = validateMediaFile({
+    name: 'arsip-raksasa.png',
+    type: 'image/png',
+    size: 6 * 1024 * 1024,
+  })
+  assert.equal(invalidPhoto.valid, false)
+  assert.equal(invalidPhoto.mediaType, 'image')
+  assert.match(invalidPhoto.error, /melebihi batas maksimal 5MB/)
+
+  // 5. Format tidak didukung (misal PDF)
+  const invalidFormat = validateMediaFile({
+    name: 'dokumen.pdf',
+    type: 'application/pdf',
+    size: 1024 * 1024,
+  })
+  assert.equal(invalidFormat.valid, false)
+  assert.match(invalidFormat.error, /tidak didukung/)
+})
+
+
 
 

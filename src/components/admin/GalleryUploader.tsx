@@ -5,7 +5,8 @@
 import React, { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { updateMediaAction } from "@/app/(admin)/admin/galeri/actions";
-import { isMediaVideo } from "@/lib/gallery/utils";
+import { isMediaVideo, validateMediaFile, MEDIA_LIMITS } from "@/lib/gallery/utils";
+import { upload } from "@vercel/blob/client";
 import { Video as VideoIcon } from "lucide-react";
 
 export function GalleryUploader({ initialMedia, collection = "gallery-media" }: { initialMedia: any[], collection?: string }) {
@@ -68,14 +69,89 @@ export function GalleryUploader({ initialMedia, collection = "gallery-media" }: 
     const file = e.target.files?.[0];
     if (!file) return;
 
-    setIsUploading(true);
     setError("");
 
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("alt", file.name);
+    // Validasi format dan batas ukuran file (Foto maks 25MB, Video maks 10MB)
+    const validation = validateMediaFile(file);
+    if (!validation.valid) {
+      setError(validation.error || "File tidak memenuhi syarat batas upload.");
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+      return;
+    }
+
+    setIsUploading(true);
 
     try {
+      // Jika file > 4 MB, coba direct client upload ke Vercel Blob untuk memintas batas 4.5 MB Serverless Function
+      if (file.size > 4 * 1024 * 1024) {
+        try {
+          const issueRes = await fetch("/api/vercel-blob-client-upload-route?issue-client-upload=1", {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              collectionSlug: collection,
+              filename: file.name,
+              mimeType: file.type,
+            }),
+          });
+
+          if (issueRes.ok) {
+            const { clientUploadContext, filename, pathname } = await issueRes.json();
+            await upload(pathname, file, {
+              access: "public",
+              clientPayload: JSON.stringify({
+                collectionSlug: collection,
+                mimeType: file.type,
+                signedReceipt: clientUploadContext.signedReceipt,
+              }),
+              contentType: file.type,
+              handleUploadUrl: "/api/vercel-blob-client-upload-route",
+            });
+
+            const formData = new FormData();
+            formData.append(
+              "file",
+              JSON.stringify({
+                filename,
+                mimeType: file.type,
+                size: file.size,
+                clientUploadContext,
+              })
+            );
+            formData.append("alt", file.name);
+
+            const res = await fetch(`/api/${collection}`, {
+              method: "POST",
+              body: formData,
+            });
+
+            const result = await res.json().catch(() => null);
+            if (!res.ok) {
+              throw new Error(
+                result?.errors?.[0]?.message ||
+                  result?.message ||
+                  `Upload gagal (${res.status})`
+              );
+            }
+
+            if (fileInputRef.current) {
+              fileInputRef.current.value = "";
+            }
+            router.refresh();
+            return;
+          }
+        } catch (clientErr: any) {
+          console.warn("Direct client upload tidak aktif atau gagal, beralih ke standard POST:", clientErr.message);
+        }
+      }
+
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("alt", file.name);
+
       const res = await fetch(`/api/${collection}`, {
         method: "POST",
         body: formData,

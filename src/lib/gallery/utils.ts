@@ -24,6 +24,69 @@ export function getAlbumCategoryLabel(category?: string | null, locale: 'id' | '
   return match ? match.label[locale] : (locale === 'id' ? 'Dokumentasi Acara' : 'Event Documentation')
 }
 
+export const MEDIA_CATEGORIES = [
+  { value: 'building', label: { id: 'Bangunan Klenteng', en: 'Temple Building' } },
+  { value: 'interior', label: { id: 'Interior & Altar', en: 'Interior & Altar' } },
+  { value: 'activities', label: { id: 'Kegiatan & Ritual', en: 'Activities & Rituals' } },
+  { value: 'history', label: { id: 'Sejarah & Peninggalan', en: 'History & Relics' } },
+  { value: 'traditions', label: { id: 'Tradisi & Budaya', en: 'Traditions & Culture' } },
+  { value: 'other', label: { id: 'Dokumentasi Lainnya', en: 'Other Documentation' } },
+] as const
+
+export function getMediaCategoryLabel(category?: string | null, locale: 'id' | 'en' = 'id'): string {
+  const match = MEDIA_CATEGORIES.find((c) => c.value === category)
+  return match ? match.label[locale] : (locale === 'id' ? 'Umum' : 'General')
+}
+
+export const MEDIA_LIMITS = {
+  MAX_IMAGE_SIZE_BYTES: 5 * 1024 * 1024, // 5 MB (Dibatasi 5 MB sesuai permintaan)
+  MAX_VIDEO_SIZE_BYTES: 10 * 1024 * 1024, // 10 MB (Dibatasi 10 MB sesuai permintaan)
+  MAX_IMAGE_SIZE_MB: 5,
+  MAX_VIDEO_SIZE_MB: 10,
+  ALLOWED_IMAGE_TYPES: ['image/jpeg', 'image/png', 'image/webp', 'image/gif'],
+  ALLOWED_VIDEO_TYPES: ['video/mp4', 'video/webm', 'video/quicktime', 'video/ogg'],
+} as const
+
+export function validateMediaFile(file: { size: number; type: string; name?: string }): {
+  valid: boolean
+  error?: string
+  mediaType: 'image' | 'video'
+} {
+  const isImage =
+    MEDIA_LIMITS.ALLOWED_IMAGE_TYPES.includes(file.type as any) || file.type.startsWith('image/')
+  const isVideo =
+    MEDIA_LIMITS.ALLOWED_VIDEO_TYPES.includes(file.type as any) || file.type.startsWith('video/')
+
+  if (!isImage && !isVideo) {
+    return {
+      valid: false,
+      error: `Format berkas "${file.name || 'file'}" tidak didukung. Gunakan format foto (JPG, PNG, WebP) atau video (MP4, WebM).`,
+      mediaType: 'image',
+    }
+  }
+
+  if (isImage && file.size > MEDIA_LIMITS.MAX_IMAGE_SIZE_BYTES) {
+    return {
+      valid: false,
+      error: `Ukuran foto "${file.name || 'file'}" (${(file.size / (1024 * 1024)).toFixed(1)}MB) melebihi batas maksimal ${MEDIA_LIMITS.MAX_IMAGE_SIZE_MB}MB.`,
+      mediaType: 'image',
+    }
+  }
+
+  if (isVideo && file.size > MEDIA_LIMITS.MAX_VIDEO_SIZE_BYTES) {
+    return {
+      valid: false,
+      error: `Ukuran video "${file.name || 'file'}" (${(file.size / (1024 * 1024)).toFixed(1)}MB) melebihi batas maksimal ${MEDIA_LIMITS.MAX_VIDEO_SIZE_MB}MB.`,
+      mediaType: 'video',
+    }
+  }
+
+  return {
+    valid: true,
+    mediaType: isVideo ? 'video' : 'image',
+  }
+}
+
 export function isMediaVideo(media: any): boolean {
   if (!media) return false
   if (media.mediaType === 'video') return true

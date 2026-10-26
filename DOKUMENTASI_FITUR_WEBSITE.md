@@ -328,7 +328,7 @@ Website dirancang dengan arsitektur dwibahasa bawaan (*first-class international
   2. **Bulk Upload Gambar & Video Massal (`BulkMediaUploader.tsx`):**
      - Mendukung *drag-and-drop* dan pemilihan banyak berkas sekaligus (*multi-file picker*).
      - Pratinjau lokal (*client-side preview*) instan untuk gambar dan lencana indikator video.
-     - Validasi whitelist MIME type (`image/jpeg`, `image/png`, `image/webp`, `video/mp4`, `video/webm`, `video/quicktime`) serta batas ukuran berkas (maksimal 10MB per foto, 100MB per video).
+     - Validasi whitelist MIME type (`image/jpeg`, `image/png`, `image/webp`, `video/mp4`, `video/webm`, `video/quicktime`) serta batas ukuran berkas (maksimal 5MB per foto, 10MB per video).
      - Pengunggahan asinkron mandiri per-berkas dengan bilah progres (*progress bar*), status penanganan error terisolasi (kegagalan satu berkas tidak membatalkan berkas lainnya), dan tombol *Coba Lagi* (*Retry*).
   3. **Pengaturan Urutan Media (*Media Reordering*):**
      - Setiap item media di dalam album memiliki nomor urut dan tombol navigasi naik/turun (*Move Up / Move Down*).

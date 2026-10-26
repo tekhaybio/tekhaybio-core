@@ -87,6 +87,13 @@ export function MediaPicker({
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error(`Ukuran file "${file.name}" (${(file.size / (1024 * 1024)).toFixed(1)}MB) melebihi batas maksimal 5MB.`)
+      e.target.value = ''
+      return
+    }
+
     setIsUploading(true)
     const formData = new FormData()
     formData.append('file', file)

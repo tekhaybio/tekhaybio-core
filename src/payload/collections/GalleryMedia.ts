@@ -10,10 +10,17 @@ export const GalleryMedia: CollectionConfig = {
     beforeChange: [
       ({ data, req }: any) => {
         if (data?.mimeType) {
+          const fileSize = req?.file?.size ?? data?.filesize
           if (data.mimeType.startsWith('video/')) {
             data.mediaType = 'video'
+            if (fileSize && fileSize > 10 * 1024 * 1024) {
+              throw new Error('Ukuran file video melebihi batas maksimal 10 MB.')
+            }
           } else if (data.mimeType.startsWith('image/')) {
             data.mediaType = 'image'
+            if (fileSize && fileSize > 5 * 1024 * 1024) {
+              throw new Error('Ukuran file foto melebihi batas maksimal 5 MB.')
+            }
           }
         }
         return data

@@ -2,6 +2,8 @@
 'use client'
 
 import React, { useState, useRef, useCallback } from 'react'
+import { upload } from '@vercel/blob/client'
+import { MEDIA_LIMITS, validateMediaFile } from '@/lib/gallery/utils'
 import {
   UploadCloud,
   FileImage,
@@ -25,11 +27,6 @@ export interface UploadQueueItem {
   resultDoc?: any
 }
 
-const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
-const ALLOWED_VIDEO_TYPES = ['video/mp4', 'video/webm', 'video/quicktime', 'video/ogg']
-const MAX_IMAGE_SIZE_BYTES = 25 * 1024 * 1024 // 25 MB
-const MAX_VIDEO_SIZE_BYTES = 100 * 1024 * 1024 // 100 MB
-
 export function BulkMediaUploader({
   onUploadSuccess,
   collection = 'gallery-media',
@@ -45,37 +42,7 @@ export function BulkMediaUploader({
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const validateFile = (file: File): { valid: boolean; error?: string; mediaType: 'image' | 'video' } => {
-    const isImage = ALLOWED_IMAGE_TYPES.includes(file.type) || file.type.startsWith('image/')
-    const isVideo = ALLOWED_VIDEO_TYPES.includes(file.type) || file.type.startsWith('video/')
-
-    if (!isImage && !isVideo) {
-      return {
-        valid: false,
-        error: `Format file "${file.name}" tidak didukung. Gunakan JPG, PNG, WebP, atau video MP4, WebM.`,
-        mediaType: 'image',
-      }
-    }
-
-    if (isImage && file.size > MAX_IMAGE_SIZE_BYTES) {
-      return {
-        valid: false,
-        error: `Ukuran foto "${file.name}" (${(file.size / (1024 * 1024)).toFixed(1)}MB) melebihi batas 25MB.`,
-        mediaType: 'image',
-      }
-    }
-
-    if (isVideo && file.size > MAX_VIDEO_SIZE_BYTES) {
-      return {
-        valid: false,
-        error: `Ukuran video "${file.name}" (${(file.size / (1024 * 1024)).toFixed(1)}MB) melebihi batas 100MB.`,
-        mediaType: 'video',
-      }
-    }
-
-    return {
-      valid: true,
-      mediaType: isVideo ? 'video' : 'image',
-    }
+    return validateMediaFile(file)
   }
 
   const addFilesToQueue = (files: FileList | File[]) => {
@@ -135,6 +102,65 @@ export function BulkMediaUploader({
   const uploadSingleItem = async (item: UploadQueueItem): Promise<any | null> => {
     const filenameTitle = item.file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ')
     const mediaTitle = defaultTitle?.trim() || filenameTitle
+
+    // Jika file > 4 MB, utamakan direct client upload ke Vercel Blob untuk menghindari batas 4.5 MB Vercel Serverless
+    if (item.file.size > 4 * 1024 * 1024) {
+      try {
+        const issueRes = await fetch('/api/vercel-blob-client-upload-route?issue-client-upload=1', {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            collectionSlug: collection,
+            filename: item.file.name,
+            mimeType: item.file.type,
+          }),
+        })
+
+        if (issueRes.ok) {
+          const { clientUploadContext, filename, pathname } = await issueRes.json()
+          await upload(pathname, item.file, {
+            access: 'public',
+            clientPayload: JSON.stringify({
+              collectionSlug: collection,
+              mimeType: item.file.type,
+              signedReceipt: clientUploadContext.signedReceipt,
+            }),
+            contentType: item.file.type,
+            handleUploadUrl: '/api/vercel-blob-client-upload-route',
+          })
+
+          const formData = new FormData()
+          formData.append(
+            'file',
+            JSON.stringify({
+              filename,
+              mimeType: item.file.type,
+              size: item.file.size,
+              clientUploadContext,
+            })
+          )
+          formData.append('title', mediaTitle)
+          formData.append('alt', mediaTitle)
+          formData.append('mediaType', item.mediaType)
+
+          const res = await fetch(`/api/${collection}`, {
+            method: 'POST',
+            body: formData,
+          })
+
+          const json = await res.json().catch(() => null)
+          if (!res.ok) {
+            throw new Error(json?.errors?.[0]?.message || json?.message || `Gagal mengunggah (${res.status})`)
+          }
+
+          return json.doc || json
+        }
+      } catch (err: any) {
+        console.warn('Direct client upload tidak aktif atau gagal, beralih ke standard upload:', err.message)
+      }
+    }
+
     const formData = new FormData()
     formData.append('file', item.file)
     formData.append('title', mediaTitle)
@@ -259,7 +285,7 @@ export function BulkMediaUploader({
               Tarik & lepas file foto atau video ke sini, atau klik untuk memilih
             </p>
             <p className="text-xs text-slate-500 mt-1">
-              Mendukung banyak file sekaligus. Foto (JPG, PNG, WebP maks 25MB) dan Video (MP4, WebM maks 100MB).
+              Mendukung banyak file sekaligus. Foto (JPG, PNG, WebP maks 5MB) dan Video (MP4, WebM maks 10MB).
             </p>
           </div>
           <button
