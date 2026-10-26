@@ -10,6 +10,8 @@ import {
   formatEventDateRange,
   MEDIA_LIMITS,
   validateMediaFile,
+  extractCaptionText,
+  normalizeMediaItemsForLocale,
 } from '../../src/lib/gallery/utils.ts'
 
 test('Verifikasi 1: Kategori Album Galeri Terstruktur dan Bilingual', () => {
@@ -277,6 +279,91 @@ test('Verifikasi 10: Batas Ukuran dan Format Validasi Media (Video maks 10MB, Fo
   assert.equal(invalidFormat.valid, false)
   assert.match(invalidFormat.error, /tidak didukung/)
 })
+
+test('Verifikasi 11: Normalisasi mediaItems Dwibahasa untuk Pengeluaran dan Penambahan Media', () => {
+  // 1. Ekstraksi caption dari berbagai format
+  assert.equal(extractCaptionText('Teks Sederhana', 'id'), 'Teks Sederhana')
+  assert.equal(extractCaptionText({ id: 'Altar Klenteng', en: 'Temple Altar' }, 'id'), 'Altar Klenteng')
+  assert.equal(extractCaptionText({ id: 'Altar Klenteng', en: 'Temple Altar' }, 'en'), 'Temple Altar')
+
+  // Tangani objek bersarang yang cacat akibat locale fallback { id: { en: '' }, en: '' }
+  assert.equal(extractCaptionText({ id: { en: '' }, en: '' }, 'id'), '')
+  assert.equal(extractCaptionText({ id: { en: '' }, en: '' }, 'en'), '')
+  assert.equal(extractCaptionText(null, 'id'), '')
+  assert.equal(extractCaptionText(undefined, 'en'), '')
+
+  // 2. Normalisasi mediaItems dari data mentah findByID (termasuk populated objects dan ObjectId)
+  const rawMediaItems = [
+    {
+      media: { id: '6adf3c3d30cc5415cf4eaf04', title: 'Foto 1' },
+      caption: { id: { en: '' }, en: '' },
+      sortOrder: 0,
+      id: 'item-1',
+    },
+    {
+      media: '6adf3c3e30cc5415cf4eaf0b',
+      caption: { id: 'Keterangan ID', en: 'Caption EN' },
+      sortOrder: 1,
+      id: 'item-2',
+    },
+    {
+      media: { toString: () => '6adf3c4030cc5415cf4eaf19' },
+      caption: 'Keterangan Tunggal',
+      sortOrder: 5,
+      id: 'item-3',
+    },
+    {
+      // Item tanpa media harus disaring
+      media: null,
+      caption: '',
+      sortOrder: 9,
+    },
+  ]
+
+  const normalizedId = normalizeMediaItemsForLocale(rawMediaItems, 'id')
+  assert.equal(normalizedId.length, 3)
+
+  // Pastikan seluruh media adalah string ID murni (bukan objek / ObjectId)
+  assert.equal(normalizedId[0].media, '6adf3c3d30cc5415cf4eaf04')
+  assert.equal(typeof normalizedId[0].media, 'string')
+  assert.equal(normalizedId[1].media, '6adf3c3e30cc5415cf4eaf0b')
+  assert.equal(typeof normalizedId[1].media, 'string')
+  assert.equal(normalizedId[2].media, '6adf3c4030cc5415cf4eaf19')
+  assert.equal(typeof normalizedId[2].media, 'string')
+
+  // Pastikan seluruh caption adalah string primitif (bukan objek bersarang yang menyebabkan CastError)
+  assert.equal(typeof normalizedId[0].caption, 'string')
+  assert.equal(normalizedId[0].caption, '')
+  assert.equal(typeof normalizedId[1].caption, 'string')
+  assert.equal(normalizedId[1].caption, 'Keterangan ID')
+  assert.equal(typeof normalizedId[2].caption, 'string')
+  assert.equal(normalizedId[2].caption, 'Keterangan Tunggal')
+
+  // Pastikan sortOrder di-reindex secara berurutan
+  assert.equal(normalizedId[0].sortOrder, 0)
+  assert.equal(normalizedId[1].sortOrder, 1)
+  assert.equal(normalizedId[2].sortOrder, 2)
+
+  // Normalisasi untuk bahasa Inggris
+  const normalizedEn = normalizeMediaItemsForLocale(rawMediaItems, 'en')
+  assert.equal(normalizedEn[0].caption, '')
+  assert.equal(normalizedEn[1].caption, 'Caption EN')
+  assert.equal(normalizedEn[2].caption, 'Keterangan Tunggal')
+
+  // 3. Simulasi pengeluaran media (remove media):
+  const targetMediaIdToRemove = '6adf3c3d30cc5415cf4eaf04'
+  const remaining = rawMediaItems.filter((item) => {
+    const mId = typeof item.media === 'object' && item.media?.id ? item.media.id : String(item.media || '')
+    return mId !== targetMediaIdToRemove
+  })
+  const afterRemoval = normalizeMediaItemsForLocale(remaining, 'id')
+  assert.equal(afterRemoval.length, 2)
+  assert.equal(afterRemoval[0].media, '6adf3c3e30cc5415cf4eaf0b')
+  assert.equal(afterRemoval[0].sortOrder, 0)
+  assert.equal(afterRemoval[1].media, '6adf3c4030cc5415cf4eaf19')
+  assert.equal(afterRemoval[1].sortOrder, 1)
+})
+
 
 
 

@@ -8,6 +8,7 @@ import {
   saveAlbumAction,
   deleteAlbumAction,
   removeMediaFromAlbumAction,
+  addMediaToAlbumAction,
   deleteMediaAction,
   updateMediaAction,
 } from '@/app/(admin)/admin/galeri/actions'
@@ -15,6 +16,7 @@ import { LocaleTabs } from '@/components/admin/LocaleTabs'
 import { useAdminFeedback } from '@/components/admin/AdminFeedbackContext'
 import { MediaPicker } from '@/components/admin/MediaPicker'
 import { BulkMediaUploader } from '@/components/admin/BulkMediaUploader'
+import { AlbumMediaPickerModal } from '@/components/admin/AlbumMediaPickerModal'
 import { ALBUM_CATEGORIES, isMediaVideo } from '@/lib/gallery/utils'
 import {
   Calendar,
@@ -27,6 +29,7 @@ import {
   Check,
   AlertCircle,
   Plus,
+  FolderPlus,
   Layers,
   Sparkles,
 } from 'lucide-react'
@@ -122,6 +125,39 @@ export function AlbumForm({ initialData }: { initialData?: any }) {
     setSuccessMessage(`${newDocs.length} media berhasil ditambahkan ke daftar album. Tekan "Simpan Album" untuk memfinalisasi.`)
   }
 
+  const [showExistingMediaPicker, setShowExistingMediaPicker] = useState(false)
+
+  const handleAddExistingMedia = async (selectedDocs: any[]) => {
+    if (!selectedDocs || selectedDocs.length === 0) return
+
+    setMediaItems((prev) => {
+      const existingMediaIds = new Set(
+        prev.map((i) => (typeof i.media === 'object' ? i.media?.id : String(i.media || '')))
+      )
+      const toAdd = selectedDocs
+        .filter((d) => !existingMediaIds.has(d.id))
+        .map((doc, idx) => ({
+          media: doc,
+          caption: { id: '', en: '' },
+          sortOrder: prev.length + idx,
+        }))
+      return [...prev, ...toAdd]
+    })
+
+    // Jika sedang mengedit album yang sudah ada di database, simpan juga secara langsung
+    if (initialData?.id) {
+      const idsToAdd = selectedDocs.map((d) => d.id)
+      const res = await addMediaToAlbumAction(initialData.id, idsToAdd)
+      if (res.success) {
+        toast.success(`${selectedDocs.length} media berhasil ditambahkan ke album.`)
+      } else {
+        toast.error('Gagal menyimpan penambahan media: ' + (res.error || 'Kesalahan server'))
+      }
+    } else {
+      toast.success(`${selectedDocs.length} media dipilih dari repositori. Tekan "Simpan Album" untuk memfinalisasi.`)
+    }
+  }
+
   const moveItem = (index: number, direction: 'up' | 'down') => {
     const newItems = [...mediaItems]
     const targetIndex = direction === 'up' ? index - 1 : index + 1
@@ -155,6 +191,7 @@ export function AlbumForm({ initialData }: { initialData?: any }) {
         toast.error('Gagal mengeluarkan media: ' + (res.error || 'Kesalahan sistem'))
         return
       }
+      toast.success('Media berhasil dikeluarkan dari album.')
     }
 
     setMediaItems((prev) => prev.filter((_, i) => i !== index))
@@ -393,8 +430,19 @@ export function AlbumForm({ initialData }: { initialData?: any }) {
                   Media dalam Album ({mediaItems.length} File)
                 </h2>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  Unggah banyak foto dan video sekaligus, lalu atur urutan dan keterangan media.
+                  Unggah berkas baru atau pilih dari repositori media yang sudah ada.
                 </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setShowExistingMediaPicker(true)}
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold px-3.5 py-2 rounded-lg bg-amber-50 text-amber-900 border border-amber-300 hover:bg-amber-100 transition-colors shadow-2xs cursor-pointer"
+                >
+                  <FolderPlus className="w-4 h-4 text-amber-700" />
+                  Pilih dari Media yang Ada
+                </button>
               </div>
             </div>
 
@@ -407,8 +455,18 @@ export function AlbumForm({ initialData }: { initialData?: any }) {
 
             {/* Media Items Grid */}
             {mediaItems.length === 0 ? (
-              <div className="text-center py-10 border border-dashed border-slate-200 rounded-xl bg-slate-50/50 text-slate-500 text-sm">
-                Belum ada foto atau video dalam album ini. Gunakan area unggah di atas untuk menambahkan media.
+              <div className="text-center py-10 border border-dashed border-slate-200 rounded-xl bg-slate-50/50 text-slate-500 text-sm space-y-3">
+                <p>Belum ada foto atau video dalam album ini.</p>
+                <div className="flex flex-wrap items-center justify-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setShowExistingMediaPicker(true)}
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-lg bg-white text-slate-800 border border-slate-300 hover:bg-slate-100 transition-colors shadow-2xs cursor-pointer"
+                  >
+                    <FolderPlus className="w-4 h-4 text-amber-600" />
+                    Pilih dari Media yang Ada
+                  </button>
+                </div>
               </div>
             ) : (
               <div className="space-y-3">
@@ -763,6 +821,16 @@ export function AlbumForm({ initialData }: { initialData?: any }) {
           </div>
         </div>
       )}
+
+      {/* Modal Pemilih Media dari Repositori yang Sudah Ada */}
+      <AlbumMediaPickerModal
+        isOpen={showExistingMediaPicker}
+        onClose={() => setShowExistingMediaPicker(false)}
+        onSelectMedia={handleAddExistingMedia}
+        existingMediaIds={mediaItems.map((i) =>
+          typeof i.media === 'object' ? i.media?.id : String(i.media || '')
+        )}
+      />
     </form>
   )
 }

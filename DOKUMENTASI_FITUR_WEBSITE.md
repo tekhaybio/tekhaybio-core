@@ -330,7 +330,10 @@ Website dirancang dengan arsitektur dwibahasa bawaan (*first-class international
      - Pratinjau lokal (*client-side preview*) instan untuk gambar dan lencana indikator video.
      - Validasi whitelist MIME type (`image/jpeg`, `image/png`, `image/webp`, `video/mp4`, `video/webm`, `video/quicktime`) serta batas ukuran berkas (maksimal 5MB per foto, 10MB per video).
      - Pengunggahan asinkron mandiri per-berkas dengan bilah progres (*progress bar*), status penanganan error terisolasi (kegagalan satu berkas tidak membatalkan berkas lainnya), dan tombol *Coba Lagi* (*Retry*).
-  3. **Pengaturan Urutan Media (*Media Reordering*):**
+  3. **Penambahan Media dari Repositori yang Ada (`AlbumMediaPickerModal.tsx`):**
+     - Admin dapat memilih satu atau banyak foto & video yang sudah pernah diunggah ke repositori `gallery-media` tanpa perlu upload ulang.
+     - Dilengkapi fitur pencarian judul/file, penyaringan tipe (Semua / Foto / Video), penanda media yang sudah terpasang (*Sudah di Album*), tombol *Pilih Semua*, dan kalkulasi jumlah item terpilih.
+  4. **Pengaturan Urutan Media (*Media Reordering*):**
      - Setiap item media di dalam album memiliki nomor urut dan tombol navigasi naik/turun (*Move Up / Move Down*).
      - Admin dapat menyusun urutan tampilan foto dan video sesuai kronologi perayaan.
   4. **Penyuntingan Metadata Media Per-Item:**

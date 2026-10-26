@@ -178,3 +178,47 @@ export function formatEventDateRange(
 
   return `${startFormatted} – ${endFormatted}`
 }
+
+export function extractCaptionText(caption: any, locale: 'id' | 'en'): string {
+  if (!caption) return ''
+  if (typeof caption === 'string') return caption
+  if (typeof caption === 'object') {
+    const val = caption[locale]
+    if (typeof val === 'string') return val
+    if (val && typeof val === 'object') {
+      const deepVal = val[locale] ?? val.id ?? val.en
+      if (typeof deepVal === 'string') return deepVal
+    }
+    const fallback = locale === 'id' ? caption.en : caption.id
+    if (typeof fallback === 'string') return fallback
+  }
+  return ''
+}
+
+export function normalizeMediaItemsForLocale(
+  items: any[],
+  locale: 'id' | 'en'
+): { media: string; caption: string; sortOrder: number }[] {
+  if (!Array.isArray(items)) return []
+  return items
+    .map((item: any) => {
+      const mediaId =
+        typeof item.media === 'object' && item.media?.id
+          ? item.media.id
+          : typeof item.media === 'string'
+            ? item.media
+            : String(item.media || '')
+
+      return {
+        media: mediaId,
+        caption: extractCaptionText(item.caption, locale),
+      }
+    })
+    .filter((item) => Boolean(item.media))
+    .map((item, idx) => ({
+      media: item.media,
+      caption: item.caption,
+      sortOrder: idx,
+    }))
+}
+

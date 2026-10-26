@@ -7,6 +7,7 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { revalidatePath } from 'next/cache'
 import { getMediaUsage } from '@/lib/media/getMediaUsage'
+import { normalizeMediaItemsForLocale } from '@/lib/gallery/utils'
 
 const extractLocaleData = (data: any, locale: 'id' | 'en'): any => {
   if (!data || typeof data !== 'object') return data
@@ -231,23 +232,37 @@ export async function addMediaToAlbumAction(albumId: string, mediaIds: string[])
 
     const existingItems = Array.isArray(album.mediaItems) ? [...album.mediaItems] : []
     const existingMediaIds = new Set(
-      existingItems.map((item: any) => (typeof item.media === 'object' ? item.media?.id : item.media))
+      existingItems.map((item: any) =>
+        typeof item.media === 'object' && item.media?.id ? item.media.id : String(item.media || '')
+      )
     )
 
     const newItems = mediaIds
       .filter((mId) => !existingMediaIds.has(mId))
-      .map((mId, idx) => ({
+      .map((mId) => ({
         media: mId,
-        sortOrder: existingItems.length + idx,
+        caption: '',
       }))
 
-    const updatedMediaItems = [...existingItems, ...newItems]
+    const combinedItems = [...existingItems, ...newItems]
 
     await payload.update({
       collection: 'albums',
       id: albumId,
+      locale: 'id',
       data: {
-        mediaItems: updatedMediaItems,
+        mediaItems: normalizeMediaItemsForLocale(combinedItems, 'id'),
+      },
+      user,
+      overrideAccess: false,
+    })
+
+    await payload.update({
+      collection: 'albums',
+      id: albumId,
+      locale: 'en',
+      data: {
+        mediaItems: normalizeMediaItemsForLocale(combinedItems, 'en'),
       },
       user,
       overrideAccess: false,
@@ -278,16 +293,29 @@ export async function removeMediaFromAlbumAction(albumId: string, mediaId: strin
     if (!album) throw new Error('Album tidak ditemukan.')
 
     // Mengeluarkan media dari daftar mediaItems tanpa menghapus file fisik di gallery-media
-    const updatedMediaItems = (album.mediaItems || []).filter((item: any) => {
-      const itemMediaId = typeof item.media === 'object' ? item.media?.id : item.media
+    const remainingItems = (album.mediaItems || []).filter((item: any) => {
+      const itemMediaId =
+        typeof item.media === 'object' && item.media?.id ? item.media.id : String(item.media || '')
       return itemMediaId !== mediaId
     })
 
     await payload.update({
       collection: 'albums',
       id: albumId,
+      locale: 'id',
       data: {
-        mediaItems: updatedMediaItems,
+        mediaItems: normalizeMediaItemsForLocale(remainingItems, 'id'),
+      },
+      user,
+      overrideAccess: false,
+    })
+
+    await payload.update({
+      collection: 'albums',
+      id: albumId,
+      locale: 'en',
+      data: {
+        mediaItems: normalizeMediaItemsForLocale(remainingItems, 'en'),
       },
       user,
       overrideAccess: false,
