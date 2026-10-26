@@ -17,6 +17,7 @@ import { useAdminFeedback } from '@/components/admin/AdminFeedbackContext'
 import { MediaPicker } from '@/components/admin/MediaPicker'
 import { BulkMediaUploader } from '@/components/admin/BulkMediaUploader'
 import { AlbumMediaPickerModal } from '@/components/admin/AlbumMediaPickerModal'
+import { MediaThumbnail } from '@/components/ui/MediaThumbnail'
 import { ALBUM_CATEGORIES, isMediaVideo } from '@/lib/gallery/utils'
 import {
   Calendar,
@@ -479,8 +480,6 @@ export function AlbumForm({ initialData }: { initialData?: any }) {
                   {mediaItems.map((item, index) => {
                     const mediaDoc = typeof item.media === 'object' ? item.media : {}
                     const isVideo = isMediaVideo(mediaDoc)
-                    const thumbUrl =
-                      mediaDoc.sizes?.thumbnail?.url || mediaDoc.url || '/placeholder.png'
                     const albumTitleFallback =
                       localizedData.title[activeTab] || localizedData.title.id || localizedData.title.en || 'Judul Album'
                     const displayTitle =
@@ -495,21 +494,12 @@ export function AlbumForm({ initialData }: { initialData?: any }) {
                       >
                         {/* Media Preview */}
                         <div className="w-20 h-20 rounded-lg bg-slate-900 overflow-hidden relative shrink-0 border border-slate-200">
-                          {isVideo ? (
-                            <div className="w-full h-full flex flex-col items-center justify-center text-white">
-                              <Video className="w-6 h-6 text-amber-400" />
-                              <span className="text-[9px] font-bold uppercase tracking-wider mt-1">
-                                Video
-                              </span>
-                            </div>
-                          ) : (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img
-                              src={thumbUrl}
-                              alt={mediaDoc.alt || displayTitle}
-                              className="w-full h-full object-cover"
-                            />
-                          )}
+                          <MediaThumbnail
+                            media={mediaDoc}
+                            alt={mediaDoc.alt || displayTitle}
+                            imageClassName="w-full h-full object-cover"
+                            videoClassName="w-full h-full object-cover pointer-events-none"
+                          />
 
                           {/* Badge Type */}
                           <span className="absolute bottom-1 right-1 bg-black/75 text-white p-0.5 rounded text-[10px]">

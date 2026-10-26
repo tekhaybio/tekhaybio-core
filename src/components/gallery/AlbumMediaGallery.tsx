@@ -182,12 +182,17 @@ export function AlbumMediaGallery({
                   {/* Video Preview Box with Overlay */}
                   <div className="aspect-video relative bg-stone-950 flex items-center justify-center overflow-hidden">
                     <video
-                      src={mediaDoc.url}
+                      src={mediaDoc.videoThumbnail?.url ? mediaDoc.url : `${mediaDoc.url}#t=0.001`}
                       preload="metadata"
                       playsInline
                       muted
                       poster={mediaDoc.videoThumbnail?.url || undefined}
-                      className="w-full h-full object-cover opacity-80 group-hover:opacity-95 group-hover:scale-105 transition-all duration-700"
+                      onLoadedMetadata={(e) => {
+                        try {
+                          if (e.currentTarget.currentTime === 0) e.currentTarget.currentTime = 0.001
+                        } catch (_) {}
+                      }}
+                      className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                     />
 
                     {/* Centered Glowing Play Button Overlay */}

@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { CollectionConfig } from "payload";
 import { isAdminOrEditor } from "../access/roles";
+import { ensureClientUploadObjectKey } from "../hooks/ensureClientUploadObjectKey";
 
 export const Media: CollectionConfig = {
   slug: "media",
@@ -11,6 +12,10 @@ export const Media: CollectionConfig = {
     create: isAdminOrEditor,
     update: isAdminOrEditor,
     delete: isAdminOrEditor,
+  },
+
+  hooks: {
+    beforeChange: [ensureClientUploadObjectKey],
   },
 
   admin: {

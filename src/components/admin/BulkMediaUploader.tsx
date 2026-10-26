@@ -119,7 +119,7 @@ export function BulkMediaUploader({
 
         if (issueRes.ok) {
           const { clientUploadContext, filename, pathname } = await issueRes.json()
-          await upload(pathname, item.file, {
+          const blobResult = await upload(pathname, item.file, {
             access: 'public',
             clientPayload: JSON.stringify({
               collectionSlug: collection,
@@ -140,6 +140,12 @@ export function BulkMediaUploader({
               clientUploadContext,
             })
           )
+          if (clientUploadContext?._objectKey) {
+            formData.append('_objectKey', clientUploadContext._objectKey)
+          }
+          if (blobResult?.url) {
+            formData.append('url', blobResult.url)
+          }
           formData.append('title', mediaTitle)
           formData.append('alt', mediaTitle)
           formData.append('mediaType', item.mediaType)
@@ -353,10 +359,19 @@ export function BulkMediaUploader({
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={item.previewUrl} alt={item.file.name} className="w-full h-full object-cover" />
                   ) : (
-                    <div className="w-full h-full flex flex-col items-center justify-center bg-stone-900 text-white">
-                      <Video className="w-5 h-5 text-amber-400" />
-                      <span className="text-[9px] font-bold mt-0.5 uppercase tracking-wider">Video</span>
-                    </div>
+                    <video
+                      src={`${item.previewUrl}#t=0.001`}
+                      preload="metadata"
+                      muted
+                      playsInline
+                      disablePictureInPicture
+                      onLoadedMetadata={(e) => {
+                        try {
+                          if (e.currentTarget.currentTime === 0) e.currentTarget.currentTime = 0.001
+                        } catch (_) {}
+                      }}
+                      className="w-full h-full object-cover pointer-events-none"
+                    />
                   )}
 
                   {/* Icon Badge */}

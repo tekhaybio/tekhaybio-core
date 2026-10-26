@@ -6,6 +6,7 @@ import React, { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { updateMediaAction } from "@/app/(admin)/admin/galeri/actions";
 import { isMediaVideo, validateMediaFile, MEDIA_LIMITS } from "@/lib/gallery/utils";
+import { MediaThumbnail } from "@/components/ui/MediaThumbnail";
 import { upload } from "@vercel/blob/client";
 import { Video as VideoIcon } from "lucide-react";
 
@@ -100,7 +101,7 @@ export function GalleryUploader({ initialMedia, collection = "gallery-media" }: 
 
           if (issueRes.ok) {
             const { clientUploadContext, filename, pathname } = await issueRes.json();
-            await upload(pathname, file, {
+            const blobResult = await upload(pathname, file, {
               access: "public",
               clientPayload: JSON.stringify({
                 collectionSlug: collection,
@@ -121,6 +122,12 @@ export function GalleryUploader({ initialMedia, collection = "gallery-media" }: 
                 clientUploadContext,
               })
             );
+            if (clientUploadContext?._objectKey) {
+              formData.append("_objectKey", clientUploadContext._objectKey);
+            }
+            if (blobResult?.url) {
+              formData.append("url", blobResult.url);
+            }
             formData.append("alt", file.name);
 
             const res = await fetch(`/api/${collection}`, {
@@ -437,58 +444,31 @@ export function GalleryUploader({ initialMedia, collection = "gallery-media" }: 
                 />
               </div>
 
-              {isMediaVideo(media) ? (
-                <div
-                  className={`w-full h-full bg-slate-900 relative cursor-pointer overflow-hidden flex items-center justify-center ${isSelected ? 'scale-95' : ''}`}
-                  onClick={() => {
-                    if (selectedMedia.size > 0) {
-                      toggleSelect(media.id);
-                    } else {
-                      setEditingMedia(media); 
-                      setUsageStatus(null); 
-                      fetch(`/api/media-usage?collection=${collection}&id=${media.id}`)
-                        .then(r => r.json())
-                        .then(setUsageStatus)
-                        .catch(console.error);
-                    }
-                  }}
-                >
-                  <video
-                    src={media.url}
-                    preload="metadata"
-                    muted
-                    playsInline
-                    className="w-full h-full object-cover opacity-60"
-                  />
-                  <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                    <div className="w-9 h-9 rounded-full bg-black/70 text-amber-400 flex items-center justify-center shadow-lg border border-white/20">
-                      <VideoIcon className="w-4 h-4 ml-0.5" />
-                    </div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-amber-300 mt-1 drop-shadow">
-                      Video
-                    </span>
-                  </div>
-                </div>
-              ) : (
-                /* eslint-disable-next-line @next/next/no-img-element */
-                <img
-                  src={media.url as string}
-                  alt={(media.alt as string) || "Media"}
-                  className={`w-full h-full object-cover transition-transform cursor-pointer ${isSelected ? 'scale-95' : ''}`}
-                  onClick={() => {
-                    if (selectedMedia.size > 0) {
-                      toggleSelect(media.id);
-                    } else {
-                      setEditingMedia(media); 
-                      setUsageStatus(null); 
-                      fetch(`/api/media-usage?collection=${collection}&id=${media.id}`)
-                        .then(r => r.json())
-                        .then(setUsageStatus)
-                        .catch(console.error);
-                    }
-                  }}
+              <div
+                className={`w-full h-full relative cursor-pointer overflow-hidden ${isSelected ? 'scale-95' : ''}`}
+                onClick={() => {
+                  if (selectedMedia.size > 0) {
+                    toggleSelect(media.id);
+                  } else {
+                    setEditingMedia(media); 
+                    setUsageStatus(null); 
+                    fetch(`/api/media-usage?collection=${collection}&id=${media.id}`)
+                      .then(r => r.json())
+                      .then(setUsageStatus)
+                      .catch(console.error);
+                  }
+                }}
+              >
+                <MediaThumbnail
+                  media={media}
+                  alt={media.alt || "Media"}
+                  showVideoBadge={true}
+                  badgePosition="bottom-right"
+                  showHoverPlayEffect={true}
+                  imageClassName="w-full h-full object-cover transition-transform group-hover:scale-105"
+                  videoClassName="w-full h-full object-cover transition-transform group-hover:scale-105 pointer-events-none"
                 />
-              )}
+              </div>
               <div className={`absolute inset-0 pointer-events-none bg-slate-900/50 flex flex-col items-center justify-center p-4 gap-2 transition-opacity ${selectedMedia.size > 0 ? 'hidden' : 'opacity-0 group-hover:opacity-100'}`}>
                 <button
                   type="button"

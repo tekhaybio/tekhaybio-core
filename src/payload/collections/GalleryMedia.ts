@@ -9,6 +9,10 @@ export const GalleryMedia: CollectionConfig = {
   hooks: {
     beforeChange: [
       ({ data, req }: any) => {
+        // Ensure _objectKey from clientUploadContext is preserved so Vercel Blob URL includes the folder segment
+        if (req?.file?.clientUploadContext?._objectKey && !data._objectKey) {
+          data._objectKey = req.file.clientUploadContext._objectKey
+        }
         if (data?.mimeType) {
           const fileSize = req?.file?.size ?? data?.filesize
           if (data.mimeType.startsWith('video/')) {

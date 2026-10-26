@@ -14,6 +14,8 @@ import {
   Sparkles,
 } from 'lucide-react'
 import { useAdminFeedback } from './AdminFeedbackContext'
+import { MediaThumbnail } from '@/components/ui/MediaThumbnail'
+import { upload } from '@vercel/blob/client'
 
 export function MediaPicker({
   value,
@@ -95,6 +97,69 @@ export function MediaPicker({
     }
 
     setIsUploading(true)
+
+    // Jika file > 4 MB, gunakan direct client upload ke Vercel Blob untuk memintas batas 4.5 MB serverless payload
+    if (file.size > 4 * 1024 * 1024) {
+      try {
+        const issueRes = await fetch('/api/vercel-blob-client-upload-route?issue-client-upload=1', {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            collectionSlug: mediaCollection,
+            filename: file.name,
+            mimeType: file.type,
+          }),
+        })
+
+        if (issueRes.ok) {
+          const { clientUploadContext, filename, pathname } = await issueRes.json()
+          const blobResult = await upload(pathname, file, {
+            access: 'public',
+            clientPayload: JSON.stringify({
+              collectionSlug: mediaCollection,
+              mimeType: file.type,
+              signedReceipt: clientUploadContext.signedReceipt,
+            }),
+            contentType: file.type,
+            handleUploadUrl: '/api/vercel-blob-client-upload-route',
+          })
+
+          const formData = new FormData()
+          formData.append(
+            'file',
+            JSON.stringify({
+              filename,
+              mimeType: file.type,
+              size: file.size,
+              clientUploadContext,
+            })
+          )
+          if (clientUploadContext?._objectKey) {
+            formData.append('_objectKey', clientUploadContext._objectKey)
+          }
+          if (blobResult?.url) {
+            formData.append('url', blobResult.url)
+          }
+          formData.append('alt', file.name)
+
+          const res = await fetch(`/api/${mediaCollection}`, { method: 'POST', body: formData })
+          const data = await res.json()
+          if (data.doc) {
+            setMediaList((prev) => [data.doc, ...prev])
+            onChange(data.doc)
+            setShowModal(false)
+            toast.success(`File "${file.name}" berhasil diunggah.`)
+            return
+          } else {
+            throw new Error(data.message || 'Gagal mengunggah file media.')
+          }
+        }
+      } catch (clientErr: any) {
+        console.warn('Direct client upload tidak aktif atau gagal, beralih ke standard POST:', clientErr.message)
+      }
+    }
+
     const formData = new FormData()
     formData.append('file', file)
     formData.append('alt', file.name)
@@ -151,12 +216,13 @@ export function MediaPicker({
     <div>
       {/* Current Value Preview */}
       {value ? (
-        <div className="relative inline-block border border-stone-200 rounded-lg overflow-hidden group shadow-2xs bg-stone-100">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={value.url || (typeof value === 'string' ? value : '')}
-            className="h-32 w-auto max-w-full object-cover"
+        <div className="relative inline-block border border-stone-200 rounded-lg overflow-hidden group shadow-2xs bg-stone-100 h-32 min-w-[8rem] max-w-full">
+          <MediaThumbnail
+            media={value}
             alt="Preview"
+            showVideoBadge={true}
+            imageClassName="h-32 w-auto max-w-full object-cover"
+            videoClassName="h-32 w-auto max-w-full object-cover pointer-events-none"
           />
           <div className="absolute inset-0 bg-stone-950/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 backdrop-blur-2xs">
             <button
@@ -282,11 +348,12 @@ export function MediaPicker({
                             : 'border-stone-200 hover:border-stone-400'
                         }`}
                       >
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={m.sizes?.thumbnail?.url || m.url}
+                        <MediaThumbnail
+                          media={m}
                           alt={m.alt || m.filename || 'Media'}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          showVideoBadge={true}
+                          imageClassName="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          videoClassName="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 pointer-events-none"
                         />
                         {isSelected && (
                           <div className="absolute top-2 right-2 bg-primary text-white rounded-full p-1 shadow-xs">
@@ -346,11 +413,12 @@ export function MediaPicker({
 
                   {/* Thumbnail */}
                   <div className="aspect-video w-full rounded-lg overflow-hidden border border-stone-200 bg-stone-900 mb-3 relative">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={selectedMedia.url}
-                      className="w-full h-full object-contain"
+                    <MediaThumbnail
+                      media={selectedMedia}
                       alt="Preview detail"
+                      showVideoBadge={true}
+                      imageClassName="w-full h-full object-contain"
+                      videoClassName="w-full h-full object-contain pointer-events-none"
                     />
                   </div>
 

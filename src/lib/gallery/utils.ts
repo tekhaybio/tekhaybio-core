@@ -89,12 +89,19 @@ export function validateMediaFile(file: { size: number; type: string; name?: str
 
 export function isMediaVideo(media: any): boolean {
   if (!media) return false
+  if (typeof media === 'string') {
+    const clean = media.split('?')[0].split('#')[0]
+    const ext = clean.split('.').pop()?.toLowerCase()
+    if (['mp4', 'webm', 'mov', 'ogg', 'mkv'].includes(ext || '')) return true
+    return false
+  }
   if (media.mediaType === 'video') return true
   const mime = media.mimeType || media.mimetype || ''
   if (typeof mime === 'string' && mime.startsWith('video/')) return true
   const filename = media.filename || media.url || ''
   if (typeof filename === 'string') {
-    const ext = filename.split('.').pop()?.toLowerCase()
+    const clean = filename.split('?')[0].split('#')[0]
+    const ext = clean.split('.').pop()?.toLowerCase()
     if (['mp4', 'webm', 'mov', 'ogg', 'mkv'].includes(ext || '')) return true
   }
   return false

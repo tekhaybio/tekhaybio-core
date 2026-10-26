@@ -15,6 +15,7 @@ import {
   Sparkles,
 } from 'lucide-react'
 import { isMediaVideo } from '@/lib/gallery/utils'
+import { MediaThumbnail } from '@/components/ui/MediaThumbnail'
 
 export interface AlbumMediaPickerModalProps {
   isOpen: boolean
@@ -276,7 +277,6 @@ export function AlbumMediaPickerModal({
                 const isAlreadyInAlbum = existingSet.has(m.id)
                 const isSelected = selectedMap.has(m.id)
                 const isVid = isMediaVideo(m)
-                const thumbUrl = m.sizes?.thumbnail?.url || m.url || '/placeholder.png'
                 const displayTitle = m.title || m.filename || 'Media Dokumentasi'
 
                 return (
@@ -292,20 +292,14 @@ export function AlbumMediaPickerModal({
                     }`}
                   >
                     {/* Media Thumbnail */}
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={thumbUrl}
+                    <MediaThumbnail
+                      media={m}
                       alt={m.alt || displayTitle}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      showVideoBadge={true}
+                      badgePosition="top-left"
+                      imageClassName="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      videoClassName="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 pointer-events-none"
                     />
-
-                    {/* Video Indicator Badge */}
-                    {isVid && (
-                      <div className="absolute top-2 left-2 z-10 flex items-center gap-1 bg-black/75 backdrop-blur-xs text-white text-[10px] font-bold px-1.5 py-0.5 rounded shadow-sm">
-                        <Video className="w-3 h-3 text-amber-400" />
-                        <span>VIDEO</span>
-                      </div>
-                    )}
 
                     {/* Status Badge: Already in album vs Selected Checkbox */}
                     <div className="absolute top-2 right-2 z-10">

@@ -21,6 +21,7 @@ import { ListPlugin } from '@lexical/react/LexicalListPlugin'
 import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin'
 import { HorizontalRulePlugin } from '@lexical/react/LexicalHorizontalRulePlugin'
 import { Bold, Italic, Underline, List, ListOrdered, Link as LinkIcon, Heading1, Heading2, Heading3, Heading4, Heading5, Heading6, Undo, Redo, Type, Image as ImageIcon, Code, AlignLeft, AlignCenter, AlignRight, AlignJustify, Strikethrough, Subscript, Superscript, Quote, Minus, X, UploadCloud, ChevronDown, Check, Loader2 } from 'lucide-react'
+import { upload } from '@vercel/blob/client'
 
 // Custom Upload Node for Payload Media
 export interface SerializedUploadNode extends SerializedLexicalNode {
@@ -190,7 +191,74 @@ function MediaLibraryModal({ onClose, onSelect, mediaCollection = 'media' }: { o
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      alert(`Ukuran file "${file.name}" melebihi batas maksimal 5MB.`);
+      e.target.value = '';
+      return;
+    }
+
     setLoading(true);
+
+    // Direct client upload jika > 4 MB
+    if (file.size > 4 * 1024 * 1024) {
+      try {
+        const issueRes = await fetch('/api/vercel-blob-client-upload-route?issue-client-upload=1', {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            collectionSlug: mediaCollection,
+            filename: file.name,
+            mimeType: file.type,
+          }),
+        });
+
+        if (issueRes.ok) {
+          const { clientUploadContext, filename, pathname } = await issueRes.json();
+          const blobResult = await upload(pathname, file, {
+            access: 'public',
+            clientPayload: JSON.stringify({
+              collectionSlug: mediaCollection,
+              mimeType: file.type,
+              signedReceipt: clientUploadContext.signedReceipt,
+            }),
+            contentType: file.type,
+            handleUploadUrl: '/api/vercel-blob-client-upload-route',
+          });
+
+          const formData = new FormData();
+          formData.append(
+            'file',
+            JSON.stringify({
+              filename,
+              mimeType: file.type,
+              size: file.size,
+              clientUploadContext,
+            })
+          );
+          if (clientUploadContext?._objectKey) {
+            formData.append('_objectKey', clientUploadContext._objectKey);
+          }
+          if (blobResult?.url) {
+            formData.append('url', blobResult.url);
+          }
+          formData.append('alt', file.name);
+
+          const res = await fetch(`/api/${mediaCollection}`, { method: 'POST', body: formData });
+          const data = await res.json();
+          if (data.doc) {
+            setMediaList([data.doc, ...mediaList]);
+            setSelectedMedia(data.doc);
+            setLoading(false);
+            return;
+          }
+        }
+      } catch (err: any) {
+        console.warn('Direct upload gagal, fallback ke standard POST:', err.message);
+      }
+    }
+
     const formData = new FormData();
     formData.append('file', file);
     formData.append('alt', file.name);

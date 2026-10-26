@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload';
 import { isAdminOrEditor } from '../access/roles';
 import { preventDeleteUsedMedia } from '../../lib/media/preventDeleteUsedMedia';
+import { ensureClientUploadObjectKey } from '../hooks/ensureClientUploadObjectKey';
 
 export const ActivityMedia: CollectionConfig = {
   slug: 'activity-media',
@@ -17,9 +18,9 @@ export const ActivityMedia: CollectionConfig = {
     { name: 'alt', type: 'text' },
     { name: 'title', type: 'text' },
     { name: 'description', type: 'textarea' },
-    
   ],
   hooks: {
+    beforeChange: [ensureClientUploadObjectKey],
     beforeDelete: [preventDeleteUsedMedia('activity-media')],
   },
   upload: {

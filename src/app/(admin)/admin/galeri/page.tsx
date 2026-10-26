@@ -13,6 +13,7 @@ import { deleteAlbumAction, deleteManyAlbumAction } from './actions'
 import { AdminPagination } from '@/components/admin/AdminPagination'
 import { AdminTableFilter } from '@/components/admin/AdminTableFilter'
 import { GalleryUploader } from '@/components/admin/GalleryUploader'
+import { MediaThumbnail } from '@/components/ui/MediaThumbnail'
 import { getAlbumCategoryLabel, formatEventDateRange, countAlbumMedia } from '@/lib/gallery/utils'
 
 export const dynamic = 'force-dynamic'
@@ -243,11 +244,12 @@ export default async function GalleryAdminPage({
                         </td>
                         <td className="px-5 py-3.5">
                           <div className="w-14 h-14 rounded-lg bg-stone-100 overflow-hidden relative border border-stone-200 shrink-0">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img
-                              src={coverUrl}
+                            <MediaThumbnail
+                              media={album.coverImage}
                               alt={album.title || 'Sampul Album'}
-                              className="w-full h-full object-cover"
+                              showVideoBadge={true}
+                              imageClassName="w-full h-full object-cover"
+                              videoClassName="w-full h-full object-cover pointer-events-none"
                             />
                           </div>
                         </td>

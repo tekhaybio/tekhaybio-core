@@ -68,10 +68,11 @@ export function MediaImage({
         style={!fill && width ? { maxWidth: width } : undefined}
       >
         <video
-          src={media.url}
+          src={`${media.url}#t=0.001`}
           preload="metadata"
           muted
           playsInline
+          disablePictureInPicture
           className={fill ? "w-full h-full object-cover" : "w-full h-auto object-cover"}
         />
         <div className="absolute inset-0 bg-black/30 flex items-center justify-center pointer-events-none">
