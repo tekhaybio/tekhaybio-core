@@ -12,7 +12,7 @@ export function GalleryPreview({ homePage, mediaList, locale }: { homePage?: CMS
   const hp = (homePage?.gallerySection as any) || {}
   const title = hp.title || (locale === 'id' ? 'Galeri Visual & Dokumentasi' : 'Visual Gallery & Documentation')
   const buttonText = locale === 'id' ? 'Lihat Semua Galeri' : 'View Full Gallery'
-  const buttonLink = `/${locale}/${locale === 'id' ? 'galeri' : 'gallery'}`
+  const buttonLink = `/${locale}/${locale === 'id' ? 'galeri' : 'gallery'}?tab=photos`
   
   const hasMedia = mediaList && mediaList.length > 0
 

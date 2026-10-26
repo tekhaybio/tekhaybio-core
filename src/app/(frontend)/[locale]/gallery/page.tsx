@@ -29,6 +29,7 @@ export default async function Page({
   const page = typeof sp.page === 'string' ? parseInt(sp.page, 10) : 1
   const limit = typeof sp.limit === 'string' ? parseInt(sp.limit, 10) : 12
   const category = typeof sp.category === 'string' ? sp.category : undefined
+  const tab = typeof sp.tab === 'string' ? sp.tab : undefined
 
-  return <GalleryPage locale={locale as 'id' | 'en'} page={page} limit={limit} category={category} />
+  return <GalleryPage locale={locale as 'id' | 'en'} page={page} limit={limit} category={category} tab={tab} />
 }
