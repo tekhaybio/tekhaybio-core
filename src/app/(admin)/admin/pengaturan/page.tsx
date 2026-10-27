@@ -93,7 +93,7 @@ export default async function PengaturanPage() {
             </li>
             <li className="flex items-center justify-between py-1 border-b border-stone-100">
               <span className="text-stone-500">Media Storage:</span>
-              <span className="font-mono font-medium text-stone-800">Vercel Blob Storage</span>
+              <span className="font-mono font-medium text-stone-800">Cloudflare R2 (S3 API)</span>
             </li>
             <li className="flex items-center justify-between py-1 border-b border-stone-100">
               <span className="text-stone-500">Mode Lokalisasi:</span>

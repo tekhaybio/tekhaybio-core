@@ -9,22 +9,32 @@ export const GalleryMedia: CollectionConfig = {
   hooks: {
     beforeChange: [
       ({ data, req }: any) => {
-        // Ensure _objectKey from clientUploadContext is preserved so Vercel Blob URL includes the folder segment
+        // Ensure _objectKey from clientUploadContext is preserved so storage URL includes the folder segment
         if (req?.file?.clientUploadContext?._objectKey && !data._objectKey) {
           data._objectKey = req.file.clientUploadContext._objectKey
         }
-        if (data?.mimeType) {
-          const fileSize = req?.file?.size ?? data?.filesize
-          if (data.mimeType.startsWith('video/')) {
-            data.mediaType = 'video'
-            if (fileSize && fileSize > 10 * 1024 * 1024) {
-              throw new Error('Ukuran file video melebihi batas maksimal 10 MB.')
-            }
-          } else if (data.mimeType.startsWith('image/')) {
+
+        const mime = data?.mimeType || req?.file?.mimeType || req?.file?.mimetype || ''
+        const filename = data?.filename || req?.file?.name || ''
+        const ext = filename.split('.').pop()?.toLowerCase() || ''
+        const isVideo = mime.startsWith('video/') || ['mp4', 'webm', 'mov', 'ogg', 'mkv'].includes(ext)
+
+        const fileSize = req?.file?.size ?? data?.filesize
+
+        if (isVideo) {
+          data.mediaType = 'video'
+          if (!data.mimeType) {
+            data.mimeType = mime || (ext === 'webm' ? 'video/webm' : 'video/mp4')
+          }
+          if (fileSize && fileSize > 10 * 1024 * 1024) {
+            throw new Error('Ukuran file video melebihi batas maksimal 10 MB.')
+          }
+        } else {
+          if (!data.mediaType) {
             data.mediaType = 'image'
-            if (fileSize && fileSize > 5 * 1024 * 1024) {
-              throw new Error('Ukuran file foto melebihi batas maksimal 5 MB.')
-            }
+          }
+          if (fileSize && fileSize > 5 * 1024 * 1024) {
+            throw new Error('Ukuran file foto melebihi batas maksimal 5 MB.')
           }
         }
         return data

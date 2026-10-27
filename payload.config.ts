@@ -5,6 +5,8 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { s3Storage } from '@payloadcms/storage-s3'
+import { formatR2FileURL, getR2Endpoint, isR2Configured } from './src/lib/storage/r2'
 
 import { Users } from './src/payload/collections/Users'
 import { Media } from './src/payload/collections/Media'
@@ -67,8 +69,10 @@ export default buildConfig({
     process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '',
   ].filter(Boolean),
   plugins: [
+    // Integrasi Vercel Blob dipertahankan di proyek tetapi dinonaktifkan (enabled: false)
+    // Sesuai ketentuan: Cloudflare R2 dijadikan sebagai penyimpanan aktif.
     vercelBlobStorage({
-      enabled: !!process.env.BLOB_READ_WRITE_TOKEN,
+      enabled: false,
       clientUploads: {},
       collections: {
         media: {
@@ -100,6 +104,59 @@ export default buildConfig({
         },
       },
       token: process.env.BLOB_READ_WRITE_TOKEN || '',
+    }),
+    // Cloudflare R2 Storage (S3-compatible API) sebagai penyimpanan aktif
+    s3Storage({
+      enabled: isR2Configured(),
+      clientUploads: true,
+      bucket: process.env.R2_BUCKET_NAME || '',
+      config: {
+        credentials: {
+          accessKeyId: process.env.R2_ACCESS_KEY_ID || '',
+          secretAccessKey: process.env.R2_SECRET_ACCESS_KEY || '',
+        },
+        region: 'auto',
+        endpoint: getR2Endpoint() || 'https://auto.r2.cloudflarestorage.com',
+        forcePathStyle: true,
+        requestChecksumCalculation: 'WHEN_REQUIRED',
+        responseChecksumValidation: 'WHEN_REQUIRED',
+      },
+      collections: {
+        media: {
+          disablePayloadAccessControl: true,
+          generateFileURL: ({ filename, prefix }) => formatR2FileURL({ filename, prefix }),
+        },
+        'news-media': {
+          prefix: 'news-media',
+          disablePayloadAccessControl: true,
+          generateFileURL: ({ filename, prefix }) => formatR2FileURL({ filename, prefix }),
+        },
+        'service-media': {
+          prefix: 'service-media',
+          disablePayloadAccessControl: true,
+          generateFileURL: ({ filename, prefix }) => formatR2FileURL({ filename, prefix }),
+        },
+        'activity-media': {
+          prefix: 'activity-media',
+          disablePayloadAccessControl: true,
+          generateFileURL: ({ filename, prefix }) => formatR2FileURL({ filename, prefix }),
+        },
+        'history-media': {
+          prefix: 'history-media',
+          disablePayloadAccessControl: true,
+          generateFileURL: ({ filename, prefix }) => formatR2FileURL({ filename, prefix }),
+        },
+        'gallery-media': {
+          prefix: 'gallery-media',
+          disablePayloadAccessControl: true,
+          generateFileURL: ({ filename, prefix }) => formatR2FileURL({ filename, prefix }),
+        },
+        'site-media': {
+          prefix: 'site-media',
+          disablePayloadAccessControl: true,
+          generateFileURL: ({ filename, prefix }) => formatR2FileURL({ filename, prefix }),
+        },
+      },
     }),
   ],
 })

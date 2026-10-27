@@ -50,6 +50,46 @@ export function getPageNumbers(currentPage: number, totalPages: number): (number
   return [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages]
 }
 
+/**
+ * Safely constructs a pagination URL by merging existing query parameters from both
+ * baseUrl (if it contains '?') and the browser's searchParams, avoiding double question marks.
+ */
+export function buildPaginationUrl({
+  baseUrl,
+  pathname,
+  searchParams,
+  page,
+  limit,
+}: {
+  baseUrl?: string
+  pathname: string
+  searchParams?: { toString: () => string } | null
+  page?: number
+  limit?: number
+}): string {
+  const rawBase = baseUrl || pathname
+  const [basePath, existingQuery] = rawBase.split('?')
+
+  const params = new URLSearchParams(searchParams ? searchParams.toString() : '')
+
+  if (existingQuery) {
+    const baseParams = new URLSearchParams(existingQuery)
+    baseParams.forEach((val, key) => {
+      params.set(key, val)
+    })
+  }
+
+  if (page !== undefined) {
+    params.set('page', String(page))
+  }
+  if (limit !== undefined) {
+    params.set('limit', String(limit))
+  }
+
+  const queryString = params.toString()
+  return queryString ? `${basePath}?${queryString}` : basePath
+}
+
 function PaginationToolbarContent({
   currentPage,
   totalDocs,
@@ -77,11 +117,13 @@ function PaginationToolbarContent({
 
   const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newLimit = parseInt(e.target.value, 10)
-    const params = new URLSearchParams(searchParams ? searchParams.toString() : '')
-    params.set('limit', String(newLimit))
-    params.set('page', '1') // reset to page 1 on limit change
-
-    const targetUrl = `${baseUrl || pathname}?${params.toString()}`
+    const targetUrl = buildPaginationUrl({
+      baseUrl,
+      pathname,
+      searchParams,
+      page: 1,
+      limit: newLimit,
+    })
     startTransition(() => {
       router.push(targetUrl)
     })
@@ -158,21 +200,24 @@ function PaginationContent({
 
   // Build target page URL preserving other search params
   const getPageUrl = (page: number) => {
-    const params = new URLSearchParams(searchParams ? searchParams.toString() : '')
-    params.set('page', String(page))
-    if (limit) {
-      params.set('limit', String(limit))
-    }
-    return `${baseUrl || pathname}?${params.toString()}`
+    return buildPaginationUrl({
+      baseUrl,
+      pathname,
+      searchParams,
+      page,
+      limit,
+    })
   }
 
   const handleLimitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newLimit = parseInt(e.target.value, 10)
-    const params = new URLSearchParams(searchParams ? searchParams.toString() : '')
-    params.set('limit', String(newLimit))
-    params.set('page', '1')
-
-    const targetUrl = `${baseUrl || pathname}?${params.toString()}`
+    const targetUrl = buildPaginationUrl({
+      baseUrl,
+      pathname,
+      searchParams,
+      page: 1,
+      limit: newLimit,
+    })
     startTransition(() => {
       router.push(targetUrl)
     })

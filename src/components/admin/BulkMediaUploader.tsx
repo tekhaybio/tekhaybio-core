@@ -2,7 +2,11 @@
 'use client'
 
 import React, { useState, useRef, useCallback } from 'react'
-import { upload } from '@vercel/blob/client'
+// Integrasi Vercel Blob dipertahankan untuk backward compatibility tetapi dinonaktifkan (inactive)
+// Cloudflare R2 presigned client upload kini aktif digunakan
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { upload as _inactiveVercelUpload } from '@vercel/blob/client'
+import { directUploadToR2 } from '@/lib/storage/uploadClient'
 import { MEDIA_LIMITS, validateMediaFile } from '@/lib/gallery/utils'
 import {
   UploadCloud,
@@ -103,67 +107,50 @@ export function BulkMediaUploader({
     const filenameTitle = item.file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ')
     const mediaTitle = defaultTitle?.trim() || filenameTitle
 
-    // Jika file > 4 MB, utamakan direct client upload ke Vercel Blob untuk menghindari batas 4.5 MB Vercel Serverless
+    // Jika file > 4 MB, utamakan direct client upload ke Cloudflare R2 untuk menghindari batas 4.5 MB Serverless Payload
     if (item.file.size > 4 * 1024 * 1024) {
       try {
-        const issueRes = await fetch('/api/vercel-blob-client-upload-route?issue-client-upload=1', {
-          method: 'POST',
-          credentials: 'include',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            collectionSlug: collection,
-            filename: item.file.name,
-            mimeType: item.file.type,
-          }),
+        const { clientUploadContext, filename, mimeType, publicUrl } = await directUploadToR2({
+          file: item.file,
+          collectionSlug: collection,
         })
 
-        if (issueRes.ok) {
-          const { clientUploadContext, filename, pathname } = await issueRes.json()
-          const blobResult = await upload(pathname, item.file, {
-            access: 'public',
-            clientPayload: JSON.stringify({
-              collectionSlug: collection,
-              mimeType: item.file.type,
-              signedReceipt: clientUploadContext.signedReceipt,
-            }),
-            contentType: item.file.type,
-            handleUploadUrl: '/api/vercel-blob-client-upload-route',
+        const formData = new FormData()
+        formData.append(
+          'file',
+          JSON.stringify({
+            filename,
+            mimeType,
+            size: item.file.size,
+            clientUploadContext,
           })
-
-          const formData = new FormData()
-          formData.append(
-            'file',
-            JSON.stringify({
-              filename,
-              mimeType: item.file.type,
-              size: item.file.size,
-              clientUploadContext,
-            })
-          )
-          if (clientUploadContext?._objectKey) {
-            formData.append('_objectKey', clientUploadContext._objectKey)
-          }
-          if (blobResult?.url) {
-            formData.append('url', blobResult.url)
-          }
-          formData.append('title', mediaTitle)
-          formData.append('alt', mediaTitle)
-          formData.append('mediaType', item.mediaType)
-
-          const res = await fetch(`/api/${collection}`, {
-            method: 'POST',
-            body: formData,
-          })
-
-          const json = await res.json().catch(() => null)
-          if (!res.ok) {
-            throw new Error(json?.errors?.[0]?.message || json?.message || `Gagal mengunggah (${res.status})`)
-          }
-
-          return json.doc || json
+        )
+        if (clientUploadContext?._objectKey) {
+          formData.append('_objectKey', clientUploadContext._objectKey)
         }
+        if (publicUrl) {
+          formData.append('url', publicUrl)
+        }
+        formData.append('title', mediaTitle)
+        formData.append('alt', mediaTitle)
+        formData.append('mediaType', item.mediaType)
+
+        const res = await fetch(`/api/${collection}`, {
+          method: 'POST',
+          body: formData,
+        })
+
+        const json = await res.json().catch(() => null)
+        if (!res.ok) {
+          throw new Error(json?.errors?.[0]?.message || json?.message || `Gagal mengunggah (${res.status})`)
+        }
+
+        return json.doc || json
       } catch (err: any) {
-        console.warn('Direct client upload tidak aktif atau gagal, beralih ke standard upload:', err.message)
+        if (item.file.size > 4.5 * 1024 * 1024) {
+          throw new Error(`Upload langsung ke Cloudflare R2 gagal: ${err.message}. Pastikan aturan CORS R2 telah dikonfigurasi.`)
+        }
+        console.warn('Direct upload ke Cloudflare R2 gagal atau tidak aktif, beralih ke standard POST:', err.message)
       }
     }
 

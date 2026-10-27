@@ -27,7 +27,7 @@ Website profil Klenteng Tek Hay Bio dibangun menggunakan fondasi teknologi moder
 - **Framework Aplikasi:** Next.js (App Router) dengan TypeScript dan arsitektur Server Components (RSC) serta Server Actions untuk mutasi data yang aman dan cepat.
 - **Content Management System (CMS):** Payload CMS (v3) berbasis *headless architecture* yang terintegrasi langsung dalam siklus hidup (*monorepo runtime*) Next.js.
 - **Basis Data:** MongoDB dengan konektor Mongoose Adapter.
-- **Penyimpanan Media:** Integrasi Vercel Blob Storage serta penyimpanan lokal multi-koleksi media tersegregasi.
+- **Penyimpanan Media:** Integrasi Cloudflare R2 Storage (S3-compatible API) untuk penyimpanan cloud aktif (dengan Vercel Blob dipertahankan sebagai legacy/fallback) serta penyimpanan lokal multi-koleksi media tersegregasi.
 - **Antarmuka Pengguna:** Custom Admin Dashboard berbasis Tailwind CSS yang dirancang khusus untuk kenyamanan pengurus klenteng, dilengkapi editor teks kaya (*Lexical Rich Text Editor*) dan sistem pemilih media interaktif.
 - **Dukungan Dwibahasa (*Localization*):** Dukungan penuh bahasa Indonesia (`id`) sebagai bahasa utama dan bahasa Inggris (`en`) sebagai bahasa internasional, dengan mekanisme fallback cerdas.
 

@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { getPageNumbers } from '../../src/components/ui/Pagination.tsx'
+import { getPageNumbers, buildPaginationUrl } from '../../src/components/ui/Pagination.tsx'
 
 test('Pagination: Page number windowing logic matches requirements', () => {
   // Case 1: Single page
@@ -66,4 +66,53 @@ test('Pagination: Page size options sorting and deduplication', () => {
   // Non-standard limit injected from URL query param
   assert.deepEqual(getOptions([6, 9, 12, 18], 15), [6, 9, 12, 15, 18])
   assert.deepEqual(getOptions([6, 9, 12, 18], 9), [6, 9, 12, 18])
+})
+
+test('Pagination: buildPaginationUrl merges query parameters cleanly without double question marks', () => {
+  // Bug reproduction case: /id/galeri?tab=photos clicking page 2
+  const url1 = buildPaginationUrl({
+    baseUrl: '/id/galeri?tab=photos',
+    pathname: '/id/galeri',
+    page: 2,
+    limit: 12,
+  })
+  assert.equal(url1, '/id/galeri?tab=photos&page=2&limit=12')
+  assert.equal(url1.indexOf('??'), -1)
+  assert.equal(url1.split('?').length, 2)
+
+  // With category filter: /id/galeri?tab=photos&category=activities
+  const url2 = buildPaginationUrl({
+    baseUrl: '/id/galeri?tab=photos&category=activities',
+    pathname: '/id/galeri',
+    page: 3,
+    limit: 24,
+  })
+  assert.equal(url2, '/id/galeri?tab=photos&category=activities&page=3&limit=24')
+
+  // Clean pathname without query in baseUrl
+  const url3 = buildPaginationUrl({
+    baseUrl: '/id/berita',
+    pathname: '/id/berita',
+    page: 2,
+    limit: 9,
+  })
+  assert.equal(url3, '/id/berita?page=2&limit=9')
+
+  // Fallback to pathname when baseUrl is undefined
+  const url4 = buildPaginationUrl({
+    pathname: '/en/activities',
+    page: 1,
+    limit: 6,
+  })
+  assert.equal(url4, '/en/activities?page=1&limit=6')
+
+  // Merging with existing searchParams from browser
+  const mockSearchParams = new URLSearchParams('tab=photos&category=interior')
+  const url5 = buildPaginationUrl({
+    pathname: '/id/galeri',
+    searchParams: mockSearchParams,
+    page: 2,
+    limit: 12,
+  })
+  assert.equal(url5, '/id/galeri?tab=photos&category=interior&page=2&limit=12')
 })

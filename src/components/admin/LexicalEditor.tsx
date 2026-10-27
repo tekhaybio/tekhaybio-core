@@ -21,7 +21,10 @@ import { ListPlugin } from '@lexical/react/LexicalListPlugin'
 import { LinkPlugin } from '@lexical/react/LexicalLinkPlugin'
 import { HorizontalRulePlugin } from '@lexical/react/LexicalHorizontalRulePlugin'
 import { Bold, Italic, Underline, List, ListOrdered, Link as LinkIcon, Heading1, Heading2, Heading3, Heading4, Heading5, Heading6, Undo, Redo, Type, Image as ImageIcon, Code, AlignLeft, AlignCenter, AlignRight, AlignJustify, Strikethrough, Subscript, Superscript, Quote, Minus, X, UploadCloud, ChevronDown, Check, Loader2 } from 'lucide-react'
-import { upload } from '@vercel/blob/client'
+// Integrasi Vercel Blob dipertahankan untuk backward compatibility tetapi dinonaktifkan (inactive)
+// Cloudflare R2 presigned client upload kini aktif digunakan
+import { upload as _inactiveVercelUpload } from '@vercel/blob/client'
+import { directUploadToR2 } from '@/lib/storage/uploadClient'
 
 // Custom Upload Node for Payload Media
 export interface SerializedUploadNode extends SerializedLexicalNode {
@@ -200,62 +203,47 @@ function MediaLibraryModal({ onClose, onSelect, mediaCollection = 'media' }: { o
 
     setLoading(true);
 
-    // Direct client upload jika > 4 MB
+    // Direct client upload ke Cloudflare R2 jika > 4 MB untuk memintas batas 4.5 MB Serverless Payload
     if (file.size > 4 * 1024 * 1024) {
       try {
-        const issueRes = await fetch('/api/vercel-blob-client-upload-route?issue-client-upload=1', {
-          method: 'POST',
-          credentials: 'include',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            collectionSlug: mediaCollection,
-            filename: file.name,
-            mimeType: file.type,
-          }),
+        const { clientUploadContext, filename, mimeType, publicUrl } = await directUploadToR2({
+          file,
+          collectionSlug: mediaCollection,
         });
 
-        if (issueRes.ok) {
-          const { clientUploadContext, filename, pathname } = await issueRes.json();
-          const blobResult = await upload(pathname, file, {
-            access: 'public',
-            clientPayload: JSON.stringify({
-              collectionSlug: mediaCollection,
-              mimeType: file.type,
-              signedReceipt: clientUploadContext.signedReceipt,
-            }),
-            contentType: file.type,
-            handleUploadUrl: '/api/vercel-blob-client-upload-route',
-          });
+        const formData = new FormData();
+        formData.append(
+          'file',
+          JSON.stringify({
+            filename,
+            mimeType,
+            size: file.size,
+            clientUploadContext,
+          })
+        );
+        if (clientUploadContext?._objectKey) {
+          formData.append('_objectKey', clientUploadContext._objectKey);
+        }
+        if (publicUrl) {
+          formData.append('url', publicUrl);
+        }
+        formData.append('alt', file.name);
 
-          const formData = new FormData();
-          formData.append(
-            'file',
-            JSON.stringify({
-              filename,
-              mimeType: file.type,
-              size: file.size,
-              clientUploadContext,
-            })
-          );
-          if (clientUploadContext?._objectKey) {
-            formData.append('_objectKey', clientUploadContext._objectKey);
-          }
-          if (blobResult?.url) {
-            formData.append('url', blobResult.url);
-          }
-          formData.append('alt', file.name);
-
-          const res = await fetch(`/api/${mediaCollection}`, { method: 'POST', body: formData });
-          const data = await res.json();
-          if (data.doc) {
-            setMediaList([data.doc, ...mediaList]);
-            setSelectedMedia(data.doc);
-            setLoading(false);
-            return;
-          }
+        const res = await fetch(`/api/${mediaCollection}`, { method: 'POST', body: formData });
+        const data = await res.json();
+        if (data.doc) {
+          setMediaList([data.doc, ...mediaList]);
+          setSelectedMedia(data.doc);
+          setLoading(false);
+          return;
         }
       } catch (err: any) {
-        console.warn('Direct upload gagal, fallback ke standard POST:', err.message);
+        if (file.size > 4.5 * 1024 * 1024) {
+          alert(`Upload langsung ke Cloudflare R2 gagal: ${err.message}. Pastikan aturan CORS R2 telah dikonfigurasi.`);
+          setLoading(false);
+          return;
+        }
+        console.warn('Direct upload ke Cloudflare R2 gagal, fallback ke standard POST:', err.message);
       }
     }
 

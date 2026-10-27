@@ -7,10 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "tsx --test tests/unit/activities.test.mjs tests/unit/albums.test.mjs tests/unit/calendar.test.mjs tests/unit/alternateSlugs.test.mjs tests/unit/pagination.test.mjs",
+    "test": "tsx --test tests/unit/activities.test.mjs tests/unit/albums.test.mjs tests/unit/calendar.test.mjs tests/unit/alternateSlugs.test.mjs tests/unit/pagination.test.mjs tests/unit/r2Storage.test.mjs",
     "seed:activities": "tsx scripts/import-activities.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1157.0",
+    "@aws-sdk/s3-request-presigner": "^3.1157.0",
     "@lexical/code": "^0.50.0",
     "@lexical/link": "^0.50.0",
     "@lexical/list": "^0.50.0",
@@ -21,6 +23,7 @@
     "@payloadcms/db-mongodb": "^3.90.2",
     "@payloadcms/next": "^3.90.2",
     "@payloadcms/richtext-lexical": "^3.90.2",
+    "@payloadcms/storage-s3": "^3.90.2",
     "@payloadcms/storage-vercel-blob": "^3.90.2",
     "@vercel/blob": "^2.8.0",
     "cross-env": "^10.1.0",

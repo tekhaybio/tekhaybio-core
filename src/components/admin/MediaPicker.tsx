@@ -15,7 +15,10 @@ import {
 } from 'lucide-react'
 import { useAdminFeedback } from './AdminFeedbackContext'
 import { MediaThumbnail } from '@/components/ui/MediaThumbnail'
-import { upload } from '@vercel/blob/client'
+// Integrasi Vercel Blob dipertahankan untuk backward compatibility tetapi dinonaktifkan (inactive)
+// Cloudflare R2 presigned client upload kini aktif digunakan
+import { upload as _inactiveVercelUpload } from '@vercel/blob/client'
+import { directUploadToR2 } from '@/lib/storage/uploadClient'
 
 export function MediaPicker({
   value,
@@ -98,65 +101,49 @@ export function MediaPicker({
 
     setIsUploading(true)
 
-    // Jika file > 4 MB, gunakan direct client upload ke Vercel Blob untuk memintas batas 4.5 MB serverless payload
+    // Jika file > 4 MB, gunakan direct client upload ke Cloudflare R2 untuk memintas batas 4.5 MB serverless payload
     if (file.size > 4 * 1024 * 1024) {
       try {
-        const issueRes = await fetch('/api/vercel-blob-client-upload-route?issue-client-upload=1', {
-          method: 'POST',
-          credentials: 'include',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            collectionSlug: mediaCollection,
-            filename: file.name,
-            mimeType: file.type,
-          }),
+        const { clientUploadContext, filename, mimeType, publicUrl } = await directUploadToR2({
+          file,
+          collectionSlug: mediaCollection,
         })
 
-        if (issueRes.ok) {
-          const { clientUploadContext, filename, pathname } = await issueRes.json()
-          const blobResult = await upload(pathname, file, {
-            access: 'public',
-            clientPayload: JSON.stringify({
-              collectionSlug: mediaCollection,
-              mimeType: file.type,
-              signedReceipt: clientUploadContext.signedReceipt,
-            }),
-            contentType: file.type,
-            handleUploadUrl: '/api/vercel-blob-client-upload-route',
+        const formData = new FormData()
+        formData.append(
+          'file',
+          JSON.stringify({
+            filename,
+            mimeType,
+            size: file.size,
+            clientUploadContext,
           })
+        )
+        if (clientUploadContext?._objectKey) {
+          formData.append('_objectKey', clientUploadContext._objectKey)
+        }
+        if (publicUrl) {
+          formData.append('url', publicUrl)
+        }
+        formData.append('alt', file.name)
 
-          const formData = new FormData()
-          formData.append(
-            'file',
-            JSON.stringify({
-              filename,
-              mimeType: file.type,
-              size: file.size,
-              clientUploadContext,
-            })
-          )
-          if (clientUploadContext?._objectKey) {
-            formData.append('_objectKey', clientUploadContext._objectKey)
-          }
-          if (blobResult?.url) {
-            formData.append('url', blobResult.url)
-          }
-          formData.append('alt', file.name)
-
-          const res = await fetch(`/api/${mediaCollection}`, { method: 'POST', body: formData })
-          const data = await res.json()
-          if (data.doc) {
-            setMediaList((prev) => [data.doc, ...prev])
-            onChange(data.doc)
-            setShowModal(false)
-            toast.success(`File "${file.name}" berhasil diunggah.`)
-            return
-          } else {
-            throw new Error(data.message || 'Gagal mengunggah file media.')
-          }
+        const res = await fetch(`/api/${mediaCollection}`, { method: 'POST', body: formData })
+        const data = await res.json()
+        if (data.doc) {
+          setMediaList((prev) => [data.doc, ...prev])
+          onChange(data.doc)
+          setShowModal(false)
+          toast.success(`File "${file.name}" berhasil diunggah ke Cloudflare R2.`)
+          return
+        } else {
+          throw new Error(data.message || 'Gagal mengunggah file media ke R2.')
         }
       } catch (clientErr: any) {
-        console.warn('Direct client upload tidak aktif atau gagal, beralih ke standard POST:', clientErr.message)
+        if (file.size > 4.5 * 1024 * 1024) {
+          toast.error(`Upload langsung ke Cloudflare R2 gagal: ${clientErr.message}. Pastikan aturan CORS R2 telah dikonfigurasi.`)
+          return
+        }
+        console.warn('Direct client upload ke Cloudflare R2 tidak aktif atau gagal, beralih ke standard POST:', clientErr.message)
       }
     }
 
