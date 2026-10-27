@@ -109,11 +109,14 @@ export const HomePage: GlobalConfig = {
           ],
         },
         {
-          label: 'Uniqueness Section',
+          label: 'Uniqueness Section (Dinonaktifkan Sementara)',
           fields: [
             {
               name: 'uniquenessSection',
               type: 'group',
+              admin: {
+                description: 'Fitur Identitas & Nilai Luhur ini dinonaktifkan untuk sementara waktu karena belum final.',
+              },
               fields: [
                 {
                   name: 'title',

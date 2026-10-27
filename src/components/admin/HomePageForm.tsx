@@ -8,6 +8,7 @@ import { saveGlobalAction } from '@/app/(admin)/admin/actions'
 import { MediaPicker } from '@/components/admin/MediaPicker'
 import { LocaleTabs } from '@/components/admin/LocaleTabs'
 import { useAdminFeedback } from '@/components/admin/AdminFeedbackContext'
+import { AlertCircle } from 'lucide-react'
 
 const routeOptions = [
   { label: 'Beranda (Home)', value: 'home' },
@@ -243,8 +244,38 @@ export function HomePageForm({ initialData }: { initialData?: any }) {
               {renderInput('historySection', 'image', 'Gambar Pendukung', 'image')}
             </div>
 
-            <div className="space-y-6">
-              <h3 className="font-semibold text-lg text-slate-900 border-b pb-2">Bagian Keunikan</h3>
+            {/* Bagian Keunikan / Identitas & Nilai Luhur - Dinonaktifkan Sementara */}
+            <div className="space-y-6 pt-6 border-t border-slate-200">
+              <div className="rounded-xl border border-amber-200 bg-amber-50/80 p-5 space-y-3">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-amber-100 border border-amber-300 flex items-center justify-center text-amber-700 shrink-0">
+                      <AlertCircle className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-base text-slate-900">
+                        Bagian Identitas &amp; Nilai Luhur (Keunikan)
+                      </h3>
+                      <p className="text-xs text-amber-800">
+                        Pengaturan konten seksi keunikan &amp; identitas nilai luhur pada halaman beranda.
+                      </p>
+                    </div>
+                  </div>
+                  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-900 border border-amber-300 shadow-2xs">
+                    Fitur ini dinonaktifkan untuk sementara waktu
+                  </span>
+                </div>
+                <div className="pt-2 text-xs text-amber-900 leading-relaxed border-t border-amber-200/80">
+                  <p>
+                    <strong>Status:</strong> Fitur ini masih belum final dan untuk sementara waktu dinonaktifkan dari tampilan publik maupun formulir admin. Seluruh kode formulir di bawah ini dikomentari (tidak dihapus) sehingga riwayat data tetap aman dan dapat diaktifkan kembali sewaktu-waktu.
+                  </p>
+                </div>
+              </div>
+
+              {/* 
+              KODE FORMULIR IDENTITAS & NILAI LUHUR (KEUNIKAN) - DINONAKTIFKAN SEMENTARA:
+              Untuk mengaktifkan kembali, hapus tanda komentar pada blok kode di bawah ini:
+
               {renderInput('uniquenessSection', 'title', 'Judul Keunikan')}
               {renderInput('uniquenessSection', 'description', 'Deskripsi Keunikan', 'textarea')}
               
@@ -275,6 +306,7 @@ export function HomePageForm({ initialData }: { initialData?: any }) {
                   )}
                 </div>
               </div>
+              */}
             </div>
           </div>
         )}

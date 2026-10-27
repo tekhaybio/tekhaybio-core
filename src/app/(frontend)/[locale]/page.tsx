@@ -48,7 +48,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <Hero homePage={hp} siteSettings={data.siteSettings as CMSRecord} locale={locale} />
       <Introduction homePage={hp} siteSettings={data.siteSettings as CMSRecord} locale={locale} />
       <ShortHistory homePage={hp} history={data.history as CMSRecord} locale={locale} />
+      {/* Fitur Identitas & Nilai Luhur dinonaktifkan untuk sementara waktu (belum final)
       <Uniqueness homePage={hp} locale={locale} />
+      */}
       <ServicesList homePage={hp} services={data.services as CMSRecord[]} locale={locale} />
       <ActivitiesList homePage={hp} activities={data.activities as CMSRecord[]} locale={locale} />
       <NewsList homePage={hp} posts={data.posts as CMSRecord[]} locale={locale} />

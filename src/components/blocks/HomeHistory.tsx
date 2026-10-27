@@ -55,6 +55,8 @@ export function ShortHistory({ homePage, history, locale }: { homePage?: CMSReco
   )
 }
 
+// Catatan: Komponen Uniqueness (Identitas & Nilai Luhur) dinonaktifkan untuk sementara waktu pada halaman beranda.
+// Kode komponen tetap dipertahankan secara utuh agar dapat diaktifkan kembali sewaktu-waktu.
 export function Uniqueness({ homePage, locale }: { homePage?: CMSRecord, locale: 'id' | 'en' }) {
   const hp = (homePage?.uniquenessSection as any) || {}
   
