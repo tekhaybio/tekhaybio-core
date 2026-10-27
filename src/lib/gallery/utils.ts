@@ -25,7 +25,7 @@ export function getAlbumCategoryLabel(category?: string | null, locale: 'id' | '
 }
 
 export const MEDIA_CATEGORIES = [
-  { value: 'building', label: { id: 'Bangunan Klenteng', en: 'Temple Building' } },
+  { value: 'building', label: { id: 'Bangunan TITD', en: 'Temple Building' } },
   { value: 'interior', label: { id: 'Interior & Altar', en: 'Interior & Altar' } },
   { value: 'activities', label: { id: 'Kegiatan & Ritual', en: 'Activities & Rituals' } },
   { value: 'history', label: { id: 'Sejarah & Peninggalan', en: 'History & Relics' } },

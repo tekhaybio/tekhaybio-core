@@ -47,8 +47,8 @@ export async function ActivitiesListPage({
         title={locale === 'id' ? 'Jadwal Kegiatan & Perayaan' : 'Activities & Festival Schedule'}
         description={
           locale === 'id'
-            ? 'Dokumentasi dan agenda ritual keagamaan, sembahyang leluhur, hari kebesaran dewa, dan perayaan budaya di Klenteng Tek Hay Bio.'
-            : 'Documentation and schedule of religious rituals, ancestral worship, deity festivals, and cultural events at Tek Hay Bio Temple.'
+            ? 'Dokumentasi dan agenda ritual keagamaan, sembahyang leluhur, hari kebesaran dewa, dan perayaan budaya di TITD Tek Hay Bio.'
+            : 'Documentation and schedule of religious rituals, ancestral worship, deity festivals, and cultural events at TITD Tek Hay Bio.'
         }
       />
 
@@ -63,7 +63,7 @@ export async function ActivitiesListPage({
               <div>
                 <h3 className="text-base font-serif font-bold text-stone-900">
                   {locale === 'id'
-                    ? 'Kalender Ritual & Perayaan Klenteng'
+                    ? 'Kalender Ritual & Perayaan TITD'
                     : 'Temple Ritual & Celebration Calendar'}
                 </h3>
                 <p className="text-xs text-stone-600 mt-0.5">

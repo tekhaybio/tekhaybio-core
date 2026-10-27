@@ -80,9 +80,9 @@ export const ACTIVITY_LUNAR_RULES: { value: ActivityLunarRuleType; label: { id: 
 ]
 
 export const ACTIVITY_LOCATION_TYPES: { value: ActivityLocationType; label: { id: string; en: string } }[] = [
-  { value: 'internal', label: { id: 'Klenteng Tek Hay Bio (Internal)', en: 'Tek Hay Bio Temple (Internal)' } },
+  { value: 'internal', label: { id: 'TITD Tek Hay Bio (Internal)', en: 'TITD Tek Hay Bio (Internal)' } },
   { value: 'external', label: { id: 'Lokasi Lain / Eksternal', en: 'External Location' } },
-  { value: 'hybrid', label: { id: 'Klenteng Tek Hay Bio & Lokasi Eksternal', en: 'Internal & External Location' } },
+  { value: 'hybrid', label: { id: 'TITD Tek Hay Bio & Lokasi Eksternal', en: 'TITD Tek Hay Bio & External Location' } },
 ]
 
 export function getActivityCategoryLabel(category?: string | null, locale: 'id' | 'en' = 'id'): string {

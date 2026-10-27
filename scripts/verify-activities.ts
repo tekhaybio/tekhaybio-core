@@ -4,7 +4,7 @@ import configPromise from '../payload.config'
 
 async function verifySeededActivities() {
   console.log('='.repeat(80))
-  console.log('VERIFIKASI DATA KEGIATAN KLENTENG TEK HAY BIO DALAM DATABASE')
+  console.log('VERIFIKASI DATA KEGIATAN TITD TEK HAY BIO DALAM DATABASE')
   console.log('='.repeat(80))
 
   const payload = await getPayload({ config: configPromise })

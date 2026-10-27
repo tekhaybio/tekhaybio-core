@@ -34,7 +34,7 @@ export default async function CategoriesPage({
             Kategori Berita
           </h1>
           <p className="text-xs text-stone-500 mt-0.5">
-            Kelola klasifikasi topik dan kategori berita untuk Klenteng Tek Hay Bio.
+            Kelola klasifikasi topik dan kategori berita untuk TITD Tek Hay Bio.
           </p>
         </div>
         <Link

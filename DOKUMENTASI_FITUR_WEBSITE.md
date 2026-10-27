@@ -1,17 +1,17 @@
-# Dokumentasi Fitur Website Profil Klenteng Tek Hay Bio
+# Dokumentasi Fitur Website Profil TITD Tek Hay Bio
 
 ---
 
 ## 1. Pendahuluan
 
 ### 1.1 Latar Belakang
-Klenteng Tek Hay Bio, Semarang, merupakan salah satu cagar budaya dan tempat ibadah bersejarah bagi masyarakat Tionghoa dan penganut Tridharma di Kota Semarang. Sebagai warisan leluhur yang kaya akan nilai historis, spiritualitas, arsitektur klasik, serta tradisi keagamaan dan kebudayaan, Klenteng Tek Hay Bio memerlukan media komunikasi modern untuk mendokumentasikan dan mempublikasikan identitasnya kepada khalayak luas.
+TITD Tek Hay Bio, Semarang, merupakan salah satu cagar budaya dan tempat ibadah bersejarah bagi masyarakat Tionghoa dan penganut Tridharma di Kota Semarang. Sebagai warisan leluhur yang kaya akan nilai historis, spiritualitas, arsitektur klasik, serta tradisi keagamaan dan kebudayaan, TITD Tek Hay Bio memerlukan media komunikasi modern untuk mendokumentasikan dan mempublikasikan identitasnya kepada khalayak luas.
 
-Melalui pengembangan website profil digital berbasis web modern, seluruh rekam jejak sejarah, informasi kegiatan ibadah, layanan sosial-keagamaan, artikel berita, dan dokumentasi visual klenteng dapat diakses secara terbuka, transparan, dan terpercaya oleh umat, peneliti, wisatawan, maupun masyarakat umum.
+Melalui pengembangan website profil digital berbasis web modern, seluruh rekam jejak sejarah, informasi kegiatan ibadah, layanan sosial-keagamaan, artikel berita, dan dokumentasi visual TITD dapat diakses secara terbuka, transparan, dan terpercaya oleh umat, peneliti, wisatawan, maupun masyarakat umum.
 
 ### 1.2 Tujuan Dokumentasi
-Dokumen ini disusun untuk memberikan gambaran komprehensif, akurat, dan terstruktur mengenai seluruh fitur fungsional serta halaman yang telah diimplementasikan dalam sistem website profil Klenteng Tek Hay Bio. Dokumen ini bertujuan untuk:
-1. Menjadi acuan fungsional bagi pengurus dan administrator klenteng dalam mengoperasikan panel pengelolaan konten (*Content Management System*).
+Dokumen ini disusun untuk memberikan gambaran komprehensif, akurat, dan terstruktur mengenai seluruh fitur fungsional serta halaman yang telah diimplementasikan dalam sistem website profil TITD Tek Hay Bio. Dokumen ini bertujuan untuk:
+1. Menjadi acuan fungsional bagi pengurus dan administrator TITD dalam mengoperasikan panel pengelolaan konten (*Content Management System*).
 2. Memberikan pemahaman menyeluruh bagi tim pengembang (*developer*) dan penguji sistem mengenai arsitektur fitur, keterkaitan data, serta batasan sistem yang ada.
 3. Menyediakan dokumentasi akademik dan teknis formal yang dapat dipertanggungjawabkan untuk keperluan evaluasi proyek, laporan kemajuan, dan pengujian kelayakan sistem.
 
@@ -23,12 +23,12 @@ Dokumentasi ini mencakup:
 - **Matriks Fungsional & Keterbatasan:** Evaluasi objektif tingkat kelengkapan operasi CRUD (*Create, Read, Update, Delete*), proteksi referensi media, mekanisme revalidasi *cache*, serta catatan fitur yang belum diimplementasikan secara penuh.
 
 ### 1.4 Gambaran Umum Website
-Website profil Klenteng Tek Hay Bio dibangun menggunakan fondasi teknologi modern:
+Website profil TITD Tek Hay Bio dibangun menggunakan fondasi teknologi modern:
 - **Framework Aplikasi:** Next.js (App Router) dengan TypeScript dan arsitektur Server Components (RSC) serta Server Actions untuk mutasi data yang aman dan cepat.
 - **Content Management System (CMS):** Payload CMS (v3) berbasis *headless architecture* yang terintegrasi langsung dalam siklus hidup (*monorepo runtime*) Next.js.
 - **Basis Data:** MongoDB dengan konektor Mongoose Adapter.
 - **Penyimpanan Media:** Integrasi Cloudflare R2 Storage (S3-compatible API) untuk penyimpanan cloud aktif (dengan Vercel Blob dipertahankan sebagai legacy/fallback) serta penyimpanan lokal multi-koleksi media tersegregasi.
-- **Antarmuka Pengguna:** Custom Admin Dashboard berbasis Tailwind CSS yang dirancang khusus untuk kenyamanan pengurus klenteng, dilengkapi editor teks kaya (*Lexical Rich Text Editor*) dan sistem pemilih media interaktif.
+- **Antarmuka Pengguna:** Custom Admin Dashboard berbasis Tailwind CSS yang dirancang khusus untuk kenyamanan pengurus TITD, dilengkapi editor teks kaya (*Lexical Rich Text Editor*) dan sistem pemilih media interaktif.
 - **Dukungan Dwibahasa (*Localization*):** Dukungan penuh bahasa Indonesia (`id`) sebagai bahasa utama dan bahasa Inggris (`en`) sebagai bahasa internasional, dengan mekanisme fallback cerdas.
 
 ---
@@ -39,17 +39,17 @@ Website profil Klenteng Tek Hay Bio dibangun menggunakan fondasi teknologi moder
 Website publik merupakan antarmuka digital yang diakses oleh masyarakat umum. Antarmuka ini dirancang dengan estetika oriental-kontemporer yang khidmat, bersih, dan responsif untuk berbagai perangkat (desktop, tablet, dan smartphone).
 
 Fungsi utama website publik meliputi:
-- Menyajikan profil, visi, identitas, dan keunikan Klenteng Tek Hay Bio.
-- Menampilkan garis waktu (*historical timeline*) perjalanan klenteng secara kronologis.
+- Menyajikan profil, visi, identitas, dan keunikan TITD Tek Hay Bio.
+- Menampilkan garis waktu (*historical timeline*) perjalanan TITD secara kronologis.
 - Menginformasikan jadwal agenda kegiatan ritual, kebudayaan, dan sosial mendatang.
 - Menjelaskan layanan keagamaan dan fasilitas yang tersedia untuk umat.
-- Menyediakan artikel berita terkini, pengumuman, dan arsip publikasi klenteng.
+- Menyediakan artikel berita terkini, pengumuman, dan arsip publikasi TITD.
 - Menampilkan arsip foto visual arsitektur, interior, dan tradisi.
 - Menyediakan panduan alamat fisik, jam kunjungan, nomor kontak (WhatsApp), email, serta integrasi peta lokasi interaktif.
 
 ### 2.2 Admin Dashboard
 Sistem menyediakan antarmuka khusus pengelolaan konten yang terpisah dari tampilan publik. Menariknya, sistem ini mengimplementasikan **dua lapis panel administrasi**:
-1. **Custom Admin Dashboard (`/admin`):** Antarmuka utama yang dirancang khusus (*custom-built*) dengan komponen modern, navigasi berbahasa Indonesia, tab pengelolaan bahasa terpadu, dan formulir yang disederhanakan agar mudah digunakan oleh pengurus klenteng sehari-hari.
+1. **Custom Admin Dashboard (`/admin`):** Antarmuka utama yang dirancang khusus (*custom-built*) dengan komponen modern, navigasi berbahasa Indonesia, tab pengelolaan bahasa terpadu, dan formulir yang disederhanakan agar mudah digunakan oleh pengurus TITD sehari-hari.
 2. **Payload Native Admin (`/admin-payload`):** Antarmuka bawaan Payload CMS yang berfungsi sebagai pusat kendali tingkat lanjut (*advanced administration*), manajemen skema, dan operasional darurat bagi pengembang sistem.
 
 ### 2.3 Pengguna dan Hak Akses
@@ -58,7 +58,7 @@ Sistem mengimplementasikan kontrol akses berbasis peran (*Role-Based Access Cont
 | Peran (*Role*) | Deskripsi & Hak Akses | Ruang Lingkup Kewenangan |
 |---|---|---|
 | **Super Admin** (`super_admin`) | Tingkat kewenangan tertinggi sistem. Memiliki akses penuh terhadap seluruh fitur konten dan pengaturan sistem. | - Mengelola semua konten (Berita, Kategori, Kegiatan, Layanan, Galeri).<br>- Mengubah Pengaturan Global (Informasi Website, Sejarah, Beranda).<br>- Mengakses daftar pengguna (`/admin/pengguna`) dan membuat pengguna baru.<br>- Mengakses halaman pengaturan lanjutan (`/admin/pengaturan`) dan Payload Admin asli. |
-| **Editor** (`editor`) | Tingkat kewenangan operasional harian konten. | - Membuat, membaca, memperbarui, dan menghapus Berita, Kegiatan, dan Layanan.<br>- Mengunggah dan mengelola media pada Galeri.<br>- Mengubah konten Halaman Sejarah.<br>- **Dilarang** mengubah Identitas Website / Kontak Klenteng.<br>- **Dilarang** mengakses daftar akun pengguna (`/admin/pengguna`).<br>- **Dilarang** membuka halaman pengaturan sistem (`/admin/pengaturan`). |
+| **Editor** (`editor`) | Tingkat kewenangan operasional harian konten. | - Membuat, membaca, memperbarui, dan menghapus Berita, Kegiatan, dan Layanan.<br>- Mengunggah dan mengelola media pada Galeri.<br>- Mengubah konten Halaman Sejarah.<br>- **Dilarang** mengubah Identitas Website / Kontak TITD.<br>- **Dilarang** mengakses daftar akun pengguna (`/admin/pengguna`).<br>- **Dilarang** membuka halaman pengaturan sistem (`/admin/pengaturan`). |
 | **Pengunjung Publik** (*Guest*) | Pengguna umum tanpa login (*unauthenticated*). | - Hanya memiliki hak baca (*read-only*) terhadap konten yang berstatus `published`. |
 
 ### 2.4 Hubungan Pengelolaan Konten dengan Website Publik
@@ -81,12 +81,12 @@ Website dirancang dengan arsitektur dwibahasa bawaan (*first-class international
 
 ### 3.1 Homepage (Beranda)
 - **URL / Rute Aktual:** `/[locale]` (misal: `http://localhost:3000/id` dan `http://localhost:3000/en`)
-- **Tujuan Halaman:** Menjadi pintu gerbang informasi utama yang memberikan impresi visual klenteng, ringkasan sejarah, keunikan arsitektur, serta menampilkan sorotan kegiatan dan berita terbaru.
+- **Tujuan Halaman:** Menjadi pintu gerbang informasi utama yang memberikan impresi visual TITD, ringkasan sejarah, keunikan arsitektur, serta menampilkan sorotan kegiatan dan berita terbaru.
 - **Sumber Data:** Payload Global `home-page`, `site-settings`, `contact-information`, `history`, serta query otomatis 3 data teratas dari koleksi `services`, `activities`, `posts`, dan 6 gambar dari `gallery-media`.
 - **Komponen & Bagian Konten:**
-  1. **Hero Section (`HomeHero.tsx`):** Menampilkan judul utama klenteng, slogan (*tagline*), gambar latar belakang sinematik, serta tombol panggilan aksi (*Call-to-Action*) menuju halaman Sejarah dan Kontak.
-  2. **Introduction Section (`HomeHero.tsx`):** Blok teks sambutan hangat yang memperkenalkan eksistensi Klenteng Tek Hay Bio dengan tautan penjelajahan ke Tentang Kami.
-  3. **Short History Section (`HomeHistory.tsx`):** Ringkasan sejarah klenteng ("Jejak Waktu") berdampingan dengan arsip visual dan tombol pintas ke linimasa sejarah lengkap.
+  1. **Hero Section (`HomeHero.tsx`):** Menampilkan judul utama TITD, slogan (*tagline*), gambar latar belakang sinematik, serta tombol panggilan aksi (*Call-to-Action*) menuju halaman Sejarah dan Kontak.
+  2. **Introduction Section (`HomeHero.tsx`):** Blok teks sambutan hangat yang memperkenalkan eksistensi TITD Tek Hay Bio dengan tautan penjelajahan ke Tentang Kami.
+  3. **Short History Section (`HomeHistory.tsx`):** Ringkasan sejarah TITD ("Jejak Waktu") berdampingan dengan arsip visual dan tombol pintas ke linimasa sejarah lengkap.
   4. **Uniqueness Section (`HomeHistory.tsx`):** Bagian berlatar gelap yang menyajikan nilai luhur, filosofi arsitektur, dan warisan tradisi melalui kartu visual fitur keunikan.
   5. **Services Section (`HomeLists.tsx`):** Menampilkan maksimal 3 kartu layanan unggulan yang berstatus `published` dengan urutan `sortOrder`.
   6. **Activities Section (`HomeLists.tsx`):** Menampilkan maksimal 3 agenda kegiatan ritual/budaya mendatang, lengkap dengan kalender tanggal dan lokasi.
@@ -99,18 +99,18 @@ Website dirancang dengan arsitektur dwibahasa bawaan (*first-class international
 - **URL / Rute Aktual:**
   - Versi ID: `/[locale]/tentang-kami` (misal: `/id/tentang-kami`)
   - Versi EN: `/[locale]/about` (misal: `/en/about`)
-- **Tujuan Halaman:** Menyajikan profil naratif yang mendalam mengenai filosofi, latar belakang pendirian, dan identitas Klenteng Tek Hay Bio.
+- **Tujuan Halaman:** Menyajikan profil naratif yang mendalam mengenai filosofi, latar belakang pendirian, dan identitas TITD Tek Hay Bio.
 - **Sumber Data:** Payload Global `history` (`title`, `shortDescription`, dan `content`).
 - **Komponen Utama:**
   - `PageHeader`: Menampilkan judul halaman dan deskripsi pembuka profil.
   - `RichText`: Merender isi narasi sejarah dan profil secara lengkap dalam tipografi artikel yang nyaman dibaca.
-- **Fitur Pengunjung:** Membaca profil resmi klenteng dalam bahasa Indonesia atau Inggris.
+- **Fitur Pengunjung:** Membaca profil resmi TITD dalam bahasa Indonesia atau Inggris.
 
-### 3.3 Sejarah Klenteng
+### 3.3 Sejarah TITD
 - **URL / Rute Aktual:**
   - Versi ID: `/[locale]/sejarah` (misal: `/id/sejarah`)
   - Versi EN: `/[locale]/history` (misal: `/en/history`)
-- **Tujuan Halaman:** Mendokumentasikan perjalanan historis Klenteng Tek Hay Bio dari masa awal pendirian hingga era modern dalam bentuk visual kronologis.
+- **Tujuan Halaman:** Mendokumentasikan perjalanan historis TITD Tek Hay Bio dari masa awal pendirian hingga era modern dalam bentuk visual kronologis.
 - **Sumber Data:** Payload Global `history` (khususnya field array `timeline`).
 - **Komponen Utama:**
   - Garis Waktu Interaktif (*Vertical Timeline*): Garis vertikal dengan simpul tahun yang menghubungkan peristiwa demi peristiwa.
@@ -121,7 +121,7 @@ Website dirancang dengan arsitektur dwibahasa bawaan (*first-class international
 - **URL / Rute Aktual:**
   - Versi ID: `/[locale]/berita` (misal: `/id/berita`)
   - Versi EN: `/[locale]/news` (misal: `/en/news`)
-- **Tujuan Halaman:** Menampilkan daftar artikel warta, liputan acara, dan pengumuman resmi klenteng kepada publik.
+- **Tujuan Halaman:** Menampilkan daftar artikel warta, liputan acara, dan pengumuman resmi TITD kepada publik.
 - **Sumber Data:** Koleksi `posts` dengan kondisi filter `status = 'published'` dan diurutkan berdasarkan `publishedAt` terbaru secara menurun (`-publishedAt`).
 - **Komponen Utama:**
   - Kisi Artikel (*Article Grid*): Menampilkan kartu berita dengan aspek rasio gambar 3:2, tanggal publikasi yang diformat lokal, lencana kategori, judul berita, dan ringkasan kutipan (*excerpt*).
@@ -150,7 +150,7 @@ Website dirancang dengan arsitektur dwibahasa bawaan (*first-class international
   - **Detail Album Dokumentasi:**
     - Versi ID: `/[locale]/galeri/[slug]` (misal: `/id/galeri/acara-tong-jiu-pia-2026`)
     - Versi EN: `/[locale]/gallery/[slug]` (misal: `/en/gallery/tong-jiu-pia-celebration-2026`)
-- **Tujuan Halaman:** Menyajikan album-album dokumentasi kegiatan klenteng, perayaan budaya, ritual, dan sembahyang leluhur yang berisi kumpulan foto dan video berkualitas tinggi.
+- **Tujuan Halaman:** Menyajikan album-album dokumentasi kegiatan TITD, perayaan budaya, ritual, dan sembahyang leluhur yang berisi kumpulan foto dan video berkualitas tinggi.
 - **Sumber Data:** Koleksi `albums` (dengan relasi mendalam ke koleksi `gallery-media`), difilter berdasarkan status `published` dan diurutkan berdasarkan tanggal acara terbaru (`-eventDate`).
 - **Komponen Utama Daftar Album (`GalleryPage.tsx`):**
   - **Filter Kategori Album:** Tombol pill interaktif untuk memfilter album berdasarkan kategori terstruktur (*Ritual*, *Sembahyang Leluhur*, *Hari Kebesaran Dewa*, *Perayaan Budaya*, *Kegiatan Sosial*, *Dokumentasi Lainnya*).
@@ -167,7 +167,7 @@ Website dirancang dengan arsitektur dwibahasa bawaan (*first-class international
 - **URL / Rute Aktual:**
   - Versi ID: `/[locale]/kegiatan` (misal: `/id/kegiatan`)
   - Versi EN: `/[locale]/activities` (misal: `/en/activities`)
-- **Tujuan Halaman:** Menginformasikan jadwal agenda kegiatan klenteng, baik ritual keagamaan, perayaan tradisi, maupun bakti sosial.
+- **Tujuan Halaman:** Menginformasikan jadwal agenda kegiatan TITD, baik ritual keagamaan, perayaan tradisi, maupun bakti sosial.
 - **Sumber Data:** Koleksi `activities` dengan status `published`, diurutkan berdasarkan tanggal pelaksanaan terbaru (`-date`), dengan batas 9 kegiatan per halaman.
 - **Komponen Utama:**
   - Kartu Kegiatan Interaktif: Kartu kegiatan yang dilengkapi lencana tanggal khusus di sudut gambar (menampilkan angka tanggal dan singkatan bulan), jenis kegiatan (*Ritual*, *Cultural*, atau *Other*), judul kegiatan, lokasi kegiatan dengan ikon penanda, serta ringkasan singkat.
@@ -182,7 +182,7 @@ Website dirancang dengan arsitektur dwibahasa bawaan (*first-class international
 - **Sumber Data:** Dokumen tunggal dari koleksi `activities` berdasarkan parameter `slug`.
 - **Komponen Utama:**
   - Hero Header Sinematik: Banner visual berukuran besar (tinggi 40-60vh) dengan gambar latar kegiatan bergradasi gelap.
-  - Informasi Meta: Menampilkan badge jenis kegiatan, hari dan tanggal pelaksanaan terformat lengkap, serta penanda lokasi (misal: "Altar Utama Klenteng Tek Hay Bio").
+  - Informasi Meta: Menampilkan badge jenis kegiatan, hari dan tanggal pelaksanaan terformat lengkap, serta penanda lokasi (misal: "Altar Utama TITD Tek Hay Bio").
   - Paragraf Pengantar (*Lead Paragraph*): Teks deskripsi pembuka berukuran besar.
   - Konten Penjelasan Acara: Uraian rinci yang dirender melalui Lexical Rich Text.
 
@@ -190,7 +190,7 @@ Website dirancang dengan arsitektur dwibahasa bawaan (*first-class international
 - **URL / Rute Aktual:**
   - Versi ID: `/[locale]/kalender-ritual` (misal: `/id/kalender-ritual`)
   - Versi EN: `/[locale]/ritual-calendar` (misal: `/en/ritual-calendar`)
-- **Tujuan Halaman:** Menyajikan panduan lengkap penanggalan ritual keagamaan, sembahyang leluhur, hari kebesaran dewa, dan perayaan budaya Klenteng Tek Hay Bio sepanjang tahun, memetakan siklus kalender Imlek (Lunar) ke kalender Masehi (Solar) secara astronomis presisi tanpa tanggal palsu.
+- **Tujuan Halaman:** Menyajikan panduan lengkap penanggalan ritual keagamaan, sembahyang leluhur, hari kebesaran dewa, dan perayaan budaya TITD Tek Hay Bio sepanjang tahun, memetakan siklus kalender Imlek (Lunar) ke kalender Masehi (Solar) secara astronomis presisi tanpa tanggal palsu.
 - **Sumber Data:** Koleksi `activities` dengan filter status `published`, diakses langsung secara efisien tanpa duplikasi koleksi.
 - **Dua Mode Tampilan Interaktif (`RitualCalendarView.tsx`):**
   1. **Mode A — Daftar Agenda (Agenda List View):**
@@ -210,7 +210,7 @@ Website dirancang dengan arsitektur dwibahasa bawaan (*first-class international
 - **URL / Rute Aktual:**
   - Versi ID: `/[locale]/layanan` (misal: `/id/layanan`)
   - Versi EN: `/[locale]/services` (misal: `/en/services`)
-- **Tujuan Halaman:** Menyajikan panduan layanan keagamaan, konsultasi spiritual/tridharma, dan fasilitas klenteng yang dapat dimanfaatkan oleh umat dan masyarakat.
+- **Tujuan Halaman:** Menyajikan panduan layanan keagamaan, konsultasi spiritual/tridharma, dan fasilitas TITD yang dapat dimanfaatkan oleh umat dan masyarakat.
 - **Sumber Data:** Koleksi `services` dengan filter `status = 'published'` dan diurutkan berdasarkan `sortOrder`.
 - **Komponen Utama:**
   - Tampilan Kartu Layanan Bergantian (*Alternating Two-Column Layout*): Setiap layanan ditampilkan secara detail dengan foto representatif di satu sisi dan penjelasan lengkap di sisi lainnya dengan pola zig-zag.
@@ -226,16 +226,16 @@ Website dirancang dengan arsitektur dwibahasa bawaan (*first-class international
 - **Tujuan Halaman:** Menyediakan saluran komunikasi resmi, alamat fisik, jam kunjungan, dan panduan navigasi geografis bagi peziarah atau pengunjung.
 - **Sumber Data:** Payload Global `contact-information`.
 - **Komponen Utama:**
-  - Blok Alamat Fisik: Alamat lengkap klenteng dilengkapi tombol cepat "Buka di Google Maps" yang membuka aplikasi peta eksternal.
+  - Blok Alamat Fisik: Alamat lengkap TITD dilengkapi tombol cepat "Buka di Google Maps" yang membuka aplikasi peta eksternal.
   - Blok Jam Operasional: Panduan waktu berkunjung bagi umat dan wisatawan (misal: "Setiap Hari 06.00 - 18.00 WIB").
   - Saluran Komunikasi Terpadu:
     - Nomor WhatsApp / Telepon: Dilengkapi logika otomatis sanitasi nomor telepon yang mengubah format lokal `08...` menjadi tautan pesan WhatsApp langsung (`https://wa.me/628...`).
     - Alamat Email: Tautan `mailto:` untuk mengirim pesan elektronik langsung.
-    - Media Sosial: Tautan ke akun media sosial klenteng (Instagram, Facebook, YouTube, dll.).
+    - Media Sosial: Tautan ke akun media sosial TITD (Instagram, Facebook, YouTube, dll.).
   - Peta Lokasi Interaktif: Wadah peta responsif dengan fallback 3 tingkat:
     1. Menggunakan kode `<iframe>` Embed kustom jika diisi administrator.
     2. Menggunakan koordinat presisi Latitude dan Longitude jika kode embed kosong.
-    3. Menggunakan fallback pencarian Google Maps statis untuk nama Klenteng Tek Hay Bio Semarang.
+    3. Menggunakan fallback pencarian Google Maps statis untuk nama TITD Tek Hay Bio Semarang.
 
 ### 3.12 Halaman Publik Lainnya
 1. **Root Redirect (`src/app/(frontend)/page.tsx`):** Rute root website (`/`) secara otomatis mengalihkan (*server-side redirect*) pengunjung ke bahasa default yaitu `/id`.
@@ -447,10 +447,10 @@ Website dirancang dengan arsitektur dwibahasa bawaan (*first-class international
 | No | Nama Halaman | Pola Rute Aktual | Tujuan & Fungsi Halaman | Sumber Data |
 |---|---|---|---|---|
 | 1 | **Root Redirection** | `/` | Mengarahkan pengunjung root ke bahasa default (`/id`) | Logika `redirect('/id')` |
-| 2 | **Beranda (Home)** | `/[locale]` (`/id`, `/en`) | Menampilkan etalase utama informasi klenteng | Globals: `home-page`, `site-settings`, `contact-information`, `history`; Koleksi: `services`, `activities`, `posts`, `gallery-media` |
-| 3 | **Tentang Kami** | `/[locale]/tentang-kami` (ID)<br>`/[locale]/about` (EN) | Profil filosofis dan narasi pendirian klenteng | Global: `history` |
-| 4 | **Sejarah Klenteng** | `/[locale]/sejarah` (ID)<br>`/[locale]/history` (EN) | Linimasa kronologis perjalanan sejarah klenteng | Global: `history` (`timeline`) |
-| 5 | **Daftar Berita** | `/[locale]/berita` (ID)<br>`/[locale]/news` (EN) | Arsip dan warta berita terbaru klenteng | Koleksi: `posts` (filter `published`) |
+| 2 | **Beranda (Home)** | `/[locale]` (`/id`, `/en`) | Menampilkan etalase utama informasi TITD | Globals: `home-page`, `site-settings`, `contact-information`, `history`; Koleksi: `services`, `activities`, `posts`, `gallery-media` |
+| 3 | **Tentang Kami** | `/[locale]/tentang-kami` (ID)<br>`/[locale]/about` (EN) | Profil filosofis dan narasi pendirian TITD | Global: `history` |
+| 4 | **Sejarah TITD** | `/[locale]/sejarah` (ID)<br>`/[locale]/history` (EN) | Linimasa kronologis perjalanan sejarah TITD | Global: `history` (`timeline`) |
+| 5 | **Daftar Berita** | `/[locale]/berita` (ID)<br>`/[locale]/news` (EN) | Arsip dan warta berita terbaru TITD | Koleksi: `posts` (filter `published`) |
 | 6 | **Detail Berita** | `/[locale]/berita/[slug]` (ID)<br>`/[locale]/news/[slug]` (EN) | Membaca artikel berita secara mendalam | Koleksi: `posts` (by slug & locale) |
 | 7 | **Daftar Kegiatan** | `/[locale]/kegiatan` (ID)<br>`/[locale]/activities` (EN) | Jadwal agenda ibadah dan kebudayaan | Koleksi: `activities` (filter `published`) |
 | 8 | **Detail Kegiatan** | `/[locale]/kegiatan/[slug]` (ID)<br>`/[locale]/activities/[slug]` (EN) | Rincian panduan dan pelaksanaan kegiatan | Koleksi: `activities` (by slug & locale) |
@@ -584,7 +584,7 @@ Aplikasi Next.js menggunakan struktur rute terorganisir (*Route Groups*):
    - Menekan tombol **Simpan Album**. Server Action `saveAlbumAction` memvalidasi data dan mengeksekusi revalidasi cache publik (`/id/galeri`, `/en/gallery`, dan detail album).
 8. **Pustaka Media Terpusat & Proteksi File:**
    - Melalui tab **Pustaka Media** (`/admin/galeri?tab=media`), admin dapat melihat seluruh aset media.
-   - Jika admin berniat menghapus permanen suatu berkas foto/video dari repositori, sistem memverifikasi relasi berkas melalui `getMediaUsage`. Apabila berkas sedang menjadi cover atau item dari album aktif, tombol hapus dikunci demi keamanan integritas data klenteng.
+   - Jika admin berniat menghapus permanen suatu berkas foto/video dari repositori, sistem memverifikasi relasi berkas melalui `getMediaUsage`. Apabila berkas sedang menjadi cover atau item dari album aktif, tombol hapus dikunci demi keamanan integritas data TITD.
 
 ### 6.3 Alur Pengelolaan Kegiatan
 1. **Navigasi:** Admin membuka menu **Kegiatan** (`/admin/kegiatan`). Tabel daftar menampilkan Judul, Kategori terstruktur, Jadwal (Masehi & Imlek), Status Jadwal, dan Status Publikasi.
@@ -596,7 +596,7 @@ Aplikasi Next.js menggunakan struktur rute terorganisir (*Route Groups*):
      - **Kalender Imlek:** Tanggal Imlek (1–30), Bulan Imlek (1–12), Bulan Kabisat (*Runyue*), Aturan Imlek (Tanggal Tetap, Paruh Pertama Bulan 1–15, Paruh Kedua Bulan 16–30, Periode Khusus), dan deskripsi periode.
      - **Kalender Masehi:** Tanggal & waktu mulai dan tanggal & waktu selesai untuk kegiatan multi-hari.
      - **Status Jadwal:** Jadwal Ditetapkan (`scheduled`), Perkiraan/Menunggu Konfirmasi (`tentative`), Jadwal Diubah (`rescheduled`), atau Belum Ditentukan (`unscheduled`). Dilengkapi catatan jadwal dan catatan perubahan (*reschedule note*).
-   - **Lokasi Pelaksanaan:** Pilihan cakupan lokasi (Internal Klenteng Tek Hay Bio, Eksternal, atau Gabungan), nama tempat, alamat lengkap, dan catatan hubungan lokasi.
+   - **Lokasi Pelaksanaan:** Pilihan cakupan lokasi (Internal TITD Tek Hay Bio, Eksternal, atau Gabungan), nama tempat, alamat lengkap, dan catatan hubungan lokasi.
    - **Makna, Tradisi & Rangkaian Acara:** Dewa/Tokoh terkait (misal: Tek Hay Cin Jin), peran dewa, makna/tujuan spiritual ritual, penjelasan tradisi leluhur, rangkaian kegiatan/susunan acara, dan catatan resmi pengurus.
    - **Partisipasi Umat (Opsional):** Penjelasan partisipasi, informasi donasi lilin/pelita sembahyang terbuka untuk umum, donasi lampion berkah, perlengkapan sembahyang yang diperlukan, instruksi/tata tertib, dan kontak narahubung.
    - **Status & Media:** Kategori kegiatan terstruktur, poster/foto utama via `MediaPicker` (`activity-media`), dan status publikasi (`draft` atau `published`).
@@ -624,7 +624,7 @@ Aplikasi Next.js menggunakan struktur rute terorganisir (*Route Groups*):
 
 ### 6.6 Alur Pengelolaan Sejarah & Timeline
 1. **Navigasi:** Admin membuka menu **Sejarah** (`/admin/sejarah`).
-2. **Penyuntingan Narasi:** Admin memperbarui judul halaman, ringkasan pengantar sejarah beranda, dan uraian narasi lengkap sejarah klenteng pada tab ID dan EN.
+2. **Penyuntingan Narasi:** Admin memperbarui judul halaman, ringkasan pengantar sejarah beranda, dan uraian narasi lengkap sejarah TITD pada tab ID dan EN.
 3. **Pengelolaan Linimasa (*Timeline*):**
    - Admin dapat menambah momen baru dengan menekan **+ Tambah Momen**.
    - Mengisi angka Tahun peristiwa, Judul Peristiwa, Deskripsi, mengunggah foto arsip sejarah, dan memilih Status Verifikasi (*Verified* atau *Under Research*).
@@ -719,7 +719,7 @@ Berdasarkan hasil audit menyeluruh terhadap kode program aktual, berikut adalah 
 
 ## 8. Kesimpulan
 
-Website profil Klenteng Tek Hay Bio, Semarang, telah berhasil dibangun dengan arsitektur modern yang memadukan keunggulan **Next.js App Router** untuk performa tinggi di sisi publik dengan **Payload CMS** dan **Custom Admin Dashboard** untuk kemudahan pengelolaan data.
+Website profil TITD Tek Hay Bio, Semarang, telah berhasil dibangun dengan arsitektur modern yang memadukan keunggulan **Next.js App Router** untuk performa tinggi di sisi publik dengan **Payload CMS** dan **Custom Admin Dashboard** untuk kemudahan pengelolaan data.
 
 Sistem telah mengimplementasikan seluruh kebutuhan fungsional inti dari sebuah website profil tempat ibadah bersejarah, antara lain:
 - Penyajian profil dan linimasa sejarah interaktif yang transparan dengan status verifikasi.
@@ -729,4 +729,4 @@ Sistem telah mengimplementasikan seluruh kebutuhan fungsional inti dari sebuah w
 - Kemudahan komunikasi melalui integrasi peta interaktif dan tombol pesan instan WhatsApp.
 - Dukungan dwibahasa penuh (Indonesia dan Inggris) yang tertata rapi dari struktur basis data hingga URL publik.
 
-Secara keseluruhan, implementasi sistem telah berjalan solid, stabil, aman, dan siap digunakan untuk mendukung pelestarian serta syiar budaya Klenteng Tek Hay Bio di era digital.
+Secara keseluruhan, implementasi sistem telah berjalan solid, stabil, aman, dan siap digunakan untuk mendukung pelestarian serta syiar budaya TITD Tek Hay Bio di era digital.

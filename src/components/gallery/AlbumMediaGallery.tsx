@@ -45,7 +45,7 @@ export function AlbumMediaGallery({
       if (rawTitle && rawTitle !== 'Tanpa Judul' && rawTitle !== mediaDoc?.filename) {
         return rawTitle
       }
-      return albumTitle?.trim() || (locale === 'id' ? 'Dokumentasi Klenteng' : 'Temple Documentation')
+      return albumTitle?.trim() || (locale === 'id' ? 'Dokumentasi TITD' : 'Temple Documentation')
     },
     [albumTitle, locale]
   )

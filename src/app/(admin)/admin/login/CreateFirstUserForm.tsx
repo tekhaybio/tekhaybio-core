@@ -86,7 +86,7 @@ export function CreateFirstUserForm() {
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Pengurus Klenteng"
+            placeholder="Pengurus TITD"
             className="w-full pl-9 pr-3 py-2 text-xs rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600 transition-colors"
             disabled={isLoading}
           />

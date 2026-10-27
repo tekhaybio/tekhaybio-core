@@ -55,8 +55,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'An annual ritual held on the 24th day of the 12th lunar month as part of the religious traditions and devotional practices associated with Toa Pek Kong.',
     },
     description: {
-      id: 'Ritual Toa Pek Kong Naik merupakan salah satu kegiatan tahunan yang dilaksanakan oleh umat di Klenteng Tek Hay Bio. Ritual ini berlangsung pada tanggal 24 bulan 12 kalender Imlek dan menjadi bagian dari rangkaian tradisi menjelang Tahun Baru Imlek.\n\nPelaksanaan ritual mengikuti tradisi yang diwariskan dari generasi ke generasi. Rangkaian sembahyang dan tata cara pelaksanaan mengikuti ketentuan serta kebiasaan yang berlaku di klenteng.',
-      en: 'The Toa Pek Kong Ascension Ritual is an annual religious observance held at Tek Hay Bio Temple. It takes place on the 24th day of the 12th lunar month and forms part of the traditional observances leading up to the Chinese Lunar New Year.\n\nThe ritual follows customs passed down through generations. Its prayers and ceremonial arrangements follow the practices and guidance observed at the temple.',
+      id: 'Ritual Toa Pek Kong Naik merupakan salah satu kegiatan tahunan yang dilaksanakan oleh umat di TITD Tek Hay Bio. Ritual ini berlangsung pada tanggal 24 bulan 12 kalender Imlek dan menjadi bagian dari rangkaian tradisi menjelang Tahun Baru Imlek.\n\nPelaksanaan ritual mengikuti tradisi yang diwariskan dari generasi ke generasi. Rangkaian sembahyang dan tata cara pelaksanaan mengikuti ketentuan serta kebiasaan yang berlaku di TITD.',
+      en: 'The Toa Pek Kong Ascension Ritual is an annual religious observance held at TITD Tek Hay Bio. It takes place on the 24th day of the 12th lunar month and forms part of the traditional observances leading up to the Chinese Lunar New Year.\n\nThe ritual follows customs passed down through generations. Its prayers and ceremonial arrangements follow the practices and guidance observed at the temple.',
     },
     category: 'ritual',
     recurrenceType: 'annual-lunar',
@@ -77,8 +77,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
     rescheduledNote: null,
     locationType: 'internal',
     location: {
-      id: 'Klenteng Tek Hay Bio, Semarang',
-      en: 'Tek Hay Bio Temple, Semarang',
+      id: 'TITD Tek Hay Bio, Semarang',
+      en: 'TITD Tek Hay Bio, Semarang',
     },
     locationAddress: {
       id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang',
@@ -94,15 +94,15 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'The principal figure associated with the ritual.',
     },
     ritualMeaning: {
-      id: 'Penghormatan kepada Toa Pek Kong melalui ritual yang diwariskan dalam tradisi klenteng.',
+      id: 'Penghormatan kepada Toa Pek Kong melalui ritual yang diwariskan dalam tradisi TITD.',
       en: 'Paying homage to Toa Pek Kong through a ritual preserved in the temple\'s traditions.',
     },
     traditionExplanation: {
-      id: 'Mengikuti tradisi ritual yang dijaga oleh klenteng.',
+      id: 'Mengikuti tradisi ritual yang dijaga oleh TITD.',
       en: 'Follows ritual customs preserved by the temple.',
     },
     eventSequence: {
-      id: 'Pelaksanaan sembahyang dan rangkaian ritual sesuai tata cara klenteng.',
+      id: 'Pelaksanaan sembahyang dan rangkaian ritual sesuai tata cara TITD.',
       en: 'Prayers and ritual observances according to the temple\'s established practices.',
     },
     managementNotes: null,
@@ -129,8 +129,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'An ancestral prayer observance held one day before the Chinese Lunar New Year as part of the tradition of honoring one\'s ancestors.',
     },
     description: {
-      id: 'Sembahyang Leluhur Menjelang Imlek merupakan kegiatan yang dilaksanakan sehari sebelum Tahun Baru Imlek. Kegiatan ini menjadi bagian dari tradisi keluarga dan penghormatan kepada leluhur yang diwariskan secara turun-temurun.\n\nPelaksanaannya mengikuti kebiasaan dan tata cara sembahyang yang berlaku. Waktu serta susunan kegiatan dapat mengikuti ketentuan pengurus dan tradisi yang dijalankan di Klenteng Tek Hay Bio.',
-      en: 'Ancestors\' Prayers Before Lunar New Year is an observance held one day before the Chinese Lunar New Year. It forms part of the family tradition of honoring ancestors and preserving customs passed down through generations.\n\nThe observance follows established prayer customs and ceremonial practices. Its schedule and arrangements may be determined by the temple management and the traditions maintained at Tek Hay Bio Temple.',
+      id: 'Sembahyang Leluhur Menjelang Imlek merupakan kegiatan yang dilaksanakan sehari sebelum Tahun Baru Imlek. Kegiatan ini menjadi bagian dari tradisi keluarga dan penghormatan kepada leluhur yang diwariskan secara turun-temurun.\n\nPelaksanaannya mengikuti kebiasaan dan tata cara sembahyang yang berlaku. Waktu serta susunan kegiatan dapat mengikuti ketentuan pengurus dan tradisi yang dijalankan di TITD Tek Hay Bio.',
+      en: 'Ancestors\' Prayers Before Lunar New Year is an observance held one day before the Chinese Lunar New Year. It forms part of the family tradition of honoring ancestors and preserving customs passed down through generations.\n\nThe observance follows established prayer customs and ceremonial practices. Its schedule and arrangements may be determined by the temple management and the traditions maintained at TITD Tek Hay Bio.',
     },
     category: 'ancestral-worship',
     recurrenceType: 'annual-lunar',
@@ -151,8 +151,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
     rescheduledNote: null,
     locationType: 'internal',
     location: {
-      id: 'Klenteng Tek Hay Bio, Semarang',
-      en: 'Tek Hay Bio Temple, Semarang',
+      id: 'TITD Tek Hay Bio, Semarang',
+      en: 'TITD Tek Hay Bio, Semarang',
     },
     locationAddress: {
       id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang',
@@ -203,8 +203,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'An annual ritual held on the 4th day of the 1st lunar month as part of the religious observances at the beginning of the lunar year.',
     },
     description: {
-      id: 'Ritual Toa Pek Kong Turun merupakan salah satu ritual tahunan yang dilaksanakan pada tanggal 4 bulan 1 Imlek di Klenteng Tek Hay Bio.\n\nKegiatan ini menjadi bagian dari rangkaian tradisi keagamaan pada awal tahun lunar. Pelaksanaan sembahyang dan tata cara ritual mengikuti tradisi yang dijaga oleh klenteng serta arahan pengurus.',
-      en: 'The Toa Pek Kong Descent Ritual is an annual observance held on the 4th day of the 1st lunar month at Tek Hay Bio Temple.\n\nIt forms part of the temple\'s religious traditions at the beginning of the lunar year. The prayers and ceremonial procedures follow customs preserved by the temple and the guidance of its management.',
+      id: 'Ritual Toa Pek Kong Turun merupakan salah satu ritual tahunan yang dilaksanakan pada tanggal 4 bulan 1 Imlek di TITD Tek Hay Bio.\n\nKegiatan ini menjadi bagian dari rangkaian tradisi keagamaan pada awal tahun lunar. Pelaksanaan sembahyang dan tata cara ritual mengikuti tradisi yang dijaga oleh TITD serta arahan pengurus.',
+      en: 'The Toa Pek Kong Descent Ritual is an annual observance held on the 4th day of the 1st lunar month at TITD Tek Hay Bio.\n\nIt forms part of the temple\'s religious traditions at the beginning of the lunar year. The prayers and ceremonial procedures follow customs preserved by the temple and the guidance of its management.',
     },
     category: 'ritual',
     recurrenceType: 'annual-lunar',
@@ -225,8 +225,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
     rescheduledNote: null,
     locationType: 'internal',
     location: {
-      id: 'Klenteng Tek Hay Bio, Semarang',
-      en: 'Tek Hay Bio Temple, Semarang',
+      id: 'TITD Tek Hay Bio, Semarang',
+      en: 'TITD Tek Hay Bio, Semarang',
     },
     locationAddress: {
       id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang',
@@ -246,11 +246,11 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'Observing a traditional ritual at the beginning of the lunar year.',
     },
     traditionExplanation: {
-      id: 'Tradisi keagamaan awal tahun lunar di klenteng.',
+      id: 'Tradisi keagamaan awal tahun lunar di TITD.',
       en: 'A religious tradition observed at the temple at the beginning of the lunar year.',
     },
     eventSequence: {
-      id: 'Sembahyang dan rangkaian ritual sesuai tradisi klenteng.',
+      id: 'Sembahyang dan rangkaian ritual sesuai tradisi TITD.',
       en: 'Prayers and ritual observances according to temple traditions.',
     },
     managementNotes: null,
@@ -277,8 +277,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'An annual prayer ritual held on the 9th day of the 1st lunar month as part of the religious traditions observed at the beginning of the lunar year.',
     },
     description: {
-      id: 'Ritual Kheng Thi Kong merupakan kegiatan sembahyang tahunan yang dilaksanakan pada tanggal 9 bulan 1 Imlek di Klenteng Tek Hay Bio.\n\nKegiatan ini menjadi bagian dari tradisi keagamaan pada awal tahun lunar. Pelaksanaan ritual mengikuti tata cara sembahyang dan tradisi yang dijalankan oleh klenteng.',
-      en: 'The Kheng Thi Kong Ritual is an annual prayer observance held on the 9th day of the 1st lunar month at Tek Hay Bio Temple.\n\nIt forms part of the temple\'s religious traditions at the beginning of the lunar year. The ceremony follows the prayer customs and practices maintained by the temple.',
+      id: 'Ritual Kheng Thi Kong merupakan kegiatan sembahyang tahunan yang dilaksanakan pada tanggal 9 bulan 1 Imlek di TITD Tek Hay Bio.\n\nKegiatan ini menjadi bagian dari tradisi keagamaan pada awal tahun lunar. Pelaksanaan ritual mengikuti tata cara sembahyang dan tradisi yang dijalankan oleh TITD.',
+      en: 'The Kheng Thi Kong Ritual is an annual prayer observance held on the 9th day of the 1st lunar month at TITD Tek Hay Bio.\n\nIt forms part of the temple\'s religious traditions at the beginning of the lunar year. The ceremony follows the prayer customs and practices maintained by the temple.',
     },
     category: 'ritual',
     recurrenceType: 'annual-lunar',
@@ -299,8 +299,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
     rescheduledNote: null,
     locationType: 'internal',
     location: {
-      id: 'Klenteng Tek Hay Bio, Semarang',
-      en: 'Tek Hay Bio Temple, Semarang',
+      id: 'TITD Tek Hay Bio, Semarang',
+      en: 'TITD Tek Hay Bio, Semarang',
     },
     locationAddress: {
       id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang',
@@ -314,7 +314,7 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'A traditional prayer observance at the beginning of the lunar year.',
     },
     traditionExplanation: {
-      id: 'Mengikuti tata cara sembahyang yang berlaku di klenteng.',
+      id: 'Mengikuti tata cara sembahyang yang berlaku di TITD.',
       en: 'Follows the temple\'s established prayer customs.',
     },
     eventSequence: null,
@@ -338,12 +338,12 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'ritual-for-protection-and-the-removal-of-misfortune',
     },
     shortDescription: {
-      id: 'Ritual keagamaan yang berkaitan dengan permohonan doa perlindungan dan keselamatan bagi klenteng dan umat.',
+      id: 'Ritual keagamaan yang berkaitan dengan permohonan doa perlindungan dan keselamatan bagi TITD dan umat.',
       en: 'A religious ritual associated with prayers for protection and safety for the temple and devotees.',
     },
     description: {
-      id: 'Ritual Tolak Bala merupakan kegiatan keagamaan yang berkaitan dengan permohonan perlindungan dan keselamatan melalui sembahyang serta doa.\n\nRitual ini menjadi bagian dari praktik keagamaan yang dijalankan menurut tradisi Klenteng Tek Hay Bio.',
-      en: 'Ritual Tolak Bala is a religious observance associated with prayers for protection and safety.\n\nThe ritual forms part of religious practices observed according to the traditions of Tek Hay Bio Temple.',
+      id: 'Ritual Tolak Bala merupakan kegiatan keagamaan yang berkaitan dengan permohonan perlindungan dan keselamatan melalui sembahyang serta doa.\n\nRitual ini menjadi bagian dari praktik keagamaan yang dijalankan menurut tradisi TITD Tek Hay Bio.',
+      en: 'Ritual Tolak Bala is a religious observance associated with prayers for protection and safety.\n\nThe ritual forms part of religious practices observed according to the traditions of TITD Tek Hay Bio.',
     },
     category: 'ritual',
     recurrenceType: 'incidental',
@@ -361,8 +361,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
     rescheduledNote: null,
     locationType: 'internal',
     location: {
-      id: 'Klenteng Tek Hay Bio, Semarang',
-      en: 'Tek Hay Bio Temple, Semarang',
+      id: 'TITD Tek Hay Bio, Semarang',
+      en: 'TITD Tek Hay Bio, Semarang',
     },
     locationAddress: {
       id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang',
@@ -376,7 +376,7 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'Prayers seeking protection and safety.',
     },
     traditionExplanation: {
-      id: 'Mengikuti tata cara tradisi yang dijalankan di klenteng.',
+      id: 'Mengikuti tata cara tradisi yang dijalankan di TITD.',
       en: 'Follows traditional prayer practices maintained at the temple.',
     },
     eventSequence: null,
@@ -404,8 +404,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'The Cap Go Meh prayer ceremony forms part of the closing celebrations of the Chinese Lunar New Year period, accompanied by the tradition of sharing lontong opor.',
     },
     description: {
-      id: 'Cap Go Meh merupakan perayaan yang menandai hari ke-15 bulan pertama kalender Imlek sekaligus penutup rangkaian perayaan Tahun Baru Imlek.\n\nDi Klenteng Tek Hay Bio, perayaan ini diwarnai dengan sembahyang bersama dan tradisi makan lontong opor yang dinikmati bersama oleh segenap umat.',
-      en: 'Cap Go Meh marks the 15th day of the first lunar month and serves as the culmination of the Lunar New Year celebrations.\n\nAt Tek Hay Bio Temple, the celebration features communal prayers and the traditional sharing of lontong opor among devotees.',
+      id: 'Cap Go Meh merupakan perayaan yang menandai hari ke-15 bulan pertama kalender Imlek sekaligus penutup rangkaian perayaan Tahun Baru Imlek.\n\nDi TITD Tek Hay Bio, perayaan ini diwarnai dengan sembahyang bersama dan tradisi makan lontong opor yang dinikmati bersama oleh segenap umat.',
+      en: 'Cap Go Meh marks the 15th day of the first lunar month and serves as the culmination of the Lunar New Year celebrations.\n\nAt TITD Tek Hay Bio, the celebration features communal prayers and the traditional sharing of lontong opor among devotees.',
     },
     category: 'cultural-celebration',
     recurrenceType: 'annual-lunar',
@@ -426,8 +426,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
     rescheduledNote: null,
     locationType: 'internal',
     location: {
-      id: 'Klenteng Tek Hay Bio, Semarang',
-      en: 'Tek Hay Bio Temple, Semarang',
+      id: 'TITD Tek Hay Bio, Semarang',
+      en: 'TITD Tek Hay Bio, Semarang',
     },
     locationAddress: {
       id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang',
@@ -472,8 +472,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'An annual celebration honoring Kongco Tek Hay Cin Jin on the 2nd day of the 2nd lunar month. The observance includes candle donations and a tradition involving symbolic items associated with the deity.',
     },
     description: {
-      id: 'Perayaan Hari Kebesaran Kongco Tek Hay Cin Jin dilaksanakan pada tanggal 2 bulan 2 kalender Imlek di Klenteng Tek Hay Bio.\n\nDalam rangkaian tradisi yang dicatat, kegiatan ini mencakup pengumpulan donasi lilin serta peminjaman barang-barang dewa, seperti kue gembreng, kue mangkok, kue kuro, jeruk, apel, pir, dan punji atau modal dari dewa yang berupa angpao.\n\nPelaksanaan kegiatan, ketentuan donasi, ketersediaan perlengkapan, serta tata cara peminjaman mengikuti kebijakan dan arahan pengurus klenteng.',
-      en: 'The Celebration of Kongco Tek Hay Cin Jin\'s Birthday is held on the 2nd day of the 2nd lunar month at Tek Hay Bio Temple.\n\nAccording to the recorded traditions, the event includes candle donations and the borrowing of items associated with the deity, such as kue gembreng, kue mangkok, kue kuro, oranges, apples, pears, and punji, or symbolic capital from the deity in the form of an angpao (red envelope).\n\nThe arrangements for the celebration, donation procedures, availability of ceremonial items, and borrowing process are subject to the temple management\'s policies and guidance.',
+      id: 'Perayaan Hari Kebesaran Kongco Tek Hay Cin Jin dilaksanakan pada tanggal 2 bulan 2 kalender Imlek di TITD Tek Hay Bio.\n\nDalam rangkaian tradisi yang dicatat, kegiatan ini mencakup pengumpulan donasi lilin serta peminjaman barang-barang dewa, seperti kue gembreng, kue mangkok, kue kuro, jeruk, apel, pir, dan punji atau modal dari dewa yang berupa angpao.\n\nPelaksanaan kegiatan, ketentuan donasi, ketersediaan perlengkapan, serta tata cara peminjaman mengikuti kebijakan dan arahan pengurus TITD.',
+      en: 'The Celebration of Kongco Tek Hay Cin Jin\'s Birthday is held on the 2nd day of the 2nd lunar month at TITD Tek Hay Bio.\n\nAccording to the recorded traditions, the event includes candle donations and the borrowing of items associated with the deity, such as kue gembreng, kue mangkok, kue kuro, oranges, apples, pears, and punji, or symbolic capital from the deity in the form of an angpao (red envelope).\n\nThe arrangements for the celebration, donation procedures, availability of ceremonial items, and borrowing process are subject to the temple management\'s policies and guidance.',
     },
     category: 'deity-festival',
     recurrenceType: 'annual-lunar',
@@ -494,8 +494,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
     rescheduledNote: null,
     locationType: 'internal',
     location: {
-      id: 'Klenteng Tek Hay Bio, Semarang',
-      en: 'Tek Hay Bio Temple, Semarang',
+      id: 'TITD Tek Hay Bio, Semarang',
+      en: 'TITD Tek Hay Bio, Semarang',
     },
     locationAddress: {
       id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang',
@@ -528,8 +528,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'Devotees may contact the temple management for information about the celebration, candle donations, and the tradition of borrowing symbolic items.',
     },
     candleDonationInfo: {
-      id: 'Informasi mengenai donasi lilin dapat diperoleh melalui pengurus Klenteng Tek Hay Bio. Ketentuan dan mekanisme donasi mengikuti informasi resmi yang berlaku.',
-      en: 'Information about candle donations is available from the management of Tek Hay Bio Temple. Donation procedures are subject to the temple\'s official arrangements.',
+      id: 'Informasi mengenai donasi lilin dapat diperoleh melalui pengurus TITD Tek Hay Bio. Ketentuan dan mekanisme donasi mengikuti informasi resmi yang berlaku.',
+      en: 'Information about candle donations is available from the management of TITD Tek Hay Bio. Donation procedures are subject to the temple\'s official arrangements.',
     },
     lanternDonationInfo: null,
     requiredEquipment: null,
@@ -574,8 +574,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
     rescheduledNote: null,
     locationType: 'internal',
     location: {
-      id: 'Klenteng Tek Hay Bio, Semarang',
-      en: 'Tek Hay Bio Temple, Semarang',
+      id: 'TITD Tek Hay Bio, Semarang',
+      en: 'TITD Tek Hay Bio, Semarang',
     },
     locationAddress: {
       id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang',
@@ -626,8 +626,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'An ancestral prayer observance held during the first half of the 7th lunar month as part of the tradition of honoring ancestors.',
     },
     description: {
-      id: 'Sembahyang Leluhur Jit Gwee merupakan kegiatan sembahyang yang dilaksanakan pada paruh pertama bulan 7 kalender Imlek.\n\nKegiatan ini berkaitan dengan tradisi penghormatan kepada leluhur yang diwariskan dari generasi ke generasi. Waktu pelaksanaan, susunan sembahyang, dan ketentuan partisipasi mengikuti kebiasaan serta arahan pengurus Klenteng Tek Hay Bio.',
-      en: 'Jit Gwee Ancestral Prayers are held during the first half of the 7th lunar month.\n\nThe observance forms part of the tradition of honoring ancestors passed down through generations. The schedule, prayer arrangements, and participation requirements follow the customs and guidance of Tek Hay Bio Temple\'s management.',
+      id: 'Sembahyang Leluhur Jit Gwee merupakan kegiatan sembahyang yang dilaksanakan pada paruh pertama bulan 7 kalender Imlek.\n\nKegiatan ini berkaitan dengan tradisi penghormatan kepada leluhur yang diwariskan dari generasi ke generasi. Waktu pelaksanaan, susunan sembahyang, dan ketentuan partisipasi mengikuti kebiasaan serta arahan pengurus TITD Tek Hay Bio.',
+      en: 'Jit Gwee Ancestral Prayers are held during the first half of the 7th lunar month.\n\nThe observance forms part of the tradition of honoring ancestors passed down through generations. The schedule, prayer arrangements, and participation requirements follow the customs and guidance of TITD Tek Hay Bio\'s management.',
     },
     category: 'ancestral-worship',
     recurrenceType: 'annual-lunar',
@@ -648,8 +648,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
     rescheduledNote: null,
     locationType: 'internal',
     location: {
-      id: 'Klenteng Tek Hay Bio, Semarang',
-      en: 'Tek Hay Bio Temple, Semarang',
+      id: 'TITD Tek Hay Bio, Semarang',
+      en: 'TITD Tek Hay Bio, Semarang',
     },
     locationAddress: {
       id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang',
@@ -673,7 +673,7 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'Ancestral prayer tradition during the first half of the 7th lunar month.',
     },
     eventSequence: {
-      id: 'Sembahyang leluhur sesuai tata cara klenteng.',
+      id: 'Sembahyang leluhur sesuai tata cara TITD.',
       en: 'Ancestral prayers according to the temple\'s established practices.',
     },
     managementNotes: null,
@@ -700,8 +700,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'Sembahyang Rebutan is a traditional observance held during the second half of the 7th lunar month, associated with prayers and offerings for wandering spirits.',
     },
     description: {
-      id: 'Sembahyang Rebutan merupakan salah satu tradisi yang dilaksanakan pada paruh kedua bulan 7 kalender Imlek. Berdasarkan keterangan yang diperoleh, kegiatan ini ditujukan untuk arwah gentayangan.\n\nPelaksanaan tradisi ini merupakan bagian dari praktik keagamaan dan budaya yang diwariskan secara turun-temurun. Susunan sembahyang, perlengkapan yang digunakan, dan tata cara pelaksanaan mengikuti tradisi yang berlaku di Klenteng Tek Hay Bio serta arahan pengurus.',
-      en: 'Sembahyang Rebutan is a traditional observance held during the second half of the 7th lunar month. According to the information recorded, the ceremony is associated with wandering spirits.\n\nThe observance forms part of religious and cultural practices passed down through generations. The prayer arrangements, ceremonial items, and procedures follow the traditions maintained at Tek Hay Bio Temple and the guidance of its management.',
+      id: 'Sembahyang Rebutan merupakan salah satu tradisi yang dilaksanakan pada paruh kedua bulan 7 kalender Imlek. Berdasarkan keterangan yang diperoleh, kegiatan ini ditujukan untuk arwah gentayangan.\n\nPelaksanaan tradisi ini merupakan bagian dari praktik keagamaan dan budaya yang diwariskan secara turun-temurun. Susunan sembahyang, perlengkapan yang digunakan, dan tata cara pelaksanaan mengikuti tradisi yang berlaku di TITD Tek Hay Bio serta arahan pengurus.',
+      en: 'Sembahyang Rebutan is a traditional observance held during the second half of the 7th lunar month. According to the information recorded, the ceremony is associated with wandering spirits.\n\nThe observance forms part of religious and cultural practices passed down through generations. The prayer arrangements, ceremonial items, and procedures follow the traditions maintained at TITD Tek Hay Bio and the guidance of its management.',
     },
     category: 'ancestral-worship',
     recurrenceType: 'annual-lunar',
@@ -722,8 +722,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
     rescheduledNote: null,
     locationType: 'internal',
     location: {
-      id: 'Klenteng Tek Hay Bio, Semarang',
-      en: 'Tek Hay Bio Temple, Semarang',
+      id: 'TITD Tek Hay Bio, Semarang',
+      en: 'TITD Tek Hay Bio, Semarang',
     },
     locationAddress: {
       id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang',
@@ -774,8 +774,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
       en: 'The Tiong Jiu celebration coincides with an observance honoring Hok Tek Ceng Sin, the Earth Deity. Traditions associated with the event include lantern donations and the borrowing of symbolic items connected with the deity.',
     },
     description: {
-      id: 'Perayaan Tiong Jiu merupakan kegiatan tahunan yang juga berkaitan dengan hari kebesaran Dewa Bumi Hok Tek Ceng Sin.\n\nBerdasarkan informasi yang dicatat, rangkaian tradisi ini mencakup pengumpulan donasi lampion serta peminjaman barang-barang dewa, seperti kue gembreng, kue mangkok, kue kuro, kue bulan, jeruk, apel, pir, dan punji atau modal dari dewa yang berupa angpao.\n\nKegiatan ini menjadi bagian dari tradisi keagamaan dan budaya yang dijalankan oleh umat. Jadwal, ketersediaan perlengkapan, dan ketentuan partisipasi mengikuti informasi resmi dari pengurus Klenteng Tek Hay Bio.',
-      en: 'The Tiong Jiu celebration is an annual observance that is also associated with the celebration honoring Hok Tek Ceng Sin, the Earth Deity.\n\nAccording to the recorded information, the traditions include lantern donations and the borrowing of deity-associated items, such as kue gembreng, kue mangkok, kue kuro, mooncakes, oranges, apples, pears, and punji, or symbolic capital from the deity in the form of an angpao (red envelope).\n\nThe event forms part of the religious and cultural traditions observed by devotees. Its schedule, the availability of ceremonial items, and participation arrangements follow official information provided by the management of Tek Hay Bio Temple.',
+      id: 'Perayaan Tiong Jiu merupakan kegiatan tahunan yang juga berkaitan dengan hari kebesaran Dewa Bumi Hok Tek Ceng Sin.\n\nBerdasarkan informasi yang dicatat, rangkaian tradisi ini mencakup pengumpulan donasi lampion serta peminjaman barang-barang dewa, seperti kue gembreng, kue mangkok, kue kuro, kue bulan, jeruk, apel, pir, dan punji atau modal dari dewa yang berupa angpao.\n\nKegiatan ini menjadi bagian dari tradisi keagamaan dan budaya yang dijalankan oleh umat. Jadwal, ketersediaan perlengkapan, dan ketentuan partisipasi mengikuti informasi resmi dari pengurus TITD Tek Hay Bio.',
+      en: 'The Tiong Jiu celebration is an annual observance that is also associated with the celebration honoring Hok Tek Ceng Sin, the Earth Deity.\n\nAccording to the recorded information, the traditions include lantern donations and the borrowing of deity-associated items, such as kue gembreng, kue mangkok, kue kuro, mooncakes, oranges, apples, pears, and punji, or symbolic capital from the deity in the form of an angpao (red envelope).\n\nThe event forms part of the religious and cultural traditions observed by devotees. Its schedule, the availability of ceremonial items, and participation arrangements follow official information provided by the management of TITD Tek Hay Bio.',
     },
     category: 'deity-festival',
     recurrenceType: 'annual-lunar',
@@ -793,8 +793,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
     rescheduledNote: null,
     locationType: 'internal',
     location: {
-      id: 'Klenteng Tek Hay Bio, Semarang',
-      en: 'Tek Hay Bio Temple, Semarang',
+      id: 'TITD Tek Hay Bio, Semarang',
+      en: 'TITD Tek Hay Bio, Semarang',
     },
     locationAddress: {
       id: 'Jl. Gang Pinggir No. 107, Kranggan, Semarang Tengah, Semarang',
@@ -828,8 +828,8 @@ export const ACTIVITIES_DATA: ActivitySeedData[] = [
     },
     candleDonationInfo: null,
     lanternDonationInfo: {
-      id: 'Informasi mengenai donasi lampion dapat diperoleh melalui pengurus Klenteng Tek Hay Bio. Ketentuan, biaya, dan mekanisme partisipasi perlu mengikuti informasi resmi yang berlaku.',
-      en: 'Information about lantern donations is available from the management of Tek Hay Bio Temple. Any fees, conditions, and participation procedures must follow the temple\'s official arrangements.',
+      id: 'Informasi mengenai donasi lampion dapat diperoleh melalui pengurus TITD Tek Hay Bio. Ketentuan, biaya, dan mekanisme partisipasi perlu mengikuti informasi resmi yang berlaku.',
+      en: 'Information about lantern donations is available from the management of TITD Tek Hay Bio. Any fees, conditions, and participation procedures must follow the temple\'s official arrangements.',
     },
     requiredEquipment: null,
     participationInstructions: null,
@@ -913,7 +913,7 @@ export function extractLocalePayload(item: ActivitySeedData, locale: 'id' | 'en'
 export async function importActivities(options: { dryRun?: boolean; force?: boolean } = {}) {
   const { dryRun = false, force = false } = options
   console.log('='.repeat(70))
-  console.log(`Klenteng Tek Hay Bio - Kegiatan Import Process`)
+  console.log(`TITD Tek Hay Bio - Kegiatan Import Process`)
   console.log(`Mode: ${dryRun ? 'DRY-RUN (Simulasi tanpa menyimpan)' : 'LIVE (Penyimpanan ke Database)'}`)
   console.log(`Force Overwrite: ${force ? 'YES' : 'NO'}`)
   console.log('='.repeat(70))

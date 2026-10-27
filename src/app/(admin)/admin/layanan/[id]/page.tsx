@@ -21,7 +21,7 @@ export default async function EditServicePage({ params }: { params: Promise<{ id
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="text-2xl font-serif font-bold text-stone-900 tracking-tight">
-              Edit Layanan Klenteng
+              Edit Layanan TITD
             </h1>
             <p className="text-xs text-stone-500 mt-0.5">
               Perbarui rincian tata cara pelayanan, ketersediaan, atau foto representatif layanan.

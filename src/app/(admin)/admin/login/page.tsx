@@ -38,7 +38,7 @@ export default async function LoginPage() {
             德
           </div>
           <h1 className="text-xl font-serif font-bold text-stone-900 tracking-tight">
-            Klenteng Tek Hay Bio
+            TITD Tek Hay Bio
           </h1>
           <p className="text-xs text-stone-500 mt-1">
             {totalUsers === 0 ? 'Konfigurasi Akun Awal Sistem' : 'Portal Manajemen & Administrasi Konten'}

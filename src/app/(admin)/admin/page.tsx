@@ -87,7 +87,7 @@ export default async function AdminDashboard() {
       href: '/admin/kegiatan',
     },
     {
-      label: 'Layanan Klenteng',
+      label: 'Layanan TITD',
       count: servicesCount.totalDocs,
       sublabel: 'Pelayanan umat',
       icon: Box,
@@ -111,15 +111,15 @@ export default async function AdminDashboard() {
             <span className="font-serif font-bold text-lg text-primary">德海廟</span>
             <span className="text-stone-300">•</span>
             <span className="text-xs uppercase tracking-widest text-stone-500 font-medium">
-              Klenteng Tek Hay Bio Semarang
+              TITD Tek Hay Bio Semarang
             </span>
           </div>
           <h1 className="text-2xl md:text-3xl font-serif font-bold text-stone-900 tracking-tight">
-            Dashboard Pengurus Klenteng
+            Dashboard Pengurus TITD
           </h1>
           <p className="text-xs text-stone-500 mt-0.5">
             Selamat datang, <strong className="text-stone-800">{user.name || user.email}</strong>.
-            Berikut ikhtisar publikasi tradisi dan dokumentasi klenteng.
+            Berikut ikhtisar publikasi tradisi dan dokumentasi TITD.
           </p>
         </div>
 
@@ -247,7 +247,7 @@ export default async function AdminDashboard() {
               <div className="flex items-center gap-2">
                 <CalendarDays className="w-4 h-4 text-amber-700" />
                 <h2 className="text-sm font-serif font-bold text-stone-900">
-                  Agenda Ritual & Perayaan Klenteng
+                  Agenda Ritual & Perayaan TITD
                 </h2>
               </div>
               <Link

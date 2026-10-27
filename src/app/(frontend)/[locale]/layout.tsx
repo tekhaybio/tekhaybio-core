@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const locale = resolvedParams.locale as 'id' | 'en'
   
   // Need to bypass during build if MongoDB isn't running. We'll use a try/catch.
-  let siteName = 'Klenteng Tek Hay Bio'
+  let siteName = 'TITD Tek Hay Bio'
   let description = 'Pusat informasi digital, sejarah, dan kegiatan pelestarian tradisi leluhur.'
 
   try {

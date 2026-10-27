@@ -10,7 +10,7 @@ import type { CMSRecord } from '@/types'
 export function Hero({ homePage, siteSettings, locale }: { homePage?: CMSRecord, siteSettings: CMSRecord, locale: 'id' | 'en' }) {
   const hp = (homePage?.hero as any) || {}
   
-  const title = hp.title || (siteSettings.siteName as string) || 'Klenteng Tek Hay Bio'
+  const title = hp.title || (siteSettings.siteName as string) || 'TITD Tek Hay Bio'
   const tagline = hp.tagline || (siteSettings.tagline as string) || (locale === 'id' ? 'Pusat Pelestarian Tradisi & Budaya Leluhur' : 'Center for Tradition & Cultural Heritage Preservation')
   const bgImage = hp.backgroundImage || siteSettings.defaultSocialImage || null
   

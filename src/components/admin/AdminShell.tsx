@@ -65,7 +65,7 @@ export function AdminShell({ children, user }: { children: React.ReactNode; user
       ],
     },
     {
-      groupLabel: 'Profil Klenteng',
+      groupLabel: 'Profil TITD',
       items: [
         { label: 'Sejarah & Linimasa', href: '/admin/sejarah', icon: History },
       ],

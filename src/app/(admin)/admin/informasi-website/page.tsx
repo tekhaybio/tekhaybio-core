@@ -47,7 +47,7 @@ export default async function WebsiteInfoAdminPage() {
           Informasi &amp; Kontak Website
         </h1>
         <p className="text-xs text-stone-500 mt-0.5">
-          Kelola kontak operasional, alamat sekretariat, nomor telepon, dan identitas klenteng.
+          Kelola kontak operasional, alamat sekretariat, nomor telepon, dan identitas TITD.
         </p>
       </div>
 

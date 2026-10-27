@@ -66,7 +66,7 @@ export default async function ServicesAdminPage({
               Layanan & Pelayanan Umat
             </h1>
             <p className="text-xs text-stone-500 mt-0.5">
-              Kelola daftar pelayanan keagamaan, persembahyangan, konsultasi, dan fasilitas klenteng.
+              Kelola daftar pelayanan keagamaan, persembahyangan, konsultasi, dan fasilitas TITD.
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -112,7 +112,7 @@ export default async function ServicesAdminPage({
                       <p className="font-medium">
                         {q || status
                           ? 'Tidak ada layanan yang cocok dengan filter saat ini.'
-                          : 'Belum ada data layanan klenteng.'}
+                          : 'Belum ada data layanan TITD.'}
                       </p>
                     </td>
                   </tr>

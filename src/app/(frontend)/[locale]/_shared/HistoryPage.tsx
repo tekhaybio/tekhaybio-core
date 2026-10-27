@@ -19,8 +19,8 @@ export async function HistoryPage({ locale }: { locale: 'id' | 'en' }) {
   return (
     <>
       <PageHeader 
-        title={locale === 'id' ? 'Garis Waktu & Sejarah Klenteng' : 'Historical Timeline & Archives'}
-        description={locale === 'id' ? 'Perjalanan sejarah dan pelestarian Klenteng Tek Hay Bio dari masa ke masa.' : 'The historical journey and cultural preservation of Tek Hay Bio Temple through the centuries.'}
+        title={locale === 'id' ? 'Garis Waktu & Sejarah TITD' : 'Historical Timeline & Archives'}
+        description={locale === 'id' ? 'Perjalanan sejarah dan pelestarian TITD Tek Hay Bio dari masa ke masa.' : 'The historical journey and cultural preservation of TITD Tek Hay Bio through the centuries.'}
       />
       <Section className="bg-stone-50 py-16 md:py-24">
         <Container>
@@ -84,7 +84,7 @@ export async function HistoryPage({ locale }: { locale: 'id' | 'en' }) {
                               />
                             </div>
                             <p className="text-xs text-stone-500 italic mt-2 text-center font-serif">
-                              {locale === 'id' ? 'Dokumentasi arsip sejarah Klenteng Tek Hay Bio' : 'Archival documentation, Tek Hay Bio Temple'}
+                              {locale === 'id' ? 'Dokumentasi arsip sejarah TITD Tek Hay Bio' : 'Archival documentation, TITD Tek Hay Bio'}
                             </p>
                           </div>
                         )}

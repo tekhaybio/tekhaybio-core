@@ -288,7 +288,7 @@ export function RitualCalendarView({
                   </h3>
                   <p className="text-sm text-stone-600 leading-relaxed">
                     {locale === 'id'
-                      ? 'Kegiatan di bawah ini mengacu pada aturan kalender tertentu (misal: paruh bulan Imlek, peristiwa tradisi, atau bersifat insidental) yang tanggal Masehi resminya menunggu konfirmasi pengurus Klenteng Tek Hay Bio.'
+                      ? 'Kegiatan di bawah ini mengacu pada aturan kalender tertentu (misal: paruh bulan Imlek, peristiwa tradisi, atau bersifat insidental) yang tanggal Masehi resminya menunggu konfirmasi pengurus TITD Tek Hay Bio.'
                       : 'The activities below follow lunar periodic rules or conditional traditions. Official Gregorian dates will be confirmed and announced by the temple board.'}
                   </p>
                 </div>

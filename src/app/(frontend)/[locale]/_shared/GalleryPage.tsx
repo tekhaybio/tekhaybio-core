@@ -87,8 +87,8 @@ export async function GalleryPage({
         title={locale === 'id' ? 'Galeri Dokumentasi & Album' : 'Documentation Gallery & Albums'}
         description={
           locale === 'id'
-            ? 'Dokumentasi visual foto dan rekaman video upacara ritual, sembahyang leluhur, hari kebesaran dewa, dan suasana Klenteng Tek Hay Bio.'
-            : 'Visual documentation of photos and video footage covering rituals, ancestral worship, deity festivals, and heritage at Tek Hay Bio Temple.'
+            ? 'Dokumentasi visual foto dan rekaman video upacara ritual, sembahyang leluhur, hari kebesaran dewa, dan suasana TITD Tek Hay Bio.'
+            : 'Visual documentation of photos and video footage covering rituals, ancestral worship, deity festivals, and heritage at TITD Tek Hay Bio.'
         }
       />
 
@@ -186,7 +186,7 @@ export async function GalleryPage({
                   </p>
                   <p className="text-xs text-stone-400">
                     {locale === 'id'
-                      ? 'Pengurus klenteng akan memperbarui arsip dokumentasi secara berkala.'
+                      ? 'Pengurus TITD akan memperbarui arsip dokumentasi secara berkala.'
                       : 'Temple management updates documentation archive periodically.'}
                   </p>
                   {category && category !== 'all' && (
@@ -219,8 +219,8 @@ export async function GalleryPage({
                     locale={locale}
                     albumTitle={
                       locale === 'id'
-                        ? 'Dokumentasi Klenteng Tek Hay Bio'
-                        : 'Tek Hay Bio Temple Documentation'
+                        ? 'Dokumentasi TITD Tek Hay Bio'
+                        : 'TITD Tek Hay Bio Documentation'
                     }
                   />
 
@@ -289,7 +289,7 @@ export async function GalleryPage({
                   </p>
                   <p className="text-xs text-stone-400">
                     {locale === 'id'
-                      ? 'Pengurus klenteng akan memperbarui album dokumentasi kegiatan secara berkala.'
+                      ? 'Pengurus TITD akan memperbarui album dokumentasi kegiatan secara berkala.'
                       : 'Temple management updates event documentation albums periodically.'}
                   </p>
                   {category && category !== 'all' ? (

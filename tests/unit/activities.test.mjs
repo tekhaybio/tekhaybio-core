@@ -152,13 +152,13 @@ test('Verifikasi 6: Kegiatan Insidental & Tentatif Tanpa Tanggal Masehi', () => 
 test('Verifikasi 7: Lokasi Kegiatan (Internal, Eksternal, Hybrid)', () => {
   assert.equal(ACTIVITY_LOCATION_TYPES.length, 3)
   const internalLoc = ACTIVITY_LOCATION_TYPES.find((l) => l.value === 'internal')
-  assert.equal(internalLoc?.label.id, 'Klenteng Tek Hay Bio (Internal)')
+  assert.equal(internalLoc?.label.id, 'TITD Tek Hay Bio (Internal)')
 
   const externalLoc = ACTIVITY_LOCATION_TYPES.find((l) => l.value === 'external')
   assert.equal(externalLoc?.label.id, 'Lokasi Lain / Eksternal')
 
   const hybridLoc = ACTIVITY_LOCATION_TYPES.find((l) => l.value === 'hybrid')
-  assert.equal(hybridLoc?.label.id, 'Klenteng Tek Hay Bio & Lokasi Eksternal')
+  assert.equal(hybridLoc?.label.id, 'TITD Tek Hay Bio & Lokasi Eksternal')
 })
 
 test('Verifikasi 8: Validasi Logika Tanggal (Rentang Tanggal Valid)', () => {

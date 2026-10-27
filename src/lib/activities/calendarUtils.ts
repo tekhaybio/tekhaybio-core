@@ -166,9 +166,9 @@ export function resolveActivityOccurrences(
           : 'External Location'
         : activity.locationType === 'hybrid'
           ? locale === 'id'
-            ? 'Klenteng & Eksternal'
+            ? 'TITD & Eksternal'
             : 'Internal & External'
-          : 'Klenteng Tek Hay Bio'
+          : 'TITD Tek Hay Bio'
 
     if (activity.locationCustom) {
       const customLoc =

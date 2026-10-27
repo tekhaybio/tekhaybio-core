@@ -23,10 +23,10 @@ export default async function HistoryAdminPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-serif font-bold text-stone-900 tracking-tight">
-          Narasi Sejarah Klenteng
+          Narasi Sejarah TITD
         </h1>
         <p className="text-xs text-stone-500 mt-0.5">
-          Kelola informasi sejarah berdirinya Klenteng Tek Hay Bio dan riwayat masa ke masa.
+          Kelola informasi sejarah berdirinya TITD Tek Hay Bio dan riwayat masa ke masa.
         </p>
       </div>
 

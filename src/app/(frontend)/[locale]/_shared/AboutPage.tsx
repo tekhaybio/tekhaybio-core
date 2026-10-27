@@ -19,7 +19,7 @@ export async function AboutPage({ locale }: { locale: 'id' | 'en' }) {
     notFound()
   }
 
-  const siteName = (siteSettings as any)?.siteName || 'Klenteng Tek Hay Bio'
+  const siteName = (siteSettings as any)?.siteName || 'TITD Tek Hay Bio'
   const tagline = (siteSettings as any)?.tagline || (locale === 'id' 
     ? 'Pusat Pelestarian Tradisi, Budaya, dan Spiritual Leluhur' 
     : 'Center for Ancestral Tradition, Culture, and Spiritual Heritage')
@@ -36,7 +36,7 @@ export async function AboutPage({ locale }: { locale: 'id' | 'en' }) {
       icon: Landmark,
       title: locale === 'id' ? 'Cagar Budaya Bersejarah' : 'Historic Cultural Heritage',
       description: locale === 'id'
-        ? 'Berdiri di kawasan Pecinan Semarang, klenteng ini menjadi saksi perjalanan sejarah, arsitektur pusaka, dan akulturasi budaya Tionghoa-Indonesia.'
+        ? 'Berdiri di kawasan Pecinan Semarang, TITD ini menjadi saksi perjalanan sejarah, arsitektur pusaka, dan akulturasi budaya Tionghoa-Indonesia.'
         : 'Standing in Semarang Chinatown, the temple is an enduring witness to historical journeys, heritage architecture, and Chinese-Indonesian cultural synthesis.',
     },
     {
@@ -51,7 +51,7 @@ export async function AboutPage({ locale }: { locale: 'id' | 'en' }) {
   return (
     <>
       <PageHeader 
-        title={history.title as string || (locale === 'id' ? 'Tentang Klenteng Tek Hay Bio' : 'About Tek Hay Bio Temple')}
+        title={history.title as string || (locale === 'id' ? 'Tentang TITD Tek Hay Bio' : 'About TITD Tek Hay Bio')}
         description={history.shortDescription as string || tagline}
       />
 
@@ -82,7 +82,7 @@ export async function AboutPage({ locale }: { locale: 'id' | 'en' }) {
                   {locale === 'id' ? 'Identitas & Nilai' : 'Values & Identity'}
                 </span>
                 <h3 className="font-serif font-bold text-2xl text-stone-900">
-                  {locale === 'id' ? 'Pilar Karakter Klenteng Tek Hay Bio' : 'Core Pillars of Tek Hay Bio Temple'}
+                  {locale === 'id' ? 'Pilar Karakter TITD Tek Hay Bio' : 'Core Pillars of TITD Tek Hay Bio'}
                 </h3>
               </div>
 
@@ -107,7 +107,7 @@ export async function AboutPage({ locale }: { locale: 'id' | 'en' }) {
                 </h4>
                 <p className="text-sm text-stone-600">
                   {locale === 'id'
-                    ? 'Buka kronologi garis waktu berdirinya klenteng dari masa ke masa.'
+                    ? 'Buka kronologi garis waktu berdirinya TITD dari masa ke masa.'
                     : 'Discover the full archival chronology of the temple through the centuries.'}
                 </p>
               </div>

@@ -171,7 +171,7 @@ export function Navbar({ locale }: { locale: 'id' | 'en' }) {
               {/* Context Header */}
               <div className="pb-3 border-b border-stone-100 flex items-center justify-between">
                 <div>
-                  <p className="font-serif font-bold text-sm text-stone-900">Klenteng Tek Hay Bio</p>
+                  <p className="font-serif font-bold text-sm text-stone-900">TITD Tek Hay Bio</p>
                   <p className="text-[11px] text-stone-500 tracking-wider">德海廟 • Pecinan Semarang</p>
                 </div>
                 <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-stone-100 text-stone-600 border border-stone-200">

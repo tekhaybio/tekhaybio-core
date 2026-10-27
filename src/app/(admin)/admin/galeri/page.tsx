@@ -68,7 +68,7 @@ export default async function GalleryAdminPage({
           <div>
             <h1 className="text-2xl font-serif font-bold text-stone-900 tracking-tight">Pusat Media Terpusat</h1>
             <p className="text-xs text-stone-500 mt-0.5">
-              Kelola seluruh file media fisik dari berbagai kategori konten klenteng.
+              Kelola seluruh file media fisik dari berbagai kategori konten TITD.
             </p>
           </div>
           <Link
@@ -152,7 +152,7 @@ export default async function GalleryAdminPage({
           <div>
             <h1 className="text-2xl font-serif font-bold text-stone-900 tracking-tight">Galeri &amp; Dokumentasi Album</h1>
             <p className="text-xs text-stone-500 mt-0.5">
-              Kelola album dokumentasi acara, upacara ritual, foto, dan video Klenteng Tek Hay Bio.
+              Kelola album dokumentasi acara, upacara ritual, foto, dan video TITD Tek Hay Bio.
             </p>
           </div>
 

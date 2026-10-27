@@ -97,10 +97,10 @@ export default async function ActivitiesAdminPage({
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="text-2xl font-serif font-bold text-stone-900 tracking-tight">
-              Agenda Ritual & Perayaan Klenteng
+              Agenda Ritual & Perayaan TITD
             </h1>
             <p className="text-xs text-stone-500 mt-0.5">
-              Kelola jadwal upacara keagamaan, sembahyang leluhur, hari kebesaran dewa, dan tradisi Imlek Klenteng Tek Hay Bio.
+              Kelola jadwal upacara keagamaan, sembahyang leluhur, hari kebesaran dewa, dan tradisi Imlek TITD Tek Hay Bio.
             </p>
           </div>
           <div className="flex items-center gap-2">

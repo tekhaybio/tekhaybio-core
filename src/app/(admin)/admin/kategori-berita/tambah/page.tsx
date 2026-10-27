@@ -19,7 +19,7 @@ export default function AddCategoryPage() {
             Tambah Kategori Berita Baru
           </h1>
           <p className="text-xs text-stone-500 mt-0.5">
-            Buat klasifikasi topik baru untuk berita dan warta klenteng.
+            Buat klasifikasi topik baru untuk berita dan warta TITD.
           </p>
         </div>
       </div>

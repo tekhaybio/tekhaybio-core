@@ -32,8 +32,8 @@ export async function RitualCalendarPage({
         }
         description={
           locale === 'id'
-            ? 'Panduan penanggalan ritual keagamaan, sembahyang leluhur, hari kebesaran dewa, dan perayaan budaya Klenteng Tek Hay Bio yang dihitung berdasarkan kalender Imlek dan kalender Masehi.'
-            : 'Comprehensive calendar of religious rituals, ancestral worship, deity festivals, and cultural traditions at Tek Hay Bio Temple, mapped across lunar and solar cycles.'
+            ? 'Panduan penanggalan ritual keagamaan, sembahyang leluhur, hari kebesaran dewa, dan perayaan budaya TITD Tek Hay Bio yang dihitung berdasarkan kalender Imlek dan kalender Masehi.'
+            : 'Comprehensive calendar of religious rituals, ancestral worship, deity festivals, and cultural traditions at TITD Tek Hay Bio, mapped across lunar and solar cycles.'
         }
       />
 

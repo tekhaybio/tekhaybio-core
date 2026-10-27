@@ -48,7 +48,7 @@ test('Verifikasi 2: Deteksi Tipe Media Foto dan Video (isMediaVideo)', () => {
 
   // Video via ekstensi file
   assert.equal(isMediaVideo({ filename: 'dokumentasi-kirab.mp4' }), true)
-  assert.equal(isMediaVideo({ filename: 'suasana-klenteng.webm' }), true)
+  assert.equal(isMediaVideo({ filename: 'suasana-titd.webm' }), true)
   assert.equal(isMediaVideo({ filename: 'sembahyang.mov' }), true)
   assert.equal(isMediaVideo({ filename: 'altar-utama.jpg' }), false)
   assert.equal(isMediaVideo({ filename: 'patung-kongco.png' }), false)
@@ -155,7 +155,7 @@ test('Verifikasi 7: Fallback Judul Media ke Judul Album Jika Kosong', () => {
     if (rawTitle && rawTitle !== 'Tanpa Judul' && rawTitle !== mediaDoc?.filename) {
       return rawTitle
     }
-    return albumTitle?.trim() || (locale === 'id' ? 'Dokumentasi Klenteng' : 'Temple Documentation')
+    return albumTitle?.trim() || (locale === 'id' ? 'Dokumentasi TITD' : 'Temple Documentation')
   }
 
   const albumTitle = 'Perayaan Tong Jiu Pia 2026'
@@ -186,7 +186,7 @@ test('Verifikasi 7: Fallback Judul Media ke Judul Album Jika Kosong', () => {
 
 test('Verifikasi 8: Kategori Media Lepas Galeri (MEDIA_CATEGORIES & getMediaCategoryLabel)', () => {
   assert.equal(MEDIA_CATEGORIES.length, 6)
-  assert.equal(getMediaCategoryLabel('building', 'id'), 'Bangunan Klenteng')
+  assert.equal(getMediaCategoryLabel('building', 'id'), 'Bangunan TITD')
   assert.equal(getMediaCategoryLabel('building', 'en'), 'Temple Building')
   assert.equal(getMediaCategoryLabel('interior', 'id'), 'Interior & Altar')
   assert.equal(getMediaCategoryLabel('interior', 'en'), 'Interior & Altar')
@@ -283,8 +283,8 @@ test('Verifikasi 10: Batas Ukuran dan Format Validasi Media (Video maks 10MB, Fo
 test('Verifikasi 11: Normalisasi mediaItems Dwibahasa untuk Pengeluaran dan Penambahan Media', () => {
   // 1. Ekstraksi caption dari berbagai format
   assert.equal(extractCaptionText('Teks Sederhana', 'id'), 'Teks Sederhana')
-  assert.equal(extractCaptionText({ id: 'Altar Klenteng', en: 'Temple Altar' }, 'id'), 'Altar Klenteng')
-  assert.equal(extractCaptionText({ id: 'Altar Klenteng', en: 'Temple Altar' }, 'en'), 'Temple Altar')
+  assert.equal(extractCaptionText({ id: 'Altar TITD', en: 'Temple Altar' }, 'id'), 'Altar TITD')
+  assert.equal(extractCaptionText({ id: 'Altar TITD', en: 'Temple Altar' }, 'en'), 'Temple Altar')
 
   // Tangani objek bersarang yang cacat akibat locale fallback { id: { en: '' }, en: '' }
   assert.equal(extractCaptionText({ id: { en: '' }, en: '' }, 'id'), '')

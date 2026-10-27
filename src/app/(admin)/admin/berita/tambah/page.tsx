@@ -23,7 +23,7 @@ export default async function AddNewsPage() {
             Tulis Berita Baru
           </h1>
           <p className="text-xs text-stone-500 mt-0.5">
-            Buat artikel berita, warta kegiatan, atau pengumuman resmi klenteng.
+            Buat artikel berita, warta kegiatan, atau pengumuman resmi TITD.
           </p>
         </div>
         <Link

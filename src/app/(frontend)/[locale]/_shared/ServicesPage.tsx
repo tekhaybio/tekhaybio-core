@@ -22,7 +22,7 @@ export async function ServicesPage({ locale, page = 1, limit = 10 }: { locale: '
     <>
       <PageHeader 
         title={locale === 'id' ? 'Layanan & Pelayanan Ibadah' : 'Religious Services & Facilities'}
-        description={locale === 'id' ? 'Pelayanan keagamaan, persembahyangan, konsultasi spiritual, dan fasilitas klenteng untuk umat.' : 'Religious ceremonies, devotional prayers, spiritual consultations, and facilities for devotees.'}
+        description={locale === 'id' ? 'Pelayanan keagamaan, persembahyangan, konsultasi spiritual, dan fasilitas TITD untuk umat.' : 'Religious ceremonies, devotional prayers, spiritual consultations, and facilities for devotees.'}
       />
       <Section className="bg-white py-16 md:py-24">
         <Container>

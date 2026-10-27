@@ -45,7 +45,7 @@ export function ShortHistory({ homePage, history, locale }: { homePage?: CMSReco
               <MediaImage media={displayImage as CMSRecord} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
             ) : (
               <div className="absolute inset-0 flex items-center justify-center text-stone-400 p-8 text-center">
-                <span className="font-serif italic text-lg">Arsip Visual Klenteng</span>
+                <span className="font-serif italic text-lg">Arsip Visual TITD</span>
               </div>
             )}
           </div>
@@ -75,7 +75,7 @@ export function Uniqueness({ homePage, locale }: { homePage?: CMSRecord, locale:
       <Container>
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <span className="text-xs font-bold tracking-widest text-amber-400/90 uppercase font-serif">
-            {locale === 'id' ? 'Keistimewaan Klenteng' : 'Temple Distinctiveness'}
+            {locale === 'id' ? 'Keistimewaan TITD' : 'Temple Distinctiveness'}
           </span>
           <h2 className="text-3xl md:text-4xl font-serif font-bold text-white tracking-tight">
             {title}

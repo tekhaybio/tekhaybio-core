@@ -1,7 +1,7 @@
 # Phase 4: Custom Admin Dashboard Summary
 
 ## 1. Scope Phase 4
-Phase 4 berfokus pada pembuatan **Custom Admin Dashboard** sebagai antarmuka utama pengurus Klenteng Tek Hay Bio. Dashboard ini beroperasi di atas Payload CMS via *Local API* (Server Actions) untuk manajemen berita, kegiatan, layanan, sejarah, galeri, dan informasi website tanpa mengharuskan pengguna berinteraksi langsung dengan panel admin *headless* bawaan.
+Phase 4 berfokus pada pembuatan **Custom Admin Dashboard** sebagai antarmuka utama pengurus TITD Tek Hay Bio. Dashboard ini beroperasi di atas Payload CMS via *Local API* (Server Actions) untuk manajemen berita, kegiatan, layanan, sejarah, galeri, dan informasi website tanpa mengharuskan pengguna berinteraksi langsung dengan panel admin *headless* bawaan.
 
 ## 2. Authentication & RBAC
 - **Login Flow**: Memanfaatkan form login Phase 3.2.1 yang sudah terhubung dengan Payload Auth.

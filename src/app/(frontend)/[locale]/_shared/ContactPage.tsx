@@ -18,8 +18,8 @@ export async function ContactPage({ locale }: { locale: 'id' | 'en' }) {
   return (
     <>
       <PageHeader 
-        title={locale === 'id' ? 'Kontak & Lokasi Klenteng' : 'Contact & Temple Location'}
-        description={locale === 'id' ? 'Panduan kunjungan, tata letak, dan saluran komunikasi resmi Klenteng Tek Hay Bio, Pecinan Semarang.' : 'Visitor guide, directions, and official contact channels for Tek Hay Bio Temple, Semarang Chinatown.'}
+        title={locale === 'id' ? 'Kontak & Lokasi TITD' : 'Contact & Temple Location'}
+        description={locale === 'id' ? 'Panduan kunjungan, tata letak, dan saluran komunikasi resmi TITD Tek Hay Bio, Pecinan Semarang.' : 'Visitor guide, directions, and official contact channels for TITD Tek Hay Bio, Semarang Chinatown.'}
       />
       <Section className="bg-white py-16 md:py-24">
         <Container>
@@ -138,7 +138,7 @@ export async function ContactPage({ locale }: { locale: 'id' | 'en' }) {
                     marginHeight={0} 
                     marginWidth={0} 
                     title="Google Maps Location"
-                    src="https://maps.google.com/maps?q=Klenteng%20Tek%20Hay%20Bio,%20Semarang&z=18&output=embed&iwloc="
+                    src="https://maps.google.com/maps?q=TITD%20Tek%20Hay%20Bio,%20Semarang&z=18&output=embed&iwloc="
                   />
                 )}
               </div>

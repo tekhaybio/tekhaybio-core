@@ -60,7 +60,7 @@ export function LocaleTabs({ activeTab, onTabChange, indicators }: LocaleTabsPro
         <Languages className="w-3.5 h-3.5 text-stone-400 shrink-0" />
         <span>
           {activeTab === 'id'
-            ? 'Teks Bahasa Indonesia wajib diisi sebagai bahasa rujukan situs klenteng.'
+            ? 'Teks Bahasa Indonesia wajib diisi sebagai bahasa rujukan situs TITD.'
             : 'Teks Bahasa Inggris opsional. Jika dikosongkan, sistem otomatis menampilkan bahasa Indonesia.'}
         </span>
       </div>

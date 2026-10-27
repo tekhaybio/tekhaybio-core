@@ -19,9 +19,9 @@ const playfair = Playfair_Display({
 export const metadata = {
   title: {
     template: '%s | Tek Hay Bio',
-    default: 'Klenteng Tek Hay Bio | Semarang',
+    default: 'TITD Tek Hay Bio | Semarang',
   },
-  description: 'Situs resmi Klenteng Tek Hay Bio, Semarang. Pusat informasi budaya, sejarah, dan kegiatan ritual.',
+  description: 'Situs resmi TITD Tek Hay Bio, Semarang. Pusat informasi budaya, sejarah, dan kegiatan ritual.',
 }
 
 export default function FrontendLayout({

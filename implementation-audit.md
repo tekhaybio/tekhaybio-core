@@ -1,4 +1,4 @@
-# Foundation Audit: Klenteng Tek Hay Bio
+# Foundation Audit: TITD Tek Hay Bio
 
 ## A. Current Status
 - **Phase 1 — Foundation:** Implemented (Next.js, TypeScript, Tailwind, Payload configured)

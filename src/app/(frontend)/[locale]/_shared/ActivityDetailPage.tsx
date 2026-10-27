@@ -191,7 +191,7 @@ export async function ActivityDetailPage({ locale, slug }: { locale: 'id' | 'en'
                     <p className="text-amber-900">
                       {activity.scheduleNote ||
                         (locale === 'id'
-                          ? 'Tanggal pelaksanaan masih menunggu kepastian atau musyawarah pengurus klenteng.'
+                          ? 'Tanggal pelaksanaan masih menunggu kepastian atau musyawarah pengurus TITD.'
                           : 'Event date is awaiting final confirmation by temple management.')}
                     </p>
                   </div>
@@ -259,7 +259,7 @@ export async function ActivityDetailPage({ locale, slug }: { locale: 'id' | 'en'
                   {Boolean(activity.managementNotes) && (
                     <div className="p-4 bg-amber-50/60 rounded-xl border border-amber-200/70 text-xs text-amber-900 space-y-1">
                       <div className="font-bold text-amber-950">
-                        {locale === 'id' ? 'Catatan Pengurus Klenteng:' : 'Temple Management Notes:'}
+                        {locale === 'id' ? 'Catatan Pengurus TITD:' : 'Temple Management Notes:'}
                       </div>
                       <p className="whitespace-pre-line">{activity.managementNotes as string}</p>
                     </div>
@@ -416,7 +416,7 @@ export async function ActivityDetailPage({ locale, slug }: { locale: 'id' | 'en'
                     <div className="font-medium text-stone-900 flex items-start gap-2 text-sm">
                       <MapPin className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                       <div>
-                        <div>{activity.location || 'Klenteng Tek Hay Bio, Semarang'}</div>
+                        <div>{activity.location || 'TITD Tek Hay Bio, Semarang'}</div>
                         {Boolean(activity.locationAddress) && (
                           <div className="text-xs text-stone-600 mt-1 font-normal">
                             {activity.locationAddress as string}
@@ -453,7 +453,7 @@ export async function ActivityDetailPage({ locale, slug }: { locale: 'id' | 'en'
                 <div className="border-t border-stone-100 pt-4 text-[11px] text-stone-500 bg-stone-50 p-3 rounded-lg border border-stone-200 leading-relaxed">
                   ⚠️{' '}
                   {locale === 'id'
-                    ? 'Jadwal dan tata cara ritual dapat mengalami penyesuaian mengikuti keputusan musyawarah pengurus Klenteng Tek Hay Bio.'
+                    ? 'Jadwal dan tata cara ritual dapat mengalami penyesuaian mengikuti keputusan musyawarah pengurus TITD Tek Hay Bio.'
                     : 'Schedule and ritual procedures are subject to adjustments following temple management deliberations.'}
                 </div>
               </div>

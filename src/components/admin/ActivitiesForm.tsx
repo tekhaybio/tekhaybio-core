@@ -71,7 +71,7 @@ export function ActivitiesForm({ initialData }: { initialData?: any }) {
     traditionExplanation: getLocalized(initialData?.traditionExplanation),
     eventSequence: getLocalized(initialData?.eventSequence),
     managementNotes: getLocalized(initialData?.managementNotes),
-    location: getLocalized(initialData?.location, 'Klenteng Tek Hay Bio, Semarang'),
+    location: getLocalized(initialData?.location, 'TITD Tek Hay Bio, Semarang'),
     locationAddress: getLocalized(initialData?.locationAddress),
     locationRelationship: getLocalized(initialData?.locationRelationship),
     participationDescription: getLocalized(initialData?.participationDescription),
@@ -603,7 +603,7 @@ export function ActivitiesForm({ initialData }: { initialData?: any }) {
                   <h2 className="font-serif font-bold text-base text-stone-900">
                     Tempat &amp; Lokasi Pelaksanaan
                   </h2>
-                  <p className="text-[11px] text-stone-500">Klenteng Tek Hay Bio atau keterlibatan lokasi eksternal</p>
+                  <p className="text-[11px] text-stone-500">TITD Tek Hay Bio atau keterlibatan lokasi eksternal</p>
                 </div>
               </div>
               <span className="text-[11px] font-medium text-stone-500">
@@ -639,7 +639,7 @@ export function ActivitiesForm({ initialData }: { initialData?: any }) {
                   name="location"
                   value={localizedData.location[activeTab]}
                   onChange={handleLocalizedChange}
-                  placeholder="Klenteng Tek Hay Bio, Semarang"
+                  placeholder="TITD Tek Hay Bio, Semarang"
                   className="w-full px-3 py-2 border border-stone-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600"
                 />
               </div>
@@ -669,7 +669,7 @@ export function ActivitiesForm({ initialData }: { initialData?: any }) {
                   name="locationRelationship"
                   value={localizedData.locationRelationship[activeTab]}
                   onChange={handleLocalizedChange}
-                  placeholder="Contoh: Kirab Cap Go Meh keliling Pecinan bersama klenteng sahabat..."
+                  placeholder="Contoh: Kirab Cap Go Meh keliling Pecinan bersama TITD sahabat..."
                   className="w-full px-3 py-2 border border-stone-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600"
                 />
               </div>
@@ -768,14 +768,14 @@ export function ActivitiesForm({ initialData }: { initialData?: any }) {
 
             <div>
               <label className="block text-xs font-semibold text-stone-700 mb-1.5">
-                Catatan Resmi Pengurus Klenteng
+                Catatan Resmi Pengurus TITD
               </label>
               <textarea
                 name="managementNotes"
                 value={localizedData.managementNotes[activeTab]}
                 onChange={handleLocalizedChange}
                 rows={2}
-                placeholder="Pesan, imbauan, atau tata laksana khusus dari Yayasan Klenteng..."
+                placeholder="Pesan, imbauan, atau tata laksana khusus dari Yayasan TITD..."
                 className="w-full px-3 py-2 border border-stone-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600"
               />
             </div>
@@ -838,7 +838,7 @@ export function ActivitiesForm({ initialData }: { initialData?: any }) {
                   value={localizedData.lanternDonationInfo[activeTab]}
                   onChange={handleLocalizedChange}
                   rows={2}
-                  placeholder="Pemasangan lampion doa berkah di serambi klenteng..."
+                  placeholder="Pemasangan lampion doa berkah di serambi TITD..."
                   className="w-full px-3 py-2 border border-stone-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600"
                 />
               </div>
@@ -883,7 +883,7 @@ export function ActivitiesForm({ initialData }: { initialData?: any }) {
                 name="contactInfo"
                 value={localizedData.contactInfo[activeTab]}
                 onChange={handleLocalizedChange}
-                placeholder="Sekretariat Klenteng Tek Hay Bio atau narahubung panitia acara"
+                placeholder="Sekretariat TITD Tek Hay Bio atau narahubung panitia acara"
                 className="w-full px-3 py-2 border border-stone-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-600"
               />
             </div>
@@ -1053,7 +1053,7 @@ export function ActivitiesForm({ initialData }: { initialData?: any }) {
               </li>
               <li className="flex justify-between">
                 <span className="text-stone-400">Tempat:</span>
-                <span className="font-semibold truncate max-w-[140px]">{localizedData.location[activeTab] || 'Klenteng Tek Hay Bio'}</span>
+                <span className="font-semibold truncate max-w-[140px]">{localizedData.location[activeTab] || 'TITD Tek Hay Bio'}</span>
               </li>
             </ul>
           </div>

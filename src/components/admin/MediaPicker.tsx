@@ -173,7 +173,7 @@ export function MediaPicker({
     if (!selectedMedia) return
     const ok = await confirm({
       title: 'Hapus Media dari Server',
-      message: `Hapus file "${selectedMedia.filename || 'media'}" secara permanen dari server?\n\nGambar ini belum digunakan oleh konten klenteng mana pun. Tindakan ini tidak dapat dibatalkan.`,
+      message: `Hapus file "${selectedMedia.filename || 'media'}" secara permanen dari server?\n\nGambar ini belum digunakan oleh konten TITD mana pun. Tindakan ini tidak dapat dibatalkan.`,
       confirmText: 'Ya, Hapus File',
       isDanger: true,
     })
@@ -491,7 +491,7 @@ export function MediaPicker({
                         disabled
                         onClick={() => {
                           toast.warning(
-                            `Gambar ini tidak dapat dihapus karena masih digunakan oleh ${usage.references.length} konten klenteng.`
+                            `Gambar ini tidak dapat dihapus karena masih digunakan oleh ${usage.references.length} konten TITD.`
                           )
                         }}
                         className="w-full bg-stone-100 text-stone-400 rounded-lg py-2 px-3 font-medium text-xs cursor-not-allowed border border-stone-200"

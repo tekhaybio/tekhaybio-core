@@ -93,7 +93,7 @@ export const Activities: CollectionConfig = {
       ],
       admin: {
         position: 'sidebar',
-        description: 'Status kepastian jadwal dari pengurus klenteng.',
+        description: 'Status kepastian jadwal dari pengurus TITD.',
       },
     },
     {
@@ -305,7 +305,7 @@ export const Activities: CollectionConfig = {
       type: 'textarea',
       localized: true,
       admin: {
-        description: 'Catatan tambahan resmi dari pengurus klenteng.',
+        description: 'Catatan tambahan resmi dari pengurus TITD.',
       },
     },
 
@@ -315,7 +315,7 @@ export const Activities: CollectionConfig = {
       type: 'select',
       defaultValue: 'internal',
       options: [
-        { label: 'Klenteng Tek Hay Bio (Internal)', value: 'internal' },
+        { label: 'TITD Tek Hay Bio (Internal)', value: 'internal' },
         { label: 'Lokasi Lain / Eksternal', value: 'external' },
         { label: 'Gabungan (Internal & Eksternal)', value: 'hybrid' },
       ],
@@ -328,7 +328,7 @@ export const Activities: CollectionConfig = {
       type: 'text',
       localized: true,
       admin: {
-        description: 'Nama tempat atau nama klenteng lokasi pelaksanaan.',
+        description: 'Nama tempat atau nama TITD lokasi pelaksanaan.',
       },
     },
     {

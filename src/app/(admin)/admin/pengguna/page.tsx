@@ -59,7 +59,7 @@ export default async function PenggunaPage({
             Kelola Pengguna Sistem
           </h1>
           <p className="text-xs text-stone-500 mt-0.5">
-            Daftar akun administrator dan editor konten Klenteng Tek Hay Bio.
+            Daftar akun administrator dan editor konten TITD Tek Hay Bio.
           </p>
         </div>
         <Link

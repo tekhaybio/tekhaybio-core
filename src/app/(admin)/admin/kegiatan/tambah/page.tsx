@@ -32,7 +32,7 @@ export default async function AddActivityPage() {
               Tambah Agenda Ritual &amp; Perayaan
             </h1>
             <p className="text-xs text-stone-500 mt-0.5">
-              Daftarkan upacara sembahyang, perayaan keagamaan, atau hari kebesaran dewa klenteng.
+              Daftarkan upacara sembahyang, perayaan keagamaan, atau hari kebesaran dewa TITD.
             </p>
           </div>
         </div>

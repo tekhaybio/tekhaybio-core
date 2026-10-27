@@ -36,7 +36,7 @@ test('Verifikasi Kalender 1: Konversi Astronomis Lunar ke Solar pada Tahun Targe
   assert.ok(eve2026.length >= 0)
 })
 
-test('Verifikasi Kalender 2: Prioritas Tanggal Resmi Pengurus Klenteng (Confirmed Date)', () => {
+test('Verifikasi Kalender 2: Prioritas Tanggal Resmi Pengurus TITD (Confirmed Date)', () => {
   const activities = [
     {
       id: 'act-1',

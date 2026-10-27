@@ -7,12 +7,12 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title:
       locale === 'id'
-        ? 'Kalender Ritual dan Perayaan | Klenteng Tek Hay Bio'
-        : 'Ritual and Celebration Calendar | Tek Hay Bio Temple',
+        ? 'Kalender Ritual dan Perayaan | TITD Tek Hay Bio'
+        : 'Ritual and Celebration Calendar | TITD Tek Hay Bio',
     description:
       locale === 'id'
-        ? 'Jadwal ritual keagamaan, sembahyang leluhur, hari kebesaran dewa, dan perayaan budaya di Klenteng Tek Hay Bio sepanjang tahun.'
-        : 'Comprehensive schedule of religious rituals, ancestral worship, deity festivals, and cultural celebrations at Tek Hay Bio Temple.',
+        ? 'Jadwal ritual keagamaan, sembahyang leluhur, hari kebesaran dewa, dan perayaan budaya di TITD Tek Hay Bio sepanjang tahun.'
+        : 'Comprehensive schedule of religious rituals, ancestral worship, deity festivals, and cultural celebrations at TITD Tek Hay Bio.',
     alternates: {
       canonical: `/${locale}/ritual-calendar`,
     },

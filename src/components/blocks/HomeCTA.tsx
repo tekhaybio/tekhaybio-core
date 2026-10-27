@@ -51,7 +51,7 @@ export function GalleryPreview({ homePage, mediaList, locale }: { homePage?: CMS
                 {/* Mobile-accessible caption (visible permanently on mobile, hover on desktop) */}
                 <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/30 to-transparent opacity-90 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3 md:p-5">
                   <span className="text-white text-xs md:text-sm font-medium drop-shadow-md line-clamp-2">
-                    {(media.title as string) || (media.alt as string) || 'Klenteng Tek Hay Bio'}
+                    {(media.title as string) || (media.alt as string) || 'TITD Tek Hay Bio'}
                   </span>
                 </div>
               </div>
@@ -73,8 +73,8 @@ export function LocationCTA({ homePage, contactInfo, locale }: { homePage?: CMSR
   const hp = (homePage?.ctaSection as any) || {}
   const title = hp.title || (locale === 'id' ? 'Rencanakan Kunjungan Anda' : 'Plan Your Visit')
   const description = hp.description || (locale === 'id' 
-                    ? 'Klenteng Tek Hay Bio terbuka bagi umat untuk sembahyang serta pengunjung dan peziarah yang ingin mengenal sejarah serta melestarikan budaya.'
-                    : 'Tek Hay Bio Temple welcomes devotees for prayers as well as pilgrims and visitors wishing to learn about our history and heritage.')
+                    ? 'TITD Tek Hay Bio terbuka bagi umat untuk sembahyang serta pengunjung dan peziarah yang ingin mengenal sejarah serta melestarikan budaya.'
+                    : 'TITD Tek Hay Bio welcomes devotees for prayers as well as pilgrims and visitors wishing to learn about our history and heritage.')
   const buttonText = locale === 'id' ? 'Hubungi Pengurus' : 'Contact Temple Board'
   const buttonLink = `/${locale}/kontak`
 
@@ -101,7 +101,7 @@ export function LocationCTA({ homePage, contactInfo, locale }: { homePage?: CMSR
                   <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                   <div className="space-y-1">
                     <h3 className="font-bold text-stone-900 uppercase tracking-wider text-xs">
-                      {locale === 'id' ? 'Alamat Klenteng' : 'Temple Address'}
+                      {locale === 'id' ? 'Alamat TITD' : 'Temple Address'}
                     </h3>
                     <p className="text-stone-600 text-sm leading-relaxed whitespace-pre-line">{contactInfo.address as string}</p>
                   </div>
@@ -143,7 +143,7 @@ export function LocationCTA({ homePage, contactInfo, locale }: { homePage?: CMSR
               ) : (
                 <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center text-stone-500 space-y-2">
                   <MapPin className="w-8 h-8 text-stone-400" />
-                  <span className="font-serif font-bold text-base text-stone-700">Klenteng Tek Hay Bio (德海廟)</span>
+                  <span className="font-serif font-bold text-base text-stone-700">TITD Tek Hay Bio (德海廟)</span>
                   <span className="text-xs text-stone-500 max-w-xs">{contactInfo.address as string}</span>
                 </div>
               )}

@@ -21,7 +21,7 @@ export async function NewsListPage({ locale, page = 1, limit = 9 }: { locale: 'i
     <>
       <PageHeader 
         title={locale === 'id' ? 'Berita & Informasi' : 'News & Information'}
-        description={locale === 'id' ? 'Informasi terbaru seputar Klenteng Tek Hay Bio.' : 'Latest information about Tek Hay Bio Temple.'}
+        description={locale === 'id' ? 'Informasi terbaru seputar TITD Tek Hay Bio.' : 'Latest information about TITD Tek Hay Bio.'}
       />
       <Section className="bg-stone-50">
         <Container>
