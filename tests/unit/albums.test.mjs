@@ -12,6 +12,7 @@ import {
   validateMediaFile,
   extractCaptionText,
   normalizeMediaItemsForLocale,
+  resolveClientMediaUrl,
 } from '../../src/lib/gallery/utils.ts'
 
 test('Verifikasi 1: Kategori Album Galeri Terstruktur dan Bilingual', () => {
@@ -362,6 +363,31 @@ test('Verifikasi 11: Normalisasi mediaItems Dwibahasa untuk Pengeluaran dan Pena
   assert.equal(afterRemoval[0].sortOrder, 0)
   assert.equal(afterRemoval[1].media, '6adf3c4030cc5415cf4eaf19')
   assert.equal(afterRemoval[1].sortOrder, 1)
+})
+
+test('Verifikasi 12: Normalisasi URL Media Sisi Klien (resolveClientMediaUrl)', () => {
+  assert.equal(resolveClientMediaUrl(null), '')
+  assert.equal(resolveClientMediaUrl(''), '')
+  assert.equal(
+    resolveClientMediaUrl('/api/r2/gallery-media/Ritual%20Chaodu-1.jpg'),
+    '/api/r2/gallery-media/Ritual%20Chaodu-1.jpg'
+  )
+  assert.equal(
+    resolveClientMediaUrl(
+      'https://pub-9638815ddd2446a6a51bfe4aa0bf030b.r2.dev/gallery-media/WhatsApp Image 2026-10-13 at 2.54.23 PM (1)-1.jpeg'
+    ),
+    '/api/r2/gallery-media/WhatsApp%20Image%202026-10-13%20at%202.54.23%20PM%20(1)-1.jpeg'
+  )
+  assert.equal(
+    resolveClientMediaUrl(
+      'https://pub-9638815ddd2446a6a51bfe4aa0bf030b.r2.dev/gallery-media/WhatsApp%20Image%202026-10-13%20at%202.54.23%20PM%20(1)-1.jpeg'
+    ),
+    '/api/r2/gallery-media/WhatsApp%20Image%202026-10-13%20at%202.54.23%20PM%20(1)-1.jpeg'
+  )
+  assert.equal(
+    resolveClientMediaUrl('https://media.tekhaybio.org/gallery-media/foto.jpg'),
+    'https://media.tekhaybio.org/gallery-media/foto.jpg'
+  )
 })
 
 

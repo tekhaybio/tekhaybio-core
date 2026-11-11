@@ -2,8 +2,9 @@
 'use client'
 
 import React, { useState, useEffect, useCallback } from 'react'
+import Image from 'next/image'
 import { MediaImage } from '@/components/ui/MediaImage'
-import { isMediaVideo } from '@/lib/gallery/utils'
+import { isMediaVideo, resolveClientMediaUrl } from '@/lib/gallery/utils'
 import {
   Image as ImageIcon,
   Video,
@@ -87,6 +88,8 @@ export function AlbumMediaGallery({
   const currentItem = lightboxIndex !== null ? filteredItems[lightboxIndex] : null
   const currentMedia = currentItem?.media || currentItem
   const currentIsVideo = isMediaVideo(currentMedia)
+  const currentMediaUrl = resolveClientMediaUrl(currentMedia?.url)
+  const currentPosterUrl = resolveClientMediaUrl(currentMedia?.videoThumbnail?.url)
   const currentTitle = currentMedia ? getDisplayTitle(currentMedia) : ''
   const currentCaption =
     (typeof currentItem?.caption === 'object' ? currentItem?.caption?.[locale] : currentItem?.caption) ||
@@ -173,6 +176,8 @@ export function AlbumMediaGallery({
               ''
 
             if (isVid) {
+              const videoUrl = resolveClientMediaUrl(mediaDoc.url)
+              const posterUrl = resolveClientMediaUrl(mediaDoc.videoThumbnail?.url)
               return (
                 <div
                   key={mediaDoc.id || index}
@@ -182,11 +187,11 @@ export function AlbumMediaGallery({
                   {/* Video Preview Box with Overlay */}
                   <div className="aspect-video relative bg-stone-950 flex items-center justify-center overflow-hidden">
                     <video
-                      src={mediaDoc.videoThumbnail?.url ? mediaDoc.url : `${mediaDoc.url}#t=0.001`}
+                      src={posterUrl ? videoUrl : `${videoUrl}#t=0.001`}
                       preload="metadata"
                       playsInline
                       muted
-                      poster={mediaDoc.videoThumbnail?.url || undefined}
+                      poster={posterUrl || undefined}
                       onLoadedMetadata={(e) => {
                         try {
                           if (e.currentTarget.currentTime === 0) e.currentTarget.currentTime = 0.001
@@ -328,22 +333,33 @@ export function AlbumMediaGallery({
             <div className="relative max-w-5xl max-h-[75vh] w-full h-full flex items-center justify-center">
               {currentIsVideo ? (
                 <video
-                  key={currentMedia.url}
-                  src={currentMedia.url}
+                  key={currentMediaUrl}
+                  src={currentMediaUrl}
                   controls
                   autoPlay
                   playsInline
-                  poster={currentMedia.videoThumbnail?.url || undefined}
+                  poster={currentPosterUrl || undefined}
                   className="max-w-full max-h-[75vh] rounded-xl shadow-2xl bg-black"
                 >
                   {locale === 'id'
                     ? 'Browser Anda tidak mendukung pemutaran video HTML5.'
                     : 'Your browser does not support HTML5 video playback.'}
                 </video>
+              ) : currentMedia.width && currentMedia.height ? (
+                <Image
+                  key={currentMediaUrl}
+                  src={currentMediaUrl}
+                  alt={currentMedia.alt || currentTitle}
+                  width={currentMedia.width}
+                  height={currentMedia.height}
+                  sizes="(max-width: 1024px) 100vw, 1024px"
+                  className="w-auto h-auto max-w-full max-h-[75vh] object-contain rounded-xl shadow-2xl transition-transform duration-300"
+                />
               ) : (
                 /* eslint-disable-next-line @next/next/no-img-element */
                 <img
-                  src={currentMedia.url}
+                  key={currentMediaUrl}
+                  src={currentMediaUrl}
                   alt={currentMedia.alt || currentTitle}
                   className="max-w-full max-h-[75vh] object-contain rounded-xl shadow-2xl transition-transform duration-300"
                 />

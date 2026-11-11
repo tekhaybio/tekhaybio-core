@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { s3Storage } from '@payloadcms/storage-s3'
-import { formatR2FileURL, getR2Endpoint, isR2Configured } from './src/lib/storage/r2'
+import { getR2Endpoint, isR2Configured, resolveR2FileURL } from './src/lib/storage/r2'
 
 import { Users } from './src/payload/collections/Users'
 import { Media } from './src/payload/collections/Media'
@@ -124,37 +124,37 @@ export default buildConfig({
       collections: {
         media: {
           disablePayloadAccessControl: true,
-          generateFileURL: ({ filename, prefix }) => formatR2FileURL({ filename, prefix }),
+          generateFileURL: ({ filename, prefix }) => resolveR2FileURL({ filename, prefix }),
         },
         'news-media': {
           prefix: 'news-media',
           disablePayloadAccessControl: true,
-          generateFileURL: ({ filename, prefix }) => formatR2FileURL({ filename, prefix }),
+          generateFileURL: ({ filename, prefix }) => resolveR2FileURL({ filename, prefix }),
         },
         'service-media': {
           prefix: 'service-media',
           disablePayloadAccessControl: true,
-          generateFileURL: ({ filename, prefix }) => formatR2FileURL({ filename, prefix }),
+          generateFileURL: ({ filename, prefix }) => resolveR2FileURL({ filename, prefix }),
         },
         'activity-media': {
           prefix: 'activity-media',
           disablePayloadAccessControl: true,
-          generateFileURL: ({ filename, prefix }) => formatR2FileURL({ filename, prefix }),
+          generateFileURL: ({ filename, prefix }) => resolveR2FileURL({ filename, prefix }),
         },
         'history-media': {
           prefix: 'history-media',
           disablePayloadAccessControl: true,
-          generateFileURL: ({ filename, prefix }) => formatR2FileURL({ filename, prefix }),
+          generateFileURL: ({ filename, prefix }) => resolveR2FileURL({ filename, prefix }),
         },
         'gallery-media': {
           prefix: 'gallery-media',
           disablePayloadAccessControl: true,
-          generateFileURL: ({ filename, prefix }) => formatR2FileURL({ filename, prefix }),
+          generateFileURL: ({ filename, prefix }) => resolveR2FileURL({ filename, prefix }),
         },
         'site-media': {
           prefix: 'site-media',
           disablePayloadAccessControl: true,
-          generateFileURL: ({ filename, prefix }) => formatR2FileURL({ filename, prefix }),
+          generateFileURL: ({ filename, prefix }) => resolveR2FileURL({ filename, prefix }),
         },
       },
     }),

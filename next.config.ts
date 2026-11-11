@@ -50,6 +50,9 @@ const nextConfig: NextConfig = {
       {
         pathname: "/api/media/file/**",
       },
+      {
+        pathname: "/api/r2/**",
+      },
     ],
   },
 };

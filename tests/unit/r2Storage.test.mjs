@@ -5,6 +5,12 @@ import {
   getR2PublicUrl,
   isR2Configured,
   formatR2FileURL,
+  formatR2ProxyURL,
+  resolveR2FileURL,
+  shouldUseR2Proxy,
+  normalizeR2ObjectKey,
+  parseByteRange,
+  MAX_PROXY_RANGE_BYTES,
   inferMimeTypeFromFilename,
   getR2Client,
 } from '../../src/lib/storage/r2.ts'
@@ -116,5 +122,101 @@ test('R2 Storage Configuration & URL Resolution', async (t) => {
     assert.ok(client)
     // S3Client config internal
     assert.equal(client.config.forcePathStyle, true)
+  })
+
+  await t.test('Verifikasi 8: Resolusi Mode Proxy R2 untuk *.r2.dev dan Custom Domain', () => {
+    delete process.env.R2_FORCE_PROXY
+    delete process.env.R2_PUBLIC_URL
+    assert.equal(shouldUseR2Proxy(), true)
+
+    process.env.R2_PUBLIC_URL = 'https://pub-9638815ddd2446a6a51bfe4aa0bf030b.r2.dev'
+    assert.equal(shouldUseR2Proxy(), true)
+
+    process.env.R2_PUBLIC_URL = 'https://acc123.r2.cloudflarestorage.com'
+    assert.equal(shouldUseR2Proxy(), true)
+
+    process.env.R2_PUBLIC_URL = 'https://media.tekhaybio.org'
+    assert.equal(shouldUseR2Proxy(), false)
+
+    process.env.R2_FORCE_PROXY = 'true'
+    assert.equal(shouldUseR2Proxy(), true)
+  })
+
+  await t.test('Verifikasi 9: Format URL Proxy R2 dengan Encoding Aman dan Resolusi Otomatis', () => {
+    delete process.env.R2_FORCE_PROXY
+    process.env.R2_PUBLIC_URL = 'https://pub-9638815ddd2446a6a51bfe4aa0bf030b.r2.dev'
+
+    assert.equal(
+      formatR2ProxyURL({
+        filename: 'WhatsApp Image 2026-10-13 at 2.54.23 PM (1)-1.jpeg',
+        prefix: 'gallery-media',
+      }),
+      '/api/r2/gallery-media/WhatsApp%20Image%202026-10-13%20at%202.54.23%20PM%20(1)-1.jpeg'
+    )
+
+    assert.equal(
+      resolveR2FileURL({
+        filename: 'Ritual Chaodu-1.jpg',
+        prefix: 'gallery-media/uuid-123',
+      }),
+      '/api/r2/gallery-media/uuid-123/Ritual%20Chaodu-1.jpg'
+    )
+
+    process.env.R2_PUBLIC_URL = 'https://media.tekhaybio.org'
+    assert.equal(
+      resolveR2FileURL({
+        filename: 'Ritual Chaodu-1.jpg',
+        prefix: 'gallery-media',
+      }),
+      'https://media.tekhaybio.org/gallery-media/Ritual Chaodu-1.jpg'
+    )
+  })
+
+  await t.test('Verifikasi 10: Validasi Keamanan Key Objek R2 (normalizeR2ObjectKey)', () => {
+    assert.equal(
+      normalizeR2ObjectKey(['gallery-media', 'Ritual Chaodu-1.jpg']),
+      'gallery-media/Ritual Chaodu-1.jpg'
+    )
+    assert.equal(normalizeR2ObjectKey(['foto.webp']), 'foto.webp')
+
+    assert.equal(normalizeR2ObjectKey([]), null)
+    assert.equal(normalizeR2ObjectKey(['..', 'secret']), null)
+    assert.equal(normalizeR2ObjectKey(['gallery-media', '.', 'file.jpg']), null)
+    assert.equal(normalizeR2ObjectKey(['.env']), null)
+    assert.equal(normalizeR2ObjectKey(['gallery-media', 'a\\b.jpg']), null)
+    assert.equal(normalizeR2ObjectKey(['gallery-media', '']), null)
+  })
+
+  await t.test('Verifikasi 11: Parsing HTTP Range Header dan Pembatasan Chunk Proxy', () => {
+    const total = 7_576_976
+    assert.deepEqual(parseByteRange(null, total), { type: 'none' })
+    assert.deepEqual(parseByteRange('items=0-10', total), { type: 'none' })
+    assert.deepEqual(parseByteRange('bytes=0-10, 20-30', total), { type: 'none' })
+
+    // Open-ended range dibatasi max chunk (2 MB)
+    assert.deepEqual(parseByteRange('bytes=0-', total), {
+      type: 'partial',
+      start: 0,
+      end: MAX_PROXY_RANGE_BYTES - 1,
+    })
+
+    // Bounded range kecil tetap utuh
+    assert.deepEqual(parseByteRange('bytes=0-1023', total), {
+      type: 'partial',
+      start: 0,
+      end: 1023,
+    })
+
+    // Suffix byte range
+    assert.deepEqual(parseByteRange('bytes=-500', total), {
+      type: 'partial',
+      start: total - 500,
+      end: total - 1,
+    })
+
+    // Invalid ranges -> 416
+    assert.deepEqual(parseByteRange(`bytes=${total}-`, total), { type: 'invalid' })
+    assert.deepEqual(parseByteRange('bytes=500-100', total), { type: 'invalid' })
+    assert.deepEqual(parseByteRange('bytes=0-10', 0), { type: 'invalid' })
   })
 })

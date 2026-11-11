@@ -25,6 +25,7 @@ import { Bold, Italic, Underline, List, ListOrdered, Link as LinkIcon, Heading1,
 // Cloudflare R2 presigned client upload kini aktif digunakan
 import { upload as _inactiveVercelUpload } from '@vercel/blob/client'
 import { directUploadToR2 } from '@/lib/storage/uploadClient'
+import { resolveClientMediaUrl } from '@/lib/gallery/utils'
 
 // Custom Upload Node for Payload Media
 export interface SerializedUploadNode extends SerializedLexicalNode {
@@ -103,7 +104,7 @@ export class UploadNode extends DecoratorNode<React.ReactNode> {
     return (
       <div className={`my-4 flex flex-col ${alignClass} relative group border-2 border-transparent hover:border-slate-300 rounded p-1`} contentEditable={false}>
         {this.__url ? (
-          <img src={this.__url} alt={this.__alt} className={`rounded shadow-sm ${this.__alignment === 'full' ? 'w-full' : 'max-w-full'}`} style={{ maxHeight: this.__alignment === 'full' ? 'none' : '400px' }} />
+          <img src={resolveClientMediaUrl(this.__url)} alt={this.__alt} className={`rounded shadow-sm ${this.__alignment === 'full' ? 'w-full' : 'max-w-full'}`} style={{ maxHeight: this.__alignment === 'full' ? 'none' : '400px' }} />
         ) : (
           <div className="w-full h-32 bg-slate-100 flex items-center justify-center text-slate-500 rounded border border-slate-200">
             Media ID: {this.__id}
@@ -284,7 +285,7 @@ function MediaLibraryModal({ onClose, onSelect, mediaCollection = 'media' }: { o
                 </label>
                 {mediaList.map((m: any) => (
                   <div key={m.id} onClick={() => { setSelectedMedia(m); setUsageStatus(null); fetch(`/api/media-usage?collection=${mediaCollection}&id=${m.id}`).then(r => r.json()).then(setUsageStatus).catch(console.error); }} className={`cursor-pointer relative aspect-square rounded-lg overflow-hidden border-2 ${selectedMedia?.id === m.id ? 'border-blue-500' : 'border-transparent'}`}>
-                    <img src={m.url} alt={m.alt || 'Media'} className="w-full h-full object-cover" />
+                    <img src={resolveClientMediaUrl(m.url)} alt={m.alt || 'Media'} className="w-full h-full object-cover" />
                     {selectedMedia?.id === m.id && <div className="absolute inset-0 bg-blue-500/20 flex items-center justify-center"><div className="bg-blue-500 rounded-full p-1"><Check className="w-4 h-4 text-white" /></div></div>}
                   </div>
                 ))}
@@ -295,7 +296,7 @@ function MediaLibraryModal({ onClose, onSelect, mediaCollection = 'media' }: { o
           {selectedMedia && (
             <div className="w-80 border-l border-slate-200 p-4 flex flex-col overflow-y-auto bg-slate-50">
               <h3 className="font-bold mb-4">Detail Media</h3>
-              <img src={selectedMedia.url} className="w-full rounded mb-4" alt="Preview" />
+              <img src={resolveClientMediaUrl(selectedMedia.url)} className="w-full rounded mb-4" alt="Preview" />
               <div className="text-sm text-slate-500 mb-4">{selectedMedia.filename}</div>
 
               <div className="mb-4 p-3 bg-white rounded border border-slate-200">

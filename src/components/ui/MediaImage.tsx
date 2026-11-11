@@ -24,7 +24,7 @@ interface MediaImageProps {
   loading?: 'lazy' | 'eager';
 }
 
-import { isMediaVideo } from "@/lib/gallery/utils";
+import { isMediaVideo, resolveClientMediaUrl } from "@/lib/gallery/utils";
 
 export function MediaImage({
   media,
@@ -58,7 +58,8 @@ export function MediaImage({
   }
 
   const isVideo = isMediaVideo(media);
-  const videoThumbnailUrl = (media as any).videoThumbnail?.url;
+  const videoThumbnailUrl = resolveClientMediaUrl((media as any).videoThumbnail?.url);
+  const mediaUrl = resolveClientMediaUrl(media.url);
 
   // If it's a video without a thumbnail image, render an HTML5 video preview instead of crashing Next.js Image
   if (isVideo && !videoThumbnailUrl) {
@@ -68,7 +69,7 @@ export function MediaImage({
         style={!fill && width ? { maxWidth: width } : undefined}
       >
         <video
-          src={`${media.url}#t=0.001`}
+          src={`${mediaUrl}#t=0.001`}
           preload="metadata"
           muted
           playsInline
@@ -86,7 +87,7 @@ export function MediaImage({
     );
   }
 
-  const imageUrl = videoThumbnailUrl || media.url;
+  const imageUrl = videoThumbnailUrl || mediaUrl;
   const imageAlt = alt || media.alt || "Tek Hay Bio Image";
 
   return (

@@ -107,6 +107,39 @@ export function isMediaVideo(media: any): boolean {
   return false
 }
 
+/**
+ * Rewrites direct `*.r2.dev` URLs to the same-origin `/api/r2/...` proxy path
+ * so client browsers on networks blocking `*.r2.dev` can still load images and stream videos.
+ */
+export function resolveClientMediaUrl(url?: string | null): string {
+  if (!url || typeof url !== 'string') return ''
+  const trimmed = url.trim()
+  if (!trimmed) return ''
+  if (trimmed.startsWith('/')) return trimmed
+
+  try {
+    const parsed = new URL(trimmed)
+    if (parsed.hostname.toLowerCase().endsWith('.r2.dev')) {
+      const encodedPath = parsed.pathname
+        .split('/')
+        .filter(Boolean)
+        .map((segment) => {
+          try {
+            return encodeURIComponent(decodeURIComponent(segment))
+          } catch {
+            return encodeURIComponent(segment)
+          }
+        })
+        .join('/')
+      return encodedPath ? `/api/r2/${encodedPath}` : trimmed
+    }
+  } catch {
+    return trimmed
+  }
+
+  return trimmed
+}
+
 export function countAlbumMedia(mediaItems?: any[]): {
   photosCount: number
   videosCount: number

@@ -6,7 +6,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import { createClientUploadReceipt, getSafeFileName } from 'payload/internal'
 import { getSanitizedUploadFilename } from 'payload/shared'
 import { randomUUID } from 'crypto'
-import { getR2Client, formatR2FileURL, isR2Configured, inferMimeTypeFromFilename } from '@/lib/storage/r2'
+import { getR2Client, resolveR2FileURL, isR2Configured, inferMimeTypeFromFilename } from '@/lib/storage/r2'
 
 const ALLOWED_COLLECTIONS: Record<string, string> = {
   media: '',
@@ -162,7 +162,7 @@ export async function POST(req: NextRequest) {
       expiresIn: 300, // 5 menit
     })
 
-    const publicUrl = formatR2FileURL({
+    const publicUrl = resolveR2FileURL({
       filename: safeFilename,
       prefix: collectionPrefix ? `${collectionPrefix}/${_objectKey}` : _objectKey,
     })

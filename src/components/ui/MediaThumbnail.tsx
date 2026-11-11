@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { Video, Image as ImageIcon, AlertCircle } from 'lucide-react'
-import { isMediaVideo } from '@/lib/gallery/utils'
+import { isMediaVideo, resolveClientMediaUrl } from '@/lib/gallery/utils'
 
 export interface MediaThumbnailProps {
   media: any
@@ -46,18 +46,20 @@ export function MediaThumbnail({
   const isVid = isMediaVideo(media)
 
   // Resolve thumbnail image URL if available
-  const posterUrl =
+  const posterUrl = resolveClientMediaUrl(
     media?.videoThumbnail?.sizes?.thumbnail?.url ||
-    media?.videoThumbnail?.url ||
-    null
+      media?.videoThumbnail?.url ||
+      null
+  )
 
-  const imageUrl =
+  const imageUrl = resolveClientMediaUrl(
     posterUrl ||
-    media?.sizes?.thumbnail?.url ||
-    media?.sizes?.card?.url ||
-    (!isVid ? (typeof media === 'string' ? media : media?.url) : null)
+      media?.sizes?.thumbnail?.url ||
+      media?.sizes?.card?.url ||
+      (!isVid ? (typeof media === 'string' ? media : media?.url) : null)
+  )
 
-  const videoUrl = isVid ? (typeof media === 'string' ? media : media?.url) : null
+  const videoUrl = isVid ? resolveClientMediaUrl(typeof media === 'string' ? media : media?.url) : null
   const displayTitle = media?.title || media?.filename || alt
 
   // Badge position styling

@@ -5,7 +5,7 @@
 import React, { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { updateMediaAction } from "@/app/(admin)/admin/galeri/actions";
-import { isMediaVideo, validateMediaFile, MEDIA_LIMITS } from "@/lib/gallery/utils";
+import { isMediaVideo, validateMediaFile, MEDIA_LIMITS, resolveClientMediaUrl } from "@/lib/gallery/utils";
 import { MediaThumbnail } from "@/components/ui/MediaThumbnail";
 // Integrasi Vercel Blob dipertahankan untuk backward compatibility tetapi dinonaktifkan (inactive)
 // Cloudflare R2 presigned client upload kini aktif digunakan
@@ -281,7 +281,7 @@ export function GalleryUploader({ initialMedia, collection = "gallery-media" }: 
             <div className="md:w-1/2 bg-slate-900 p-4 flex flex-col items-center justify-center relative">
               {isMediaVideo(editingMedia) ? (
                 <video
-                  src={editingMedia.url}
+                  src={resolveClientMediaUrl(editingMedia.url)}
                   controls
                   playsInline
                   preload="metadata"
@@ -290,7 +290,7 @@ export function GalleryUploader({ initialMedia, collection = "gallery-media" }: 
               ) : (
                 /* eslint-disable-next-line @next/next/no-img-element */
                 <img
-                  src={editingMedia.url}
+                  src={resolveClientMediaUrl(editingMedia.url)}
                   alt={editingMedia.alt}
                   className="max-w-full max-h-[40vh] md:max-h-full object-contain"
                 />
